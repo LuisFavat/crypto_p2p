@@ -3,10 +3,13 @@ package ar.edu.unq.cryptop2p.model;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
@@ -54,7 +57,5 @@ public class Usuario implements Serializable {
         this.direccioncriptoactivo = direccioncriptoactivo;
 
                 }
-
-
 
     }
