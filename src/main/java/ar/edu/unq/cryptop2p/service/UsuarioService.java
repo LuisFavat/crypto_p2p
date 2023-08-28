@@ -27,10 +27,15 @@ public class UsuarioService {
         return userRepository.save(user);
     }
 
-
     private Boolean existByEmail(String email) {
         List<Usuario> users = userRepository.findAll();
         return  users.stream().anyMatch(user -> Objects.equals(user.getEmail(), email));
+    }
+
+
+    @Transactional
+    public  List<Usuario> findAll() {
+        return userRepository.findAll();
     }
 
 
