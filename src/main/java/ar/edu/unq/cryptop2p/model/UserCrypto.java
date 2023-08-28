@@ -10,22 +10,22 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "usuario")
-public class Usuario implements Serializable {
+@Table(name = "userCrypto")
+public class UserCrypto implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id_usuario")
+        @Column(name = "id_userCrypto")
         private Long id;
 
         @Column(nullable = false)
-       private String nombre;
+       private String name;
 
         @Column(nullable = false)
-        private String apellido;
+        private String surname;
 
         @Column(nullable = false)
-        private  String direccion ;
+        private  String address ;
 
         @Column(nullable = false, unique = true)
         private  String  email;
@@ -34,27 +34,27 @@ public class Usuario implements Serializable {
         private String cvu ;
 
         @Column
-        private String direccioncriptoactivo ;
+        private String cryptoAddress ;
 
-        public Usuario() {
+        public UserCrypto() {
         }
 
 
-        public Usuario(
+        public UserCrypto(
                 Long id,
-                String nombre,
-                String apellido,
-                String direccion,
+                String name,
+                String surname,
+                String address,
                 String email,
                 String cvu,
-                String direccioncriptoactivo ){
+                String cryptoAddress ){
         this.id= id;
-        this.nombre =nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
         this.email = email;
         this.cvu = cvu;
-        this.direccioncriptoactivo = direccioncriptoactivo;
+        this.cryptoAddress  = cryptoAddress ;
 
                 }
 

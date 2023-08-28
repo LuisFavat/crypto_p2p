@@ -1,9 +1,9 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 
-import ar.edu.unq.cryptop2p.model.Usuario;
+import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
-import ar.edu.unq.cryptop2p.service.UsuarioService;
+import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +17,22 @@ import java.util.List;
 @RequestMapping("/api/user")
 @EnableAutoConfiguration
 
-public class UsuarioController {
+public class UserCryptoController {
 
     @Autowired
-    private UsuarioService userService;
+    private UserCryptoService userService;
 
     /**register a user*/
     @PostMapping("/register")
-    public  ResponseEntity<Usuario> register(@RequestBody Usuario userdata ) throws UserNameExistsException {
-        Usuario entity = userService.register(userdata);
+    public  ResponseEntity<UserCrypto> register(@RequestBody UserCrypto userdata ) throws UserNameExistsException {
+        UserCrypto entity = userService.register(userdata);
         ResponseEntity.status(201);
         return ResponseEntity.ok().body(entity);
     }
 
     @GetMapping("/users")
-    public  ResponseEntity<List<Usuario>> getAllUsers(){
-        List<Usuario> users = userService.findAll();
+    public  ResponseEntity<List<UserCrypto>> getAllUsers(){
+        List<UserCrypto> users = userService.findAll();
         return ResponseEntity.ok().body(users);
 
     }

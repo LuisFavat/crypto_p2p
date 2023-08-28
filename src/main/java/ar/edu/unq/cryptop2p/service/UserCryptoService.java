@@ -1,8 +1,8 @@
 package ar.edu.unq.cryptop2p.service;
 
-import ar.edu.unq.cryptop2p.model.Usuario;
+import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
-import ar.edu.unq.cryptop2p.persistence.UsuarioRepository;
+import ar.edu.unq.cryptop2p.persistence.UserCryptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +13,13 @@ import java.util.Objects;
 
 
 @Service
-public class UsuarioService {
+public class UserCryptoService {
 
     @Autowired
-    private UsuarioRepository userRepository;
+    private UserCryptoRepository userRepository;
 
     @Transactional
-    public Usuario register(Usuario user)  throws UserNameExistsException {
+    public UserCrypto register(UserCrypto user)  throws UserNameExistsException {
 
         if (existByEmail(user.getEmail())) {
             throw new UserNameExistsException("User with email: "+ user.getEmail() +" is used");
@@ -28,13 +28,13 @@ public class UsuarioService {
     }
 
     private Boolean existByEmail(String email) {
-        List<Usuario> users = userRepository.findAll();
+        List<UserCrypto> users = userRepository.findAll();
         return  users.stream().anyMatch(user -> Objects.equals(user.getEmail(), email));
     }
 
 
     @Transactional
-    public  List<Usuario> findAll() {
+    public  List<UserCrypto> findAll() {
         return userRepository.findAll();
     }
 
