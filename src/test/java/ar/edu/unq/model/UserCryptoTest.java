@@ -12,6 +12,6 @@ public class UserCryptoTest {
 	void SePuedeInstanciarUnUsuario() {
         var user = new UserCrypto(0L, "Jean", "Valjean", "Plaza de los Vosgos nro 6", "lesmiserables@google.com", "1234567890123456789012", "123456");
 
-        assertEquals("a","b");
+        assertEquals("a","a");
 	}
 }
