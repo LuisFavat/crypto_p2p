@@ -41,14 +41,14 @@ dependencies {
 
 }
 
-sonarqube {
+/* sonarqube {
     properties {
         property "sonar.projectKey", "cryptop2pkey_ar-edu-unq-crypto-p2p"
         property "sonar.organization", "cryptop2pkey"
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
-
+*/
 tasks.named('test') {
 	useJUnitPlatform()
 }
