@@ -18,7 +18,7 @@ public class UserCrypto implements Serializable {
         @Column(name = "id_userCrypto")
         private Long id;
 
-        @Column(nullable = false)
+       @Column(nullable = false)
        private String name;
 
         @Column(nullable = false)

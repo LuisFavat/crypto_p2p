@@ -28,8 +28,7 @@ public class UserCryptoService {
     }
 
     private Boolean existByEmail(String email) {
-        List<UserCrypto> users = userRepository.findAll();
-        return  users.stream().anyMatch(user -> Objects.equals(user.getEmail(), email));
+        return userRepository.findByEmail(email).isPresent();
     }
 
 
