@@ -26,4 +26,8 @@ public abstract class Option {
         this.user = user;
     }
 
+    public Double amountPriceInPesos() {
+        return this.price * this.units;
+    }
+
 }
