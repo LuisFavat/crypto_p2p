@@ -38,8 +38,9 @@ public class InitServiceInMemory {
     }
 
     private void fireInitialData()  {
+    
          UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña","dir1", "ale@gmail.com", "cvu123", "dircripto123" );
-         UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir2", "luis@gmail.com", "cvu456", "dircripto456" );
+         UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir2", "luis@gmail.com", "cvu456", "dircripto456");
         try {
         userService.register(ale) ;
         userService.register(luis);

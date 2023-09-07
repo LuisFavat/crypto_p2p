@@ -11,6 +11,8 @@ public class UserCryptoBuilder {
     private String email   = "empty email";
     private String cvu     = "empty cvu";
     private String cryptoAddress = "empty address";
+    private int numberOfOperations = 0;
+    private int reputation = 0;
 
 
     public static UserCryptoBuilder aUserCrypto()
@@ -59,10 +61,25 @@ public class UserCryptoBuilder {
         cryptoAddress = aCryptoAddress;
         return this;
     }
+     
+    public UserCryptoBuilder withNumberOfOperation(int aNumberOfOperations)
+    {
+        numberOfOperations = aNumberOfOperations;
+        return this;
+    }
+     
+    public UserCryptoBuilder withReputation(int aReputation)
+    {
+        reputation = aReputation;
+        return this;
+    }
 
     public UserCrypto build()
     {
-        return new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
+        var user = new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
+        user.setReputation(reputation);
+        user.setNumerOfOperation(numberOfOperations);
+        return user;
     }
 
 }
