@@ -14,33 +14,35 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 
 class OptionTest {
-    public Cryptocurrency mockCryptocurrency = Mockito.mock(Cryptocurrency.class);
-
-    public UserCrypto mockUser = Mockito.mock(UserCrypto.class);
-    public Double price = 5.00;
-    public int units= 2;
 
     @BeforeEach
     void setUp() {
     }
 
     @Test
-    void ItShouldBe_GetTheSameValueOfPrice_WhenGenerateAnOptionWithAValueOfPriceByDefault() {
+    void ItShouldBe_SamePrice_When_SettingPrice() {
 
-        Option option = new OptionCall( mockCryptocurrency, 5.00, units, mockUser);
+        Option option = new OptionCall();
+        option.setPrice(5.00);
+
         assertEquals(5.00, option.getPrice());
     }
 
     @Test
-    void ItShouldBe_GetTheSameValueOfUnits_WhenGenerateAnOptionWithAValueOfUnitsByDefault() {
+    void ItShouldBe_SameUnits_When_SettingUnits(){
 
-        Option option = new OptionCall( mockCryptocurrency, price, 2, mockUser);
+        Option option = new OptionCall();
+        option.setUnits(2);
+
         assertEquals(2, option.getUnits());
     }
 
     @Test
-    void ItShouldBe_Expect_10_Pesos_WhenGetTheAmountPriceInPesos() {
-        Option option = new OptionCall( mockCryptocurrency, 5.00, 2, mockUser);
+    void ItShouldBe_Expect_10_WhenGetTheAmountPriceInPesos() {
+        Option option = new OptionCall();
+        option.setUnits(2);
+        option.setPrice(5.00);
+
         assertEquals(10.00, option.amountPriceInPesos());
     }
 

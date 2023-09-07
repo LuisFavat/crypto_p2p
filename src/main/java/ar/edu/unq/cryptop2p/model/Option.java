@@ -1,11 +1,13 @@
 package ar.edu.unq.cryptop2p.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@NoArgsConstructor
 
 public abstract class Option {
 
@@ -25,6 +27,7 @@ public abstract class Option {
         this.units = units;
         this.user = user;
     }
+
 
     public Double amountPriceInPesos() {
         return this.price * this.units;
