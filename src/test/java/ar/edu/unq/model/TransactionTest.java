@@ -2,16 +2,12 @@ package ar.edu.unq.model;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 import static ar.edu.unq.model.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.model.builders.CryptoCurrencyBuilder.aCryto;
 import static ar.edu.unq.model.builders.UserCryptoBuilder.aUserCrypto;
-
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.cryptop2p.model.Cryptocurrency;
-import ar.edu.unq.cryptop2p.model.OptionCall;
-import ar.edu.unq.cryptop2p.model.Transaction;
+
 
 
 public class TransactionTest {
