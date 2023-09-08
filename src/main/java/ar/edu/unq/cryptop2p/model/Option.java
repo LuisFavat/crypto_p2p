@@ -21,7 +21,7 @@ public abstract class Option {
     private UserCrypto user;
 
 
-    public Option(Cryptocurrency cryptocurrency, Double price, int units, UserCrypto user) {
+    public Option(Cryptocurrency cryptocurrency, Double price, int  units, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
         this.units = units;
