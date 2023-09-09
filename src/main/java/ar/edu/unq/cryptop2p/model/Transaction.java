@@ -2,20 +2,22 @@ package ar.edu.unq.cryptop2p.model;
 
 public class Transaction {
 
-    private Cryptocurrency cryptoCurrency;
-    private String address;
-    private float amountOfCryptoCurrency;
-    private UserCrypto buyer;
-    private UserCrypto seller;
-    private int sellerReputation;
+    //private Cryptocurrency cryptoCurrency;//option
+    private String address;//option
+    private float amountOfCryptoCurrency;//option
+    private UserCrypto userOwnerOfTheOption;//option o el seller
+    private UserCrypto userInteresed;
+    private int sellerReputation;//user
+    private Option option;
 
-    public Transaction(Cryptocurrency aCryptoCurrency , float aNominalAmount, String aAddress, UserCrypto aBuyer, UserCrypto aSeller)
+    public Transaction(/*Cryptocurrency aCryptoCurrency ,*/ float aNominalAmount, String aAddress, UserCrypto aBuyer, UserCrypto aSeller, Option aOption)
     {
-        cryptoCurrency         = aCryptoCurrency;
+        //cryptoCurrency         = aCryptoCurrency;
         amountOfCryptoCurrency = aNominalAmount;
         address = aAddress;
-        buyer   = aBuyer;
-        seller  = aSeller;
+        userOwnerOfTheOption   = aBuyer;
+        userInteresed  = aSeller;
+        option  = aOption;
     }
 
     public Transaction() {
@@ -23,50 +25,59 @@ public class Transaction {
 
     public String getAddress()
     {
-        return address;
+        return option.getAddress();
     }
 
     public Cryptocurrency getCryptoCurrency() {
-        return cryptoCurrency;
+        //return cryptoCurrency;
+        return option.getCryptocurrency();
     }
 
     public float getAmountOfCryptoCurrency()
     {
-        return amountOfCryptoCurrency;
+        //return amountOfCryptoCurrency;
+        return option.getUnits();
     }
 
     public Double cryptoPrice()
     {
-        return cryptoCurrency.getPrice();
+        //return 1D;//cryptoCurrency.getPrice();
+        return option.quote();
     }
 
     public Double transactionAmount()
     {
-        return amountOfCryptoCurrency * cryptoPrice();
+        return getAmountOfCryptoCurrency() * cryptoPrice();
     }
 
-    public String buyerName()
+    public String nameOfTheOwnerOfTheOption()
     {
-        return buyer.getName() + " " + buyer.getSurname();
+        return option.nameOfTheOwner();//userOwnerOfTheOption.getName() + " " + userOwnerOfTheOption.getSurname();
     }
      
     public String sellerName()
     {
-        return seller.getName() + " " + seller.getSurname();
+        return userInteresed.getName() + " " + userInteresed.getSurname();
     }
 
-    public int numberOfOperations()
+    public int  numberOfOperations()
     {
-        return seller.getNumberOfOperation();
+        return option.numberOfOperation();//userOwnerOfTheOption.getNumberOfOperation();
     }
 
-    public void setSellerReputation()
+    public void takeSellerReputation()
     {
-        sellerReputation = seller.getReputation();
+        sellerReputation = userInteresed.getReputation();
     }
 
-    public int getSellerReputation()
+    public int reputation()
     {
-        return sellerReputation;
+        //return sellerReputation;
+        return option.reputation();
+    }
+
+    public String address()
+    {
+        return option.getAddress();
     }
 }

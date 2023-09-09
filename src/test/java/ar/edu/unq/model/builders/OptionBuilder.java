@@ -11,6 +11,7 @@ public class OptionBuilder {
     private float cryptoAmount;
     private Double price;
     private UserCrypto interesedUser;
+    //private String address;
 
 
     public static OptionBuilder aOption()
@@ -41,8 +42,15 @@ public class OptionBuilder {
         interesedUser = aUserCrypto;
         return this;
     }
+     /* 
+    public OptionBuilder withAddress(String anAddress)
+    {
+        address = anAddress;
+        return this;
+    }*/
 
-    public OptionCall build()
+
+       public OptionCall build()
     {
         return new OptionCall(cryptocurrency, price, cryptoAmount, interesedUser);
     }
@@ -57,5 +65,4 @@ public class OptionBuilder {
         return new OptionPut(cryptocurrency, price, cryptoAmount, interesedUser);
     }
 
-}
 }

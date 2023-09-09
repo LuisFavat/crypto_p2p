@@ -14,14 +14,16 @@ public abstract class Option {
 
     private Cryptocurrency cryptocurrency;
 
-    private int units;
+    private float units;
 
     private Double price;
 
-    private UserCrypto user;
+    protected UserCrypto user;
+
+    //protected String address;
 
 
-    public Option(Cryptocurrency cryptocurrency, Double price, int  units, UserCrypto user) {
+    public Option(Cryptocurrency cryptocurrency, Double price, float units, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
         this.units = units;
@@ -31,6 +33,28 @@ public abstract class Option {
 
     public Double amountPriceInPesos() {
         return this.price * this.units;
+    }
+
+    public abstract String getAddress();
+
+    public Double quote()
+    {
+        return cryptocurrency.getPrice();
+    }
+
+    public String nameOfTheOwner()
+    {
+        return user.getName() + " " +user.getSurname();
+    }
+
+    public int numberOfOperation()
+    {
+        return user.getNumberOfOperation();
+    }
+
+    public int reputation()
+    {
+        return user.getReputation();
     }
 
 }

@@ -5,8 +5,14 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class OptionCall extends Option{
-    public OptionCall(Cryptocurrency cryptocurrency, Double price, int units, UserCrypto user) {
+    public OptionCall(Cryptocurrency cryptocurrency, Double price, float units, UserCrypto user) {
         super(cryptocurrency, price, units, user);
+        //address = user.getCryptoAddress();
+    }
+
+    public String getAddress()
+    {
+        return user.getCryptoAddress();
     }
 
     }
