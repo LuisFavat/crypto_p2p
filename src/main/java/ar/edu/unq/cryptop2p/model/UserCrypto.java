@@ -36,7 +36,7 @@ public class UserCrypto implements Serializable {
         @Column
         private String cryptoAddress ;
 
-        private int numerOfOperation;
+        private int numberOfOperation;
         private int reputation;
 
         public UserCrypto() {
@@ -62,18 +62,18 @@ public class UserCrypto implements Serializable {
 
         public int getNumberOfOperation()
         {
-                return numerOfOperation;
+                return numberOfOperation;
         }
 
         //TODO test
         public void addOperation()
         {
-                numerOfOperation += 1;
+                numberOfOperation += 1;
         }
 
         public void setNumberOfOperation(int aNumberOfOperations)
         {
-                numerOfOperation = aNumberOfOperations;
+                numberOfOperation = aNumberOfOperations;
         }
 
         public void setReputation(int aReputation)

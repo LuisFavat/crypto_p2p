@@ -1,5 +1,7 @@
 package ar.edu.unq.model.builders;
 
+import org.springframework.data.projection.TargetAware;
+
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.Transaction;
 
@@ -10,6 +12,7 @@ public class TransactionBuilder {
     private float amountOfCrypto;
     private UserCrypto buyer;
     private UserCrypto seller;
+    private Option option;
 
     public static TransactionBuilder aTransaction()
     {
@@ -46,10 +49,16 @@ public class TransactionBuilder {
         return this;
     }
 
+    public TransactionBuilder withOption(Option aOption)
+    {
+        option = aOption;
+        return this;
+    }
+
 
     public Transaction build()
     {
-        Transaction transaction = new Transaction(crypto, amountOfCrypto, address, buyer, seller);
+        Transaction transaction = new Transaction( amountOfCrypto, address, buyer, seller, option);
         return transaction;
     }
 

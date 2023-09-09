@@ -78,7 +78,7 @@ public class UserCryptoBuilder {
     {
         var user = new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
         user.setReputation(reputation);
-        user.setNumerOfOperation(numberOfOperations);
+        user.setNumberOfOperation(numberOfOperations);
         return user;
     }
 
