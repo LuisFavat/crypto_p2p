@@ -20,7 +20,6 @@ public abstract class Option {
 
     protected UserCrypto user;
 
-    //protected String address;
 
 
     public Option(Cryptocurrency cryptocurrency, Double price, float units, UserCrypto user) {

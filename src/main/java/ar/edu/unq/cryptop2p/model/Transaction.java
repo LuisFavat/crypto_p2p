@@ -2,25 +2,11 @@ package ar.edu.unq.cryptop2p.model;
 
 public class Transaction {
 
-    //private Cryptocurrency cryptoCurrency;//option
-    private String address;//option
-    private float amountOfCryptoCurrency;//option
-    private UserCrypto userOwnerOfTheOption;//option o el seller
-    private UserCrypto userInteresed;
-    private int sellerReputation;//user
     private Option option;
 
-    public Transaction(/*Cryptocurrency aCryptoCurrency ,*/ float aNominalAmount, String aAddress, UserCrypto aBuyer, UserCrypto aSeller, Option aOption)
+    public Transaction( Option aOption)
     {
-        //cryptoCurrency         = aCryptoCurrency;
-        amountOfCryptoCurrency = aNominalAmount;
-        address = aAddress;
-        userOwnerOfTheOption   = aBuyer;
-        userInteresed  = aSeller;
         option  = aOption;
-    }
-
-    public Transaction() {
     }
 
     public String getAddress()
@@ -28,20 +14,18 @@ public class Transaction {
         return option.getAddress();
     }
 
-    public Cryptocurrency getCryptoCurrency() {
-        //return cryptoCurrency;
+    public Cryptocurrency getCryptoCurrency()
+    {
         return option.getCryptocurrency();
     }
 
     public float getAmountOfCryptoCurrency()
     {
-        //return amountOfCryptoCurrency;
         return option.getUnits();
     }
 
     public Double cryptoPrice()
     {
-        //return 1D;//cryptoCurrency.getPrice();
         return option.quote();
     }
 
@@ -52,27 +36,16 @@ public class Transaction {
 
     public String nameOfTheOwnerOfTheOption()
     {
-        return option.nameOfTheOwner();//userOwnerOfTheOption.getName() + " " + userOwnerOfTheOption.getSurname();
+        return option.nameOfTheOwner();
     }
      
-    public String sellerName()
-    {
-        return userInteresed.getName() + " " + userInteresed.getSurname();
-    }
-
     public int  numberOfOperations()
     {
-        return option.numberOfOperation();//userOwnerOfTheOption.getNumberOfOperation();
-    }
-
-    public void takeSellerReputation()
-    {
-        sellerReputation = userInteresed.getReputation();
+        return option.numberOfOperation();
     }
 
     public int reputation()
     {
-        //return sellerReputation;
         return option.reputation();
     }
 

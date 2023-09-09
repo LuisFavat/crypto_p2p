@@ -19,46 +19,15 @@ public class TransactionBuilder {
         return new TransactionBuilder();
     }
 
-    public TransactionBuilder withAddress(String aAddress)
-    {
-        address = aAddress;
-        return this;
-    } 
-
-    public TransactionBuilder withCryptoCurrency(Cryptocurrency aCrypto)
-    {
-        crypto = aCrypto;
-        return this;
-    } 
-
-    public TransactionBuilder withAmountOfCryptoCurrency(float aNominalAmount)
-    {
-        amountOfCrypto = aNominalAmount;
-        return this;
-    } 
-
-    public TransactionBuilder withBuyer(UserCrypto aBuyer)
-    {
-        buyer = aBuyer;
-        return this;
-    }
-
-    public TransactionBuilder withSeller(UserCrypto aSeller)
-    {
-        seller = aSeller;
-        return this;
-    }
-
     public TransactionBuilder withOption(Option aOption)
     {
         option = aOption;
         return this;
     }
 
-
     public Transaction build()
     {
-        Transaction transaction = new Transaction( amountOfCrypto, address, buyer, seller, option);
+        Transaction transaction = new Transaction( option);
         return transaction;
     }
 
