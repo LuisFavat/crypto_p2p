@@ -18,7 +18,7 @@ public class UserCrypto implements Serializable {
         @Column(name = "id_userCrypto")
         private Long id;
 
-        @Column(nullable = false)
+       @Column(nullable = false)
        private String name;
 
         @Column(nullable = false)
@@ -36,6 +36,9 @@ public class UserCrypto implements Serializable {
         @Column
         private String cryptoAddress ;
 
+        private int numberOfOperation;
+        private int reputation;
+
         public UserCrypto() {
         }
 
@@ -47,15 +50,35 @@ public class UserCrypto implements Serializable {
                 String address,
                 String email,
                 String cvu,
-                String cryptoAddress ){
+                String cryptoAddress){
         this.id= id;
         this.name = name;
         this.surname = surname;
         this.address = address;
         this.email = email;
         this.cvu = cvu;
-        this.cryptoAddress  = cryptoAddress ;
-
+        this.cryptoAddress  = cryptoAddress;
                 }
+
+        public int getNumberOfOperation()
+        {
+                return numberOfOperation;
+        }
+
+        //TODO test
+        public void addOperation()
+        {
+                numberOfOperation += 1;
+        }
+
+        public void setNumberOfOperation(int aNumberOfOperations)
+        {
+                numberOfOperation = aNumberOfOperations;
+        }
+
+        public void setReputation(int aReputation)
+        {
+                reputation = aReputation;
+        }
 
     }
