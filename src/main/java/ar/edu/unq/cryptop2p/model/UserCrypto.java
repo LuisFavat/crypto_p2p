@@ -65,12 +65,6 @@ public class UserCrypto implements Serializable {
                 return numberOfOperation;
         }
 
-        //TODO test
-        public void addOperation()
-        {
-                numberOfOperation += 1;
-        }
-
         public void setNumberOfOperation(int aNumberOfOperations)
         {
                 numberOfOperation = aNumberOfOperations;
