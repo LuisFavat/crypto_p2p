@@ -34,7 +34,7 @@ public class Cryptocurrency {
         return this.price * percentUp;
     }
 
-    public boolean intentionPriceInARangeOfFiveUpAndDown(Double intentionPrice) {
+    public boolean validateOptionPriceInARangeOfFiveUpAndDown(Double intentionPrice) {
         return intentionPrice >= fivePercentDown()  && intentionPrice <= fivePercentUp();
     }
 

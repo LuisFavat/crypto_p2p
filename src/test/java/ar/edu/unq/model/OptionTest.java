@@ -1,10 +1,12 @@
 package ar.edu.unq.model;
 
 
+import ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static ar.edu.unq.model.builders.OptionCallBuilder.*;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +21,7 @@ class OptionTest {
     @Test
     void ItShouldBeSamePriceWhenSettingPrice() {
 
-        var option = anOption().withPrice(5.00).build();
+        var option = OptionConcreteBuilder.anyOption().withPrice(5.00).build();
 
         assertEquals(5.00, option.getPrice());
     }
@@ -27,14 +29,14 @@ class OptionTest {
     @Test
     void ItShouldBeSameUnitsWhenSettingUnits(){
 
-        var option = anOption().withUnits(2).build();
+        var option = OptionConcreteBuilder.anyOption().withUnits(2).build();
 
         assertEquals(2, option.getUnits());
     }
 
     @Test
     void ItShouldBeExpect10WhenGetTheAmountPriceInPesos() {
-        var option = anOption().withPrice(5.00).withUnits(2).build();
+        var option = OptionConcreteBuilder.anyOption().withPrice(5.00).withUnits(2).build();
 
         assertEquals(10.00, option.amountPriceInPesos());
     }

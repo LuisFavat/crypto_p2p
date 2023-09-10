@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.model;
 
+
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

@@ -1,22 +1,31 @@
 package ar.edu.unq.cryptop2p.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+
+
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 
 public abstract class Option {
 
 
+    private int id;
+
+
     private Cryptocurrency cryptocurrency;
+
 
     private int units;
 
+
     private Double price;
+
 
     private UserCrypto user;
 
