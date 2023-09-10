@@ -26,12 +26,12 @@ public class OptionProvider {
     }
 
    public  Option provide (OptionPostDTO optionDTO){
-    OptionBuilder amyOption =  options.stream().filter(  option -> option.getTyoe() == optionDTO.getType()  ).findFirst().get();
-   return  amyOption
+    OptionBuilder amOption =  options.stream().filter(  option -> option.getTyoe() == optionDTO.getType()  ).findFirst().get();
+   return  amOption
            .withUser(optionDTO.getUser())
            .withCryptoCurrency(optionDTO.getCryptocurrency())
            .withPrice(optionDTO.getPrice())
-           .withUnits(optionDTO.getUnits())
+           .withCryptoAmount(optionDTO.getCryptoAmount())
            .build();
 
     }

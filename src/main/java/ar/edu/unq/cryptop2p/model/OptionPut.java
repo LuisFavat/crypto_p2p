@@ -11,7 +11,7 @@ public class OptionPut  extends Option{
         //address = user.getCvu();
     }
 
-    public String getAddress()
+    public String getVirtualAddress()
     {
         return user.getCvu();
     }

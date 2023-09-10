@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.model;
 
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@Entity
+@Table(name = "cryptocurrency")
 public class Cryptocurrency {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cryptocurrency")
 
     private String name;
     private Double price;

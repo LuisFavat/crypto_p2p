@@ -1,25 +1,17 @@
 package ar.edu.unq.model;
 
 
-<<<<<<< HEAD
-//import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
-//import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
-//import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
-=======
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ar.edu.unq.model.builders.TransactionBuilder.aTransaction;
-import static ar.edu.unq.model.builders.CryptoCurrencyBuilder.aCryto;
-import static ar.edu.unq.model.builders.UserCryptoBuilder.aUserCrypto;
-import static ar.edu.unq.model.builders.OptionBuilder.aOption;
+import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
+import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
+import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
 
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
+
+import static ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder.anyOption;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import ar.edu.unq.cryptop2p.model.Cryptocurrency;
-import ar.edu.unq.cryptop2p.model.OptionCall;
-import ar.edu.unq.cryptop2p.model.Transaction;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 public class TransactionTest {
@@ -28,60 +20,43 @@ public class TransactionTest {
     void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated()
     {
         var address = "12345678";
-<<<<<<< HEAD
-        //var transaction = aTransaction().withAddress(address).build();
-=======
-        var user = aUserCrypto().withCryptoAddress(address).build();
-        var option = aOption().withUser(user).builOptionCall();
-        var transaction = aTransaction().withOption(option).build();
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
-
-      //  assertEquals(address, transaction.getAddress());
+        var user = aUserCrypto().withAddress(address).build();
+        var  option = anyOption().withUser(user).build();
+        var transaction = aTransaction().wwithOption(option).build();
+        assertEquals(address, transaction.address());
     }
 
     @Test
     void ShouldConsultTheCryptoCurrency()
     {
-<<<<<<< HEAD
-        //var crypto = aCryto().build();
-        //var transaction = aTransaction().withCryptoCurrency(crypto).build();
-=======
         var crypto = aCryto().build();
-        var option = aOption().withCryptocurrency(crypto).build();
-        var transaction = aTransaction().withOption(option).build();
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
+        var option = anyOption().withCryptoCurrency(crypto).build();
+        var transaction = aTransaction().wwithOption(option).build();
 
-        //assertEquals(crypto, transaction.getCryptoCurrency());
+       assertEquals(crypto, transaction.getCryptoCurrency());
     }
 
     @Test
     void ShouldConsultTheNominalAmountOfCryptoCurrency()
     {
         var nominalAmountOfCryptoCurrency = 1;
-<<<<<<< HEAD
-       // var transaction = aTransaction().withAmountOfCryptoCurrency(nominalAmountOfCryptoCurrency).build();
-=======
-        var option = aOption().withCryptoAmount(nominalAmountOfCryptoCurrency).build();
-        var transaction = aTransaction().withOption(option).build();
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
 
-       // assertEquals(nominalAmountOfCryptoCurrency, transaction.getAmountOfCryptoCurrency());
+       var option = anyOption().withCryptoAmount(nominalAmountOfCryptoCurrency).build();
+       var transaction = aTransaction().wwithOption(option).build();
+
+        assertEquals(nominalAmountOfCryptoCurrency, transaction.getAmountOfCryptoCurrency());
     }
 
     @Test
     void ShouldConsultThePriceOfTheCryptoCurrency()
     {
         var price  = 3000;
-<<<<<<< HEAD
-       // var crypto = aCryto().withPrice(price).build();
-       // var transaction = aTransaction().withCryptoCurrency(crypto).build();
-=======
-        var crypto = aCryto().withPrice(price).build();
-        var option = aOption().withCryptocurrency(crypto).build();
-        var transaction = aTransaction().withOption(option).build();
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
 
-      //  assertEquals(price, transaction.cryptoPrice());
+        var crypto = aCryto().withPrice(price).build();
+        var option = anyOption().withCryptoCurrency(crypto).build();
+        var transaction = aTransaction().wwithOption(option).build();
+
+        assertEquals(price, transaction.cryptoPrice());
     }
 
     @Test
@@ -89,68 +64,50 @@ public class TransactionTest {
     {
         var price = (double) 3000;
         var amountOfCrypto = 0.1f;
-<<<<<<< HEAD
-       // var crypto = aCryto().withPrice(price).build();
-       // var transaction = aTransaction().withCryptoCurrency(crypto).withAmountOfCryptoCurrency(amountOfCrypto).build();
 
-      //  assertEquals(price * amountOfCrypto, transaction.transactionAmount());
-=======
         var crypto = aCryto().withPrice(price).build();
-        var option = aOption().withCryptocurrency(crypto).withCryptoAmount(amountOfCrypto).build();
-        var transaction = aTransaction().withOption(option).build();
+        var option = anyOption().withCryptoCurrency(crypto).withCryptoAmount(amountOfCrypto).build();
+        var transaction = aTransaction().wwithOption(option).build();
 
        assertEquals(price * amountOfCrypto, transaction.transactionAmount()); 
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
+
     }
 
     @Test
     void ShoudConsultTheNameOfTheUserOwnerOfTheOption()
     {
-<<<<<<< HEAD
-      //  var buyer = aUserCrypto().withName("Victor").withSurname("Hugo").build();
-      //  var transaction = aTransaction().withBuyer(buyer).build();
 
-       // assertEquals("Victor Hugo", transaction.buyerName());
-=======
+
         var user = aUserCrypto().withName("Victor").withSurname("Hugo").build();
-        var option = aOption().withUser(user).build();
-        var transaction = aTransaction().withOption(option).build();
+        var option = anyOption().withUser(user).build();
+        var transaction = aTransaction().wwithOption(option).build();
 
         assertEquals("Victor Hugo", transaction.nameOfTheOwnerOfTheOption());
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
+
     }
 
     @Test
     void ShoudConsultTheNameOfTheInteresedUserInTheOption()
     {
-<<<<<<< HEAD
-      //  var seller = aUserCrypto().withName("Jean").withSurname("Valjean").build();
-       // var transaction = aTransaction().withBuyer(seller).build();
 
-      //  assertEquals("Jean Valjean", transaction.buyerName());
-=======
         var interesed = aUserCrypto().withName("Jean").withSurname("Valjean").build();
-        var option = aOption().withUser(interesed).build(); 
-        var transaction = aTransaction().withOption(option).build();
+        var option = anyOption().withUser(interesed).build();
+        var transaction = aTransaction().wwithOption(option).build();
 
         assertEquals("Jean Valjean", transaction.nameOfTheOwnerOfTheOption());
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
+
     }
      
     @Test //Todo mostrar la las operaciones de quien hizo la publicacion
     void ShoudConsultTheNumberOfOperationOfTheOwnerOfTheOption()
     {
         var numberOfOperations = 3;
-<<<<<<< HEAD
-       // var seller = aUserCrypto().withNumberOfOperation(numberOfOperations).build();
-       // var transaction = aTransaction().withSeller(seller).build();
-=======
-        var owner = aUserCrypto().withNumberOfOperation(numberOfOperations).build();
-        var option = aOption().withUser(owner).build();
-        var transaction = aTransaction().withOption(option).build();
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
 
-       // assertEquals(numberOfOperations, transaction.numberOfOperations());
+        var owner = aUserCrypto().withNumberOfOperation(numberOfOperations).build();
+        var option = anyOption().withUser(owner).build();
+        var transaction = aTransaction().wwithOption(option).build();
+
+       assertEquals(numberOfOperations, transaction.numberOfOperations());
     }
 
     //here! 
@@ -158,17 +115,9 @@ public class TransactionTest {
     void ShoudConsultTheReputationOfTheOwnerOfTheOption()
     {
         var reputation = 97;
-<<<<<<< HEAD
-       // var seller = aUserCrypto().withReputation(reputation).build();
-       // var transaction = aTransaction().withSeller(seller).build();
-
-       // transaction.setSellerReputation();
-
-       // assertEquals(reputation, transaction.getSellerReputation());
-=======
         var owner = aUserCrypto().withReputation(reputation).build();
-        var option = aOption().withUser(owner).build();
-        var transaction = aTransaction().withOption(option).build();
+        var option = anyOption().withUser(owner).build();
+        var transaction = aTransaction().wwithOption(option).build();
 
         assertEquals(reputation, transaction.reputation());
     }
@@ -178,8 +127,8 @@ public class TransactionTest {
     {
         var cryptoAddress = "meme1234";
         var seller = aUserCrypto().withCryptoAddress(cryptoAddress).build();
-        var optionCall = aOption().withUser(seller).builOptionCall();
-        var transaction = aTransaction().withOption(optionCall).build();
+        var optionCall = anyOption().withUser(seller).buildOptionCall();
+        var transaction = aTransaction().wwithOption(optionCall).build();
 
         assertEquals(cryptoAddress, transaction.getAddress());
     }
@@ -189,14 +138,11 @@ public class TransactionTest {
     {
         var cryptoAddress = "0123456789012345678911";
         var buyer = aUserCrypto().withCvu(cryptoAddress).build();
-        var optionPut = aOption().withUser(buyer).builOptionPut();
-        var transaction = aTransaction().withOption(optionPut).build();
+        var optionPut = anyOption().withUser(buyer).buildOptionPut();
+        var transaction = aTransaction().wwithOption(optionPut).build();
 
         assertEquals(cryptoAddress, transaction.getAddress());
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
+
     }
-    
-
-
 
 }

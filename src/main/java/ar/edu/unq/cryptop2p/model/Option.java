@@ -8,50 +8,46 @@ import lombok.Setter;
 
 
 
-@NoArgsConstructor
+@Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Table(name = "options")
 
 public abstract class Option {
-
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_options")
     private int id;
 
-
+    @Transient
     private Cryptocurrency cryptocurrency;
 
-<<<<<<< HEAD
+    @Column(nullable = false)
+    private float cryptoAmount;
 
-    private int units;
-=======
-    private float units;
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
-
-
+    @Column(nullable = false)
     private Double price;
 
-<<<<<<< HEAD
-
-    private UserCrypto user;
-=======
+    @Transient
     protected UserCrypto user;
->>>>>>> 744669a75c983b9a6e7add66966968e5c811e733
 
 
-
-    public Option(Cryptocurrency cryptocurrency, Double price, float units, UserCrypto user) {
+    public Option(Cryptocurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
-        this.units = units;
+        this.cryptoAmount = cryptoAmount;
         this.user = user;
     }
 
 
     public Double amountPriceInPesos() {
-        return this.price * this.units;
+        return this.price * this.cryptoAmount;
     }
 
-    public abstract String getAddress();
+    public abstract String getVirtualAddress();
+
+    public String getAddress() {return user.getAddress();};
 
     public Double quote()
     {

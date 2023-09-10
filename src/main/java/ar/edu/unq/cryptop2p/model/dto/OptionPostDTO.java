@@ -15,6 +15,6 @@ public class OptionPostDTO {
     private OptionType type;
     private Cryptocurrency cryptocurrency;
     private Double price;
-    private int units;
+    private int cryptoAmount;
     private UserCrypto user;
 }

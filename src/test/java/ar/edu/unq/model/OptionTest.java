@@ -6,6 +6,9 @@ import ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,14 +32,14 @@ class OptionTest {
     @Test
     void ItShouldBeSameUnitsWhenSettingUnits(){
 
-        var option = OptionConcreteBuilder.anyOption().withUnits(2).build();
+        var option = OptionConcreteBuilder.anyOption().withCryptoAmount(2).build();
 
-        assertEquals(2, option.getUnits());
+        assertEquals(2, option.getCryptoAmount());
     }
 
     @Test
     void ItShouldBeExpect10WhenGetTheAmountPriceInPesos() {
-        var option = OptionConcreteBuilder.anyOption().withPrice(5.00).withUnits(2).build();
+        var option = OptionConcreteBuilder.anyOption().withPrice(5.00).withCryptoAmount(2).build();
 
         assertEquals(10.00, option.amountPriceInPesos());
     }

@@ -6,14 +6,20 @@ import ar.edu.unq.cryptop2p.model.*;
 public class OptionConcreteBuilder {
     private Cryptocurrency criptocurrency;
     private UserCrypto user;
-    private int units = 0 ;
+    private float cryptoAmount = 0 ;
     private  double price = 0.00;
-    private OptionType tyoe ;
+    private String address ="" ;
+    private OptionType type ;
 
     public static OptionConcreteBuilder anyOption() {return new OptionConcreteBuilder(); }
 
-    public OptionConcreteBuilder withUnits(int anyUnits)
-    {   units = anyUnits;
+    public OptionConcreteBuilder withAddress(String anAddress)
+    {   address = anAddress;
+        return this;
+    }
+
+    public OptionConcreteBuilder withCryptoAmount(float aCryptoAmount)
+    {   cryptoAmount = aCryptoAmount;
         return this;
     }
 
@@ -35,5 +41,10 @@ public class OptionConcreteBuilder {
         return this;
     }
 
-    public Option build ()  { return new OptionCall(criptocurrency,  price,  units, user);}
+    public Option build ()  { return new OptionCall(criptocurrency,  price,  cryptoAmount, user);}
+
+    public Option buildOptionCall ()  { return new OptionCall(criptocurrency,  price,  cryptoAmount, user);}
+
+    public Option buildOptionPut ()  { return new OptionPut(criptocurrency,  price,  cryptoAmount, user);}
+
 }
