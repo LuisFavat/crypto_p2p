@@ -2,71 +2,55 @@ package ar.edu.unq.cryptop2p.model;
 
 public class Transaction {
 
-    private Cryptocurrency cryptoCurrency;
-    private String address;
-    private float amountOfCryptoCurrency;
-    private UserCrypto buyer;
-    private UserCrypto seller;
-    private int sellerReputation;
+    private Option option;
 
-    public Transaction(Cryptocurrency aCryptoCurrency , float aNominalAmount, String aAddress, UserCrypto aBuyer, UserCrypto aSeller)
+    public Transaction( Option aOption)
     {
-        cryptoCurrency         = aCryptoCurrency;
-        amountOfCryptoCurrency = aNominalAmount;
-        address = aAddress;
-        buyer   = aBuyer;
-        seller  = aSeller;
-    }
-
-    public Transaction() {
+        option  = aOption;
     }
 
     public String getAddress()
     {
-        return address;
+        return option.getAddress();
     }
 
-    public Cryptocurrency getCryptoCurrency() {
-        return cryptoCurrency;
+    public Cryptocurrency getCryptoCurrency()
+    {
+        return option.getCryptocurrency();
     }
 
     public float getAmountOfCryptoCurrency()
     {
-        return amountOfCryptoCurrency;
+        return option.getUnits();
     }
 
     public Double cryptoPrice()
     {
-        return cryptoCurrency.getPrice();
+        return option.quote();
     }
 
     public Double transactionAmount()
     {
-        return amountOfCryptoCurrency * cryptoPrice();
+        return getAmountOfCryptoCurrency() * cryptoPrice();
     }
 
-    public String buyerName()
+    public String nameOfTheOwnerOfTheOption()
     {
-        return buyer.getName() + " " + buyer.getSurname();
+        return option.nameOfTheOwner();
     }
      
-    public String sellerName()
+    public int  numberOfOperations()
     {
-        return seller.getName() + " " + seller.getSurname();
+        return option.numberOfOperation();
     }
 
-    public int numberOfOperations()
+    public int reputation()
     {
-        return seller.getNumberOfOperation();
+        return option.reputation();
     }
 
-    public void setSellerReputation()
+    public String address()
     {
-        sellerReputation = seller.getReputation();
-    }
-
-    public int getSellerReputation()
-    {
-        return sellerReputation;
+        return option.getAddress();
     }
 }
