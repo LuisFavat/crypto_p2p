@@ -4,14 +4,9 @@ package ar.edu.unq.model;
 import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
 import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
-
-
 import static ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder.anyOption;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 
 public class TransactionTest {

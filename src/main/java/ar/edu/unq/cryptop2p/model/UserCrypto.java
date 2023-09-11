@@ -2,6 +2,9 @@ package ar.edu.unq.cryptop2p.model;
 
 
 import java.io.Serializable;
+
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidReputationException;
+import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +40,7 @@ public class UserCrypto implements Serializable {
         private String cryptoAddress ;
 
         private int numberOfOperation;
+        private int scores;
         private int reputation;
 
         public UserCrypto() {
@@ -70,6 +74,7 @@ public class UserCrypto implements Serializable {
         {
                 numberOfOperation += 1;
         }
+        public  void addScore(int givenscores) {scores += givenscores; }
 
         public void setNumberOfOperation(int aNumberOfOperations)
         {
@@ -81,4 +86,10 @@ public class UserCrypto implements Serializable {
                 reputation = aReputation;
         }
 
+        public int reputation() throws InvalidReputationException {
+            if (numberOfOperation <= 0) {
+                throw new InvalidReputationException("error: division by zero");
+            }
+            return scores / numberOfOperation;
+        }
     }

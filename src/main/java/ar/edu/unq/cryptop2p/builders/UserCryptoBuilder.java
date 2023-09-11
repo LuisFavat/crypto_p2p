@@ -13,6 +13,7 @@ public class UserCryptoBuilder {
     private String cryptoAddress = "empty address";
     private int numberOfOperations = 0;
     private int reputation = 0;
+    private int scores = 0;
 
 
     public static UserCryptoBuilder aUserCrypto()
@@ -79,6 +80,7 @@ public class UserCryptoBuilder {
         var user = new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
+        user.setScores(scores);
         return user;
     }
 
