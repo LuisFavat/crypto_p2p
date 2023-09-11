@@ -79,11 +79,11 @@ public class UserCryptoTest {
 
 
     @Test
-    void ItShouldBeThrowsExceptionWhenGettingReputationWithoutOperations() throws InvalidReputationException {
+    void ItShouldBeThrowsExceptionWhenGettingReputationWithoutOperations()  {
         var user = aUserCrypto().build();
         user.addScore(5);
-      // assertThrows( InvalidReputationException,user.reputation());
-
+        assertThrows( InvalidReputationException.class, user::reputation);
     }
+
 
 }

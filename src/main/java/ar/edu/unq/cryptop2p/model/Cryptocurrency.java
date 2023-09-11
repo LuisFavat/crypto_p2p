@@ -39,18 +39,30 @@ public class Cryptocurrency {
         return this.price * percentUp;
     }
 
-    public boolean validateOptionPriceInARangeOfFiveUpAndDown(Double intentionPrice) {
-        return intentionPrice >= fivePercentDown()  && intentionPrice <= fivePercentUp();
+    public boolean validateOptionPriceInARangeOfFiveUpAndDown(double optionPrice) {
+        return OptionPriceHigherOrEqualThanfivePercentDown(optionPrice)
+                && OptionPriceLowerOrEqualThanPercentUp(optionPrice);
     }
 
-    public boolean OptionPriceHigherThanQuotePrice(Double intentionPrice) {
 
-        return intentionPrice > this.price;
+    public boolean OptionPriceHigherOrEqualThanfivePercentDown(double optionPrice) {
+
+        return optionPrice >= fivePercentDown() ;
     }
 
-    public boolean OptionPriceLowerThanQuotePrice(Double intentionPrice) {
+    public boolean OptionPriceLowerOrEqualThanPercentUp(double optionPrice) {
 
-        return intentionPrice < this.price;
+        return optionPrice <= fivePercentUp();
+    }
+
+    public boolean OptionPriceHigherThanQuotePrice(double optionPrice) {
+
+        return optionPrice > this.price;
+    }
+
+    public boolean OptionPriceLowerThanQuotePrice(double optionPrice) {
+
+        return optionPrice < this.price;
     }
 
 
