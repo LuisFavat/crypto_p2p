@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OptionPut  extends Option{
 
-    public OptionPut(Cryptocurrency cryptocurrency, Double price, float units, UserCrypto user) {
+    public OptionPut(CryptoCurrency cryptocurrency, Double price, float units, UserCrypto user) {
         super(cryptocurrency, price, units, user);
         //address = user.getCvu();
     }

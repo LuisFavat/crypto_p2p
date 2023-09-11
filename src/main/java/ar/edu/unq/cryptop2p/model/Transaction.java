@@ -1,6 +1,5 @@
 package ar.edu.unq.cryptop2p.model;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class Transaction {
         return option.getVirtualAddress();
     }
 
-    public Cryptocurrency getCryptoCurrency()
+    public CryptoCurrency getCryptoCurrency()
     {
         return option.getCryptocurrency();
     }

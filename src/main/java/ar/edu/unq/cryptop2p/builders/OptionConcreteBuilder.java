@@ -4,7 +4,7 @@ import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.model.*;
 
 public class OptionConcreteBuilder {
-    private Cryptocurrency criptocurrency;
+    private CryptoCurrency criptocurrency;
     private UserCrypto user;
     private float cryptoAmount = 0 ;
     private  double price = 0.00;
@@ -29,9 +29,9 @@ public class OptionConcreteBuilder {
         return this;
     }
 
-    public OptionConcreteBuilder withCryptoCurrency (Cryptocurrency aCryptocurrency)
+    public OptionConcreteBuilder withCryptoCurrency (CryptoCurrency aCryptoCurrency)
     {
-        criptocurrency = aCryptocurrency;
+        criptocurrency = aCryptoCurrency;
         return this;
     }
 

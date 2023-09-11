@@ -1,18 +1,16 @@
 package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.helpers.OptionType;
-import ar.edu.unq.cryptop2p.model.Cryptocurrency;
+import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 @Getter
 @Setter
 public abstract class OptionBuilder {
-    private Cryptocurrency criptocurrency;
+    private CryptoCurrency criptocurrency;
     private UserCrypto user;
     private float cryptoAmount = 0 ;
     private  double price = 0.00;
@@ -33,9 +31,9 @@ public abstract class OptionBuilder {
         return this;
     }
 
-    public OptionBuilder withCryptoCurrency (Cryptocurrency aCryptocurrency)
+    public OptionBuilder withCryptoCurrency (CryptoCurrency aCryptoCurrency)
     {
-        criptocurrency = aCryptocurrency;
+        criptocurrency = aCryptoCurrency;
         return this;
     }
 

@@ -1,6 +1,6 @@
 package ar.edu.unq.cryptop2p.builders;
 
-import ar.edu.unq.cryptop2p.model.Cryptocurrency;
+import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 
 public class CryptoCurrencyBuilder {
     
@@ -24,8 +24,8 @@ public class CryptoCurrencyBuilder {
         return this;
     }
 
-    public Cryptocurrency build()
+    public CryptoCurrency build()
     {
-        return new Cryptocurrency(name, price);
+        return new CryptoCurrency(name, price);
     }
 }

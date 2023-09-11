@@ -14,7 +14,7 @@ import lombok.Setter;
 public class TransactionBuilder {
 
     private String address = "no address";
-    private Cryptocurrency crypto;
+    private CryptoCurrency crypto;
     private float amountOfCrypto;
     private UserCrypto buyer;
     private UserCrypto seller;
@@ -33,7 +33,7 @@ public class TransactionBuilder {
         return this;
     } 
 
-    public TransactionBuilder withCryptoCurrency(Cryptocurrency aCrypto)
+    public TransactionBuilder withCryptoCurrency(CryptoCurrency aCrypto)
     {
         crypto = aCrypto;
         return this;

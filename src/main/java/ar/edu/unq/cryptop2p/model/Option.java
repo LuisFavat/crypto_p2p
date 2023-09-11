@@ -21,7 +21,7 @@ public abstract class Option {
     private int id;
 
     @Transient
-    private Cryptocurrency cryptocurrency;
+    private CryptoCurrency cryptocurrency;
 
     @Column(nullable = false)
     private float cryptoAmount;
@@ -33,7 +33,7 @@ public abstract class Option {
     protected UserCrypto user;
 
 
-    public Option(Cryptocurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
+    public Option(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
         this.cryptoAmount = cryptoAmount;

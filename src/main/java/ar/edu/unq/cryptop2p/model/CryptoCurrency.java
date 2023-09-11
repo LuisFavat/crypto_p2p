@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "cryptocurrency")
-public class Cryptocurrency {
+public class CryptoCurrency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cryptocurrency")
@@ -20,14 +20,16 @@ public class Cryptocurrency {
     private Double price;
     private final Double percentDown = 0.95;
     private final Double percentUp= 1.05;
+    private String dateTime;
 
-    public Cryptocurrency(String name) {
+    public CryptoCurrency(String name) {
         this.name = name;
     }
 
-    public Cryptocurrency(String name, double price) {
+    public CryptoCurrency(String name, double price) {
         this.name = name;
         this.price = price;
+
     }
 
 
