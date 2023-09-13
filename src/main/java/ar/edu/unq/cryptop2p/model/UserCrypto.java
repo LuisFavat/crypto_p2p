@@ -90,6 +90,14 @@ public class UserCrypto implements Serializable {
             if (numberOfOperation <= 0) {
                 throw new InvalidReputationException("error: division by zero");
             }
-            return scores / numberOfOperation;
+            setReputation( scores / numberOfOperation);
+            return  reputation;
         }
+       public  void substractReputation(int takenscores) {reputation -= takenscores; }
+
+       public void cancel(Transaction transaction) {
+            this.substractReputation(20);
+            transaction.setState(new Cancelled());
+        }
+
     }

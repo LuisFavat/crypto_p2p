@@ -67,5 +67,10 @@ public class CryptoCurrency {
         return optionPrice < this.price;
     }
 
+    public boolean  isDifferencePrice(double OptionPrice){
+       return  OptionPriceHigherThanQuotePrice(OptionPrice)
+        || OptionPriceLowerThanQuotePrice(OptionPrice);
+    }
+
 
 }
