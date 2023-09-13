@@ -85,5 +85,4 @@ public class UserCryptoTest {
         assertThrows( InvalidReputationException.class, user::reputation);
     }
 
-
 }
