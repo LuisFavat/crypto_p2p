@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 public abstract  class State {
 
-   public abstract void execute(Action action,Transaction transaction);
+   public abstract void execute(Action action,Executor executor);
 
-    public abstract void  makeTransfer(Transaction transaction)  ;
-    public abstract void   confirmReception(Transaction transaction) ;
-    public  abstract void  cancel(Transaction transaction) ;
+    public abstract void  makeTransfer(Executor executor)  ;
+    public abstract void   confirmReception(Executor executor) ;
+    public  abstract void  cancel(Executor executor) ;
 }

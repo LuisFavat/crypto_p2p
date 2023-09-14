@@ -1,11 +1,8 @@
 package ar.edu.unq.cryptop2p.model;
 
-import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.LinkedList;
 
 @Setter
 @Getter
@@ -67,30 +64,5 @@ public class Transaction {
         return option.getAddress();
     }
 
-    public void execute() {
-        state.execute(getAction(), this);
-    }
-
-    public boolean isDifferencePrice(double optionPrice) {
-        return getCryptoCurrency().isDifferencePrice(optionPrice);
-    }
-
-    public void cancel() {
-        setState(new Cancelled());
-    }
-
-    public void makeTransfer() {
-        setState(new CVUSent());
-        getCounterPartyUser().moneyTransfer(getAddress(), getBank());
-        // notify sent
-    }
-
-    public void confirmReception () {
-        setState(new CryptoCurrencySent());
-        if (getUser().checkTransfer()) {
-            getUser().sendCryptoCurrency(getCryptoCurrency(), getCounterPartyUser());
-            // Finish Transaction
-        }
-    }
 }
 

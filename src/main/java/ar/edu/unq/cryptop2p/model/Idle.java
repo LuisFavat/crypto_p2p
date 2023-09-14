@@ -2,15 +2,15 @@ package ar.edu.unq.cryptop2p.model;
 
 public class Idle extends State {
 
-    public void execute(Action action,Transaction transaction) { action.execute(this,transaction); }
+    public void execute(Action action,Executor executor) { action.execute(this, executor); }
 
-    public void  makeTransfer(Transaction transaction) {transaction.makeTransfer();}
-
-
-   public void  confirmReception(Transaction transaction) { transaction.confirmReception();}
+    public void  makeTransfer(Executor executor) {executor.makeTransfer();}
 
 
-    public  void  cancel (Transaction transaction)  {transaction.cancel();}
+   public void  confirmReception(Executor executor) { executor.confirmReception();}
+
+
+    public  void  cancel (Executor executor)  {executor.cancel();}
 
 
 
