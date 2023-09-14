@@ -97,7 +97,7 @@ public class UserCrypto implements Serializable {
 
        public void cancel(Transaction transaction) {
             this.substractReputation(20);
-            transaction.setState(new Cancelled());
+            transaction.setState(new Cancelled() );
         }
 
     }

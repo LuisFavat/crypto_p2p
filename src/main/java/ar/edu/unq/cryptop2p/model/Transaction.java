@@ -13,6 +13,7 @@ public class Transaction {
     private Option option;
     private State state;
     private Action action;
+    private UserCrypto counterPartyUser;
 
     public Transaction( Option aOption)
     {
@@ -64,9 +65,11 @@ public class Transaction {
         return option.getAddress();
     }
 
-    public void execute(Action action) {state.execute(action);}
+    public void execute() {state.execute(getAction(),this);}
 
     public boolean isDifferencePrice(double optionPrice) {return getCryptoCurrency().isDifferencePrice(optionPrice);}
 
-    public void  cancel() {execute(new Cancel(this));}
+    public void  cancel() {
+        setAction(new Cancel());
+        execute();}
 }
