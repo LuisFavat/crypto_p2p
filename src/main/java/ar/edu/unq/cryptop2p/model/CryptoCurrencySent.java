@@ -7,9 +7,9 @@ public class CryptoCurrencySent extends State {
 
     public void  makeTransfer(Transaction transaction)  {} //" Do not can to make a transfer cause state is CryptoCurrencySent" }
 
-    public void  confirmReception(Transaction transaction)  {}
+    public void  confirmReception(Transaction transaction)  { transaction.confirmReception();}
 
-    public  void  cancel (Transaction transaction)   {transaction.setState(new Cancelled());}
+    public  void  cancel (Transaction transaction)   {transaction.cancel();}
 
 }
 

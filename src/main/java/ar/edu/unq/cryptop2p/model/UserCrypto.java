@@ -2,12 +2,15 @@ package ar.edu.unq.cryptop2p.model;
 
 
 import java.io.Serializable;
+import java.util.*;
 
 import ar.edu.unq.cryptop2p.model.exceptions.InvalidReputationException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.swing.*;
 
 
 @Entity
@@ -16,7 +19,8 @@ import lombok.Setter;
 @Table(name = "userCrypto")
 public class UserCrypto implements Serializable {
 
-        @Id
+
+    @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id_userCrypto")
         private Long id;
@@ -42,6 +46,13 @@ public class UserCrypto implements Serializable {
         private int numberOfOperation;
         private int scores;
         private int reputation;
+
+        @Transient
+        private Bank bank;
+
+       @Transient
+       private LinkedList<CryptoCurrency> cryptoCurrencies;
+
 
         public UserCrypto() {
         }
@@ -99,5 +110,19 @@ public class UserCrypto implements Serializable {
             this.substractReputation(20);
             transaction.setState(new Cancelled() );
         }
+
+        public void moneyTransfer (String cvu, Bank bank){
+           bank.getMoneyTransfers().add(cvu);
+        }
+
+
+        public Boolean checkTransfer (){
+            return  getBank().getMoneyTransfers().contains(getCvu());
+        }
+
+     public void sendCryptoCurrency(CryptoCurrency cryptoCurrency, UserCrypto user){
+            user.getCryptoCurrencies().add(cryptoCurrency);
+     }
+
 
     }

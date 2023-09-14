@@ -1,8 +1,11 @@
 package ar.edu.unq.cryptop2p.model;
 
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.LinkedList;
 
 @Setter
 @Getter
@@ -15,61 +18,79 @@ public class Transaction {
     private Action action;
     private UserCrypto counterPartyUser;
 
-    public Transaction( Option aOption)
-    {
-        option  = aOption;
+
+    public Transaction(Option aOption) {
+        option = aOption;
     }
 
-    public String getAddress()
-    {
+    public Bank getBank() {
+        return getUser().getBank();
+    }
+
+    public UserCrypto getUser() {
+        return option.getUser();
+    }
+
+    public String getAddress() {
         return option.getVirtualAddress();
     }
 
-    public CryptoCurrency getCryptoCurrency()
-    {
+    public CryptoCurrency getCryptoCurrency() {
         return option.getCryptocurrency();
     }
 
-    public float getAmountOfCryptoCurrency()
-    {
+    public float getAmountOfCryptoCurrency() {
         return option.getCryptoAmount();
     }
 
-    public Double cryptoPrice()
-    {
+    public Double cryptoPrice() {
         return option.quote();
     }
 
-    public Double transactionAmount()
-    {
+    public Double transactionAmount() {
         return getAmountOfCryptoCurrency() * cryptoPrice();
     }
 
-    public String nameOfTheOwnerOfTheOption()
-    {
+    public String nameOfTheOwnerOfTheOption() {
         return option.nameOfTheOwner();
     }
-     
-    public int  numberOfOperations()
-    {
+
+    public int numberOfOperations() {
         return option.numberOfOperation();
     }
 
-    public int reputation()
-    {
+    public int reputation() {
         return option.reputation();
     }
 
-    public String address()
-    {
+    public String address() {
         return option.getAddress();
     }
 
-    public void execute() {state.execute(getAction(),this);}
+    public void execute() {
+        state.execute(getAction(), this);
+    }
 
-    public boolean isDifferencePrice(double optionPrice) {return getCryptoCurrency().isDifferencePrice(optionPrice);}
+    public boolean isDifferencePrice(double optionPrice) {
+        return getCryptoCurrency().isDifferencePrice(optionPrice);
+    }
 
-    public void  cancel() {
-        setAction(new Cancel());
-        execute();}
+    public void cancel() {
+        setState(new Cancelled());
+    }
+
+    public void makeTransfer() {
+        setState(new CVUSent());
+        getCounterPartyUser().moneyTransfer(getAddress(), getBank());
+        // notify sent
+    }
+
+    public void confirmReception () {
+        setState(new CryptoCurrencySent());
+        if (getUser().checkTransfer()) {
+            getUser().sendCryptoCurrency(getCryptoCurrency(), getCounterPartyUser());
+            // Finish Transaction
+        }
+    }
 }
+
