@@ -3,13 +3,13 @@ package ar.edu.unq.cryptop2p.model;
 public class Cancelled extends State{
 
 
-    public void execute(Action action,Transaction transaction) { action.execute(this,transaction); }
+    public void execute(Action action,Executor executor) { action.execute(this,executor); }
 
-    public void  makeTransfer(Transaction transaction)  {} // Do nothing
+    public void  makeTransfer(Executor executor)  {} // Do nothing
 
-    public void  confirmReception(Transaction transaction)  {} // Do nothing
+    public void  confirmReception(Executor executor)  {} // Do nothing
 
-    public  void  cancel (Transaction transaction)  {} // Do nothing
+    public  void  cancel (Executor executor)  {} // Do nothing
 
 }
 
