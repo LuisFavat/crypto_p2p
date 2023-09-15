@@ -41,36 +41,9 @@ public class CryptoCurrency {
         return this.price * percentUp;
     }
 
-    public boolean validateOptionPriceInARangeOfFiveUpAndDown(double optionPrice) {
-        return OptionPriceHigherOrEqualThanfivePercentDown(optionPrice)
-                && OptionPriceLowerOrEqualThanPercentUp(optionPrice);
-    }
 
 
-    public boolean OptionPriceHigherOrEqualThanfivePercentDown(double optionPrice) {
 
-        return optionPrice >= fivePercentDown() ;
-    }
-
-    public boolean OptionPriceLowerOrEqualThanPercentUp(double optionPrice) {
-
-        return optionPrice <= fivePercentUp();
-    }
-
-    public boolean OptionPriceHigherThanQuotePrice(double optionPrice) {
-
-        return optionPrice > this.price;
-    }
-
-    public boolean OptionPriceLowerThanQuotePrice(double optionPrice) {
-
-        return optionPrice < this.price;
-    }
-
-    public boolean  isDifferencePrice(double OptionPrice){
-       return  OptionPriceHigherThanQuotePrice(OptionPrice)
-        || OptionPriceLowerThanQuotePrice(OptionPrice);
-    }
 
 
 }

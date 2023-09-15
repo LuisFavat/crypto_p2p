@@ -16,4 +16,13 @@ public class OptionCall extends Option {
             return user.getCryptoAddress();
          }
 
+    public  boolean  IsValidPriceToPost(){
+        return OptionPriceHigherThanQuotePrice();
+    }
+
+    private boolean OptionPriceHigherThanQuotePrice() {
+
+        return this.getPrice() > this.quote();
+    }
+
     }

@@ -69,4 +69,23 @@ public abstract class Option {
         return user.getReputation();
     }
 
+    public boolean validateOptionPriceInARangeOfFiveUpAndDown() {
+        return optionPriceHigherOrEqualThanfivePercentDown()
+                && optionPriceLowerOrEqualThanPercentUp();
+    }
+
+
+    public boolean optionPriceHigherOrEqualThanfivePercentDown() {
+
+        return this.getPrice() >= this.getCryptocurrency().fivePercentDown() ;
+    }
+
+    public boolean optionPriceLowerOrEqualThanPercentUp() {
+
+        return this.getPrice() <= this.getCryptocurrency().fivePercentUp();
+    }
+
+    public abstract boolean  IsValidPriceToPost();
+
+
 }

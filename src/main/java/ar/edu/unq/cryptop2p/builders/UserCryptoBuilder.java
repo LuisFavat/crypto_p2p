@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.builders;
 
+import ar.edu.unq.cryptop2p.model.Bank;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 
 public class UserCryptoBuilder {
@@ -14,6 +15,7 @@ public class UserCryptoBuilder {
     private int numberOfOperations = 0;
     private int reputation = 0;
     private int scores = 0;
+    private Bank bank ;
 
 
     public static UserCryptoBuilder aUserCrypto()
@@ -75,12 +77,19 @@ public class UserCryptoBuilder {
         return this;
     }
 
+    public UserCryptoBuilder withBank(Bank aBank)
+    {
+        bank = aBank;
+        return this;
+    }
+
     public UserCrypto build()
     {
         var user = new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);
+        user.setBank(bank);
         return user;
     }
 

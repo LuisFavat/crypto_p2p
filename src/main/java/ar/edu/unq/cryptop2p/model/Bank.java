@@ -9,4 +9,8 @@ import java.util.LinkedList;
 @Getter
 public class Bank {
     private LinkedList<String> moneyTransfers = new LinkedList<>();
+
+    public Bank(){
+        this.setMoneyTransfers(moneyTransfers); ;
+    }
 }

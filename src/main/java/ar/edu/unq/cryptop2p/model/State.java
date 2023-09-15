@@ -7,6 +7,9 @@ import lombok.Setter;
 @Getter
 public abstract  class State {
 
+    public State()  {}
+
+
    public abstract void execute(Action action,Executor executor);
 
     public abstract void  makeTransfer(Executor executor)  ;

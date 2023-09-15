@@ -24,6 +24,10 @@ public class Transaction {
         return getUser().getBank();
     }
 
+    public UserCrypto getCounterPartyUser() {
+               return counterPartyUser;
+    }
+
     public UserCrypto getUser() {
         return option.getUser();
     }
@@ -63,6 +67,9 @@ public class Transaction {
     public String address() {
         return option.getAddress();
     }
+
+
+
 
 }
 

@@ -21,6 +21,9 @@ public class TransactionBuilder {
     private float units;
     private Double price;
     private Option option;
+    private UserCrypto counterParty;
+    private State state;
+    private Action action;
 
     public static TransactionBuilder aTransaction()
     {
@@ -45,6 +48,7 @@ public class TransactionBuilder {
         return this;
     } 
 
+
     public TransactionBuilder withBuyer(UserCrypto aBuyer)
     {
         buyer = aBuyer;
@@ -56,6 +60,26 @@ public class TransactionBuilder {
         seller = aSeller;
         return this;
     }
+
+    public TransactionBuilder withCounterPartyUser (UserCrypto aCounterParty)
+    {
+        counterParty = aCounterParty;
+        return this;
+    }
+
+    public TransactionBuilder withState (State aState)
+    {
+        state = aState;
+        return this;
+    }
+
+    public TransactionBuilder withAction (Action anAction)
+    {
+        action = anAction;
+        return this;
+    }
+
+
 
     public TransactionBuilder withUnits(int anyUnits)
     {   units = anyUnits;
@@ -78,6 +102,18 @@ public class TransactionBuilder {
     public Transaction build()
     {
         Transaction transaction = new Transaction(option);
+        transaction.setCounterPartyUser(counterParty);
+        transaction.setState(state);;
+        transaction.setAction(action);
+        return transaction;
+    }
+
+    public Transaction buildWithoutOption()
+    {
+        Transaction transaction = new Transaction();
+        transaction.setCounterPartyUser(counterParty);
+        transaction.setState(state);;
+        transaction.setAction(action);
         return transaction;
     }
 
