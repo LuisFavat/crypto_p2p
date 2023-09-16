@@ -7,15 +7,13 @@ public class Cancelled extends State{
 
 
 
-    public void execute(Action action, Executor executor) throws ConfirmReceptionException, MakeTransferException { action.execute(this,executor);
+    public void execute(Action action, Executor executor) throws ConfirmReceptionException, MakeTransferException {  action.execute(this,executor);}
 
-    }
+    public  void  makeTransfer(Executor executor)  {} // Do nothing
 
-    public void  makeTransfer(Executor executor)  {} // Do nothing
+    public  void confirmReception(Executor executor)  {}// Do nothing
 
-    public void  confirmReception(Executor executor)  {} // Do nothing
-
-    public  void  cancel (Executor executor)  {} // Do nothing
+    public   void  cancel (Executor executor)  {} // Do nothing
 
 }
 

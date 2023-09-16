@@ -11,10 +11,9 @@ public abstract  class State {
 
     public State()  {}
 
+    public abstract void execute(Action action, Executor executor) throws ConfirmReceptionException, MakeTransferException;
 
-   public abstract void execute(Action action, Executor executor) throws ConfirmReceptionException, MakeTransferException;
-
-    public abstract void  makeTransfer(Executor executor) throws MakeTransferException;
-    public abstract void   confirmReception(Executor executor) throws ConfirmReceptionException;
-    public  abstract void  cancel(Executor executor) ;
+    public abstract void makeTransfer(Executor executor) throws MakeTransferException, ConfirmReceptionException;
+    public abstract void confirmReception(Executor executor) throws ConfirmReceptionException;
+    public  abstract void cancel(Executor executor) ;
 }

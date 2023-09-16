@@ -45,7 +45,7 @@ public class UserCrypto implements Serializable {
 
         private int numberOfOperation;
         private int scores;
-        private int reputation;
+        private float reputation;
 
         @Transient
         private Bank bank;
@@ -97,19 +97,22 @@ public class UserCrypto implements Serializable {
                 reputation = aReputation;
         }
 
-        public int reputation() throws InvalidReputationException {
+        public float reputation() throws InvalidReputationException {
             if (numberOfOperation <= 0) {
                 throw new InvalidReputationException("error: division by zero");
             }
             setReputation( scores / numberOfOperation);
             return  reputation;
         }
-       public  void substractReputation(int takenscores) {reputation -= takenscores; }
 
-       public void cancel(Transaction transaction) {
-            this.substractReputation(20);
-            transaction.setState(new Cancelled() );
-        }
+        public  void substractReputation(int takenscores) {
+           reputation -= takenscores;
+           if (reputation < 0) {
+               reputation = 0;
+           }
+       }
+
+
 
         public void moneyTransfer (String cvu, Bank bank){
            bank.getMoneyTransfers().add(cvu);

@@ -87,7 +87,7 @@ class ExecutorTest {
                 .withAction(new MakeTransfer()).build();
         var executor = anExecutor().withTransaction(transaction).build();
 
-       // assertThrows (MakeTransfer.class, executor.execute());
+        assertThrows ( MakeTransferException.class , executor::execute);
         assertTrue(seller.getBank().getMoneyTransfers().isEmpty());
     }
 

@@ -1,8 +1,11 @@
 package ar.edu.unq.cryptop2p.model;
 
+import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Setter
 @Getter
@@ -27,6 +30,8 @@ public class Transaction {
     public UserCrypto getCounterPartyUser() {
                return counterPartyUser;
     }
+
+    public Date getDateTime()  {return option.getDateTime();}
 
     public UserCrypto getUser() {
         return option.getUser();
@@ -60,7 +65,7 @@ public class Transaction {
         return option.numberOfOperation();
     }
 
-    public int reputation() {
+    public float reputation() {
         return option.reputation();
     }
 
@@ -68,7 +73,38 @@ public class Transaction {
         return option.getAddress();
     }
 
+    public  boolean  IsValidPriceToPost() {return option.IsValidPriceToPost();};
 
+    public void cancelySystem(){
+        this.setState(new Cancelled());
+    }
+
+    public void addOperation(){
+        if    ( ! isCanceled()) {
+               addOperationsToUsers();
+               addScoresToUsers(gainScores());;
+              }
+         }
+
+    private void addOperationsToUsers(){
+        getUser().addOperation();
+        getCounterPartyUser().addOperation();
+    }
+
+    private boolean isCanceled(){
+          return  (state.getClass().getName().equals(Cancelled.class.getName()));
+        }
+
+    public void addScoresToUsers(int scores){
+        getUser().addScore(scores);
+        getCounterPartyUser().addScore(scores);
+    }
+
+
+    private int gainScores(){
+    var thirtyMinutesAgo =  CurrentDateTime.getCurrentTimeMinus30MinutesInMilliseconds();
+    return   (thirtyMinutesAgo < getDateTime().getTime()) ? 10 : 5;
+           }
 
 
 }

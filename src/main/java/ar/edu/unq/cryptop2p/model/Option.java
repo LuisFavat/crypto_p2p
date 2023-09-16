@@ -1,11 +1,12 @@
 package ar.edu.unq.cryptop2p.model;
 
+import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+import java.util.Date;
 
 
 @Entity
@@ -32,12 +33,16 @@ public abstract class Option {
     @Transient
     protected UserCrypto user;
 
+    @Transient
+    protected Date dateTime;
+
 
     public Option(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
         this.cryptoAmount = cryptoAmount;
         this.user = user;
+        this.dateTime = CurrentDateTime.getNewDate();
     }
 
 
@@ -64,7 +69,7 @@ public abstract class Option {
         return user.getNumberOfOperation();
     }
 
-    public int reputation()
+    public float reputation()
     {
         return user.getReputation();
     }
