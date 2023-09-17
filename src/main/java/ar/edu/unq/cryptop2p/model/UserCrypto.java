@@ -2,9 +2,15 @@ package ar.edu.unq.cryptop2p.model;
 
 
 import java.io.Serializable;
+import java.util.*;
+
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidReputationException;
+import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.swing.*;
 
 
 @Entity
@@ -13,7 +19,8 @@ import lombok.Setter;
 @Table(name = "userCrypto")
 public class UserCrypto implements Serializable {
 
-        @Id
+
+    @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id_userCrypto")
         private Long id;
@@ -37,7 +44,15 @@ public class UserCrypto implements Serializable {
         private String cryptoAddress ;
 
         private int numberOfOperation;
-        private int reputation;
+        private int scores;
+        private float reputation;
+
+        @Transient
+        private Bank bank;
+
+       @Transient
+       private LinkedList<CryptoCurrency> cryptoCurrencies;
+
 
         public UserCrypto() {
         }
@@ -65,6 +80,12 @@ public class UserCrypto implements Serializable {
                 return numberOfOperation;
         }
 
+        public void addOperation()
+        {
+                numberOfOperation += 1;
+        }
+        public  void addScore(int givenscores) {scores += givenscores; }
+
         public void setNumberOfOperation(int aNumberOfOperations)
         {
                 numberOfOperation = aNumberOfOperations;
@@ -74,5 +95,36 @@ public class UserCrypto implements Serializable {
         {
                 reputation = aReputation;
         }
+
+        public float reputation() throws InvalidReputationException {
+            if (numberOfOperation <= 0) {
+                throw new InvalidReputationException("error: division by zero");
+            }
+            setReputation( scores / numberOfOperation);
+            return  reputation;
+        }
+
+        public  void substractReputation(int takenscores) {
+           reputation -= takenscores;
+           if (reputation < 0) {
+               reputation = 0;
+           }
+       }
+
+
+
+        public void moneyTransfer (String cvu, Bank bank){
+           bank.getMoneyTransfers().add(cvu);
+        }
+
+
+        public Boolean checkTransfer (){
+            return  getBank().getMoneyTransfers().contains(getCvu());
+        }
+
+     public void sendCryptoCurrency(CryptoCurrency cryptoCurrency, UserCrypto user){
+            user.getCryptoCurrencies().add(cryptoCurrency);
+     }
+
 
     }

@@ -1,40 +1,58 @@
 package ar.edu.unq.cryptop2p.model;
 
+import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 
+
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "options")
 
 public abstract class Option {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_options")
+    private int id;
 
+    @Transient
+    private CryptoCurrency cryptocurrency;
 
-    private Cryptocurrency cryptocurrency;
+    @Column(nullable = false)
+    private float cryptoAmount;
 
-    private float units;
-
+    @Column(nullable = false)
     private Double price;
 
+    @Transient
     protected UserCrypto user;
 
+    @Transient
+    protected Date dateTime;
 
 
-    public Option(Cryptocurrency cryptocurrency, Double price, float units, UserCrypto user) {
+    public Option(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
-        this.units = units;
+        this.cryptoAmount = cryptoAmount;
         this.user = user;
+        this.dateTime = CurrentDateTime.getNewDate();
     }
 
 
     public Double amountPriceInPesos() {
-        return this.price * this.units;
+        return this.price * this.cryptoAmount;
     }
 
-    public abstract String getAddress();
+    public abstract String getVirtualAddress();
+
+    public String getAddress() {return user.getAddress();};
 
     public Double quote()
     {
@@ -51,9 +69,28 @@ public abstract class Option {
         return user.getNumberOfOperation();
     }
 
-    public int reputation()
+    public float reputation()
     {
         return user.getReputation();
     }
+
+    public boolean validateOptionPriceInARangeOfFiveUpAndDown() {
+        return optionPriceHigherOrEqualThanfivePercentDown()
+                && optionPriceLowerOrEqualThanPercentUp();
+    }
+
+
+    public boolean optionPriceHigherOrEqualThanfivePercentDown() {
+
+        return this.getPrice() >= this.getCryptocurrency().fivePercentDown() ;
+    }
+
+    public boolean optionPriceLowerOrEqualThanPercentUp() {
+
+        return this.getPrice() <= this.getCryptocurrency().fivePercentUp();
+    }
+
+    public abstract boolean  IsValidPriceToPost();
+
 
 }
