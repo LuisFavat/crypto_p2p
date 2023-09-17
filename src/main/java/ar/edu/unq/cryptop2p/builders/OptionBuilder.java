@@ -14,14 +14,11 @@ public abstract class OptionBuilder {
     private UserCrypto user;
     private float cryptoAmount = 0 ;
     private  double price = 0.00;
-    private OptionType tyoe ;
-
-
-  // public static OptionBuilder anOption() {};
+    private OptionType type ;
 
 
     public OptionBuilder withCryptoAmount(float aCryptoAmount)
-    {   cryptoAmount = cryptoAmount;
+    {   cryptoAmount = aCryptoAmount;
         return this;
     }
 
