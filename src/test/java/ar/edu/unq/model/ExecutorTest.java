@@ -1,6 +1,6 @@
 package ar.edu.unq.model;
 
-import ar.edu.unq.cryptop2p.model.*;
+
 import ar.edu.unq.cryptop2p.model.actions.Cancel;
 import ar.edu.unq.cryptop2p.model.actions.MakeTransfer;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;

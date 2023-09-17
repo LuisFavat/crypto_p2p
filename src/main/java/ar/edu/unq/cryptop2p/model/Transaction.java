@@ -2,6 +2,7 @@ package ar.edu.unq.cryptop2p.model;
 
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.actions.Action;
+import ar.edu.unq.cryptop2p.model.state.Cancelled;
 import ar.edu.unq.cryptop2p.model.state.State;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,6 +2,8 @@ package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.Transaction;
+import ar.edu.unq.cryptop2p.model.actions.Action;
+import ar.edu.unq.cryptop2p.model.state.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
