@@ -1,8 +1,14 @@
 package ar.edu.unq.model;
 
 import ar.edu.unq.cryptop2p.model.*;
+import ar.edu.unq.cryptop2p.model.actions.Cancel;
+import ar.edu.unq.cryptop2p.model.actions.MakeTransfer;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
+import ar.edu.unq.cryptop2p.model.state.CVUSent;
+import ar.edu.unq.cryptop2p.model.state.Cancelled;
+import ar.edu.unq.cryptop2p.model.state.Idle;
+
 import org.junit.jupiter.api.Test;
 import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.cryptop2p.builders.ExecutorBuilder.anExecutor;

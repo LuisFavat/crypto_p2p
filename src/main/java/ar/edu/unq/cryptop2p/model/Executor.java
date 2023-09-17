@@ -2,6 +2,9 @@ package ar.edu.unq.cryptop2p.model;
 
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
+import ar.edu.unq.cryptop2p.model.state.CVUSent;
+import ar.edu.unq.cryptop2p.model.state.Cancelled;
+import ar.edu.unq.cryptop2p.model.state.CryptoCurrencySent;
 
 public class Executor {
     private final Transaction transaction;
@@ -25,8 +28,6 @@ public class Executor {
     public void makeTransfer()  throws  MakeTransferException {
         transaction.setState(new CVUSent());
         transaction.getCounterPartyUser().moneyTransfer(transaction.getAddress(), transaction.getBank());
-        // notify sent
-
     }
 
     public void confirmReception() throws ConfirmReceptionException {
