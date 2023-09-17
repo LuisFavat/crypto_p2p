@@ -21,7 +21,7 @@ public abstract class OptionBuilder {
 
 
     public OptionBuilder withCryptoAmount(float aCryptoAmount)
-    {   cryptoAmount = cryptoAmount;
+    {   cryptoAmount = aCryptoAmount;
         return this;
     }
 
