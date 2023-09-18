@@ -14,12 +14,6 @@ import org.jetbrains.annotations.Contract;
 public class OptionPutBuilder extends OptionBuilder {
 
 
-    //private Cryptocurrency criptocurrency;
-    //private UserCrypto user;
-    //private int units = 0 ;
-    //private  double price = 0.00;
-    //private OptionType tyoe = OptionType.OPTIONPUT;
-
     @NotNull
     @Contract(" -> new")
     public static OptionPutBuilder anOption() { return new OptionPutBuilder(); }

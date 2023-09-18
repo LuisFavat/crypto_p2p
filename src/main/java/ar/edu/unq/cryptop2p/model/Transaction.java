@@ -29,10 +29,6 @@ public class Transaction {
     }
 
 
-    public Bank getBank() {
-        return getUser().getBank();
-    }
-
     public UserCrypto getCounterPartyUser() {
                return counterPartyUser;
     }

@@ -36,6 +36,12 @@ public abstract class Option {
     @Transient
     protected Date dateTime;
 
+    @Transient
+    protected float reputation;
+
+    @Transient
+    protected int scores;
+
 
     public Option(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;

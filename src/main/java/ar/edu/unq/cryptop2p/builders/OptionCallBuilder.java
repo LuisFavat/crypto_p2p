@@ -15,10 +15,7 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 public class OptionCallBuilder  extends OptionBuilder  {
 
-   // private Cryptocurrency criptocurrency;
-   // private UserCrypto user;
-   // private int units= 0;
-   // private double price= 0.00;
+
     private OptionType tyoe = OptionType.OPTIONCALL;
 
     @NotNull

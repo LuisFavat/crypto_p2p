@@ -215,6 +215,14 @@ public class TransactionTest {
 
     @Test
     void cancel() {
+        var seller = aUserCrypto().withReputation(100).build();
+        var optionPut = anyOption().withUser(seller).buildOptionPut();
+        var transaction = aTransaction().wwithOption(optionPut).build();
+
+        transaction.cancel();
+
+      assertEquals(80, transaction.reputation());
+      assertTrue(transaction.isCanceled());
     }
 
     @Test

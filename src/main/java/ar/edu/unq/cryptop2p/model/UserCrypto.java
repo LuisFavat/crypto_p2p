@@ -45,10 +45,8 @@ public class UserCrypto implements Serializable {
 
         private int numberOfOperation;
         private int scores;
-        private float reputation;
+        private int reputation;
 
-        @Transient
-        private Bank bank;
 
        @Transient
        private LinkedList<CryptoCurrency> cryptoCurrencies;
@@ -114,14 +112,7 @@ public class UserCrypto implements Serializable {
 
 
 
-        public void moneyTransfer (String cvu, Bank bank){
-           bank.getMoneyTransfers().add(cvu);
-        }
-
-
-
-
-     public void sendCryptoCurrency(CryptoCurrency cryptoCurrency, UserCrypto user){
+      public void sendCryptoCurrency(CryptoCurrency cryptoCurrency, UserCrypto user){
                user.getCryptoCurrencies().add(cryptoCurrency);
      }
 

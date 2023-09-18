@@ -31,6 +31,8 @@ public abstract class OptionBuilder {
         return this;
     }
 
+
+
     public OptionBuilder withCryptoCurrency (CryptoCurrency aCryptoCurrency)
     {
         criptocurrency = aCryptoCurrency;

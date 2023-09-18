@@ -15,7 +15,7 @@ public class UserCryptoBuilder {
     private int numberOfOperations = 0;
     private int reputation = 0;
     private int scores = 0;
-    private Bank bank ;
+
 
 
     public static UserCryptoBuilder aUserCrypto()
@@ -77,11 +77,13 @@ public class UserCryptoBuilder {
         return this;
     }
 
-    public UserCryptoBuilder withBank(Bank aBank)
+    public UserCryptoBuilder withScores(int anyScores)
     {
-        bank = aBank;
+        scores = anyScores;
         return this;
     }
+
+
 
     public UserCrypto build()
     {
@@ -89,7 +91,6 @@ public class UserCryptoBuilder {
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);
-        user.setBank(bank);
         return user;
     }
 

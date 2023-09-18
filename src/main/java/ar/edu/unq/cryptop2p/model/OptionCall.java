@@ -1,7 +1,11 @@
 package ar.edu.unq.cryptop2p.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
 @NoArgsConstructor
 public class OptionCall extends Option {
 
