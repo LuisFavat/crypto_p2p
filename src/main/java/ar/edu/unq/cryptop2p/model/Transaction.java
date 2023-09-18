@@ -1,6 +1,9 @@
 package ar.edu.unq.cryptop2p.model;
 
+import ar.edu.unq.cryptop2p.helpers.ActionType;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
+import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,14 +17,17 @@ import java.util.Date;
 public class Transaction {
 
     private Option option;
-    private State state;
-    private Action action;
+    private State state = new Idle();
+    private Action action ;
+    private ActionType actionType;
     private UserCrypto counterPartyUser;
+
 
 
     public Transaction(Option aOption) {
         option = aOption;
     }
+
 
     public Bank getBank() {
         return getUser().getBank();
@@ -91,9 +97,21 @@ public class Transaction {
         getCounterPartyUser().addOperation();
     }
 
-    private boolean isCanceled(){
-          return  (state.getClass().getName().equals(Cancelled.class.getName()));
+    public boolean isCVUSent(){
+          return  (state.isCVUSent());
         }
+
+    public boolean isCryptoCurrencySent() {
+        return  (state.isCryptoCurrencySent());
+    }
+
+    public boolean isIdle(){
+        return  (state.isIdle());
+    }
+
+    public boolean isCanceled(){
+        return  (state.isCanceled());
+    }
 
     public void addScoresToUsers(int scores){
         getUser().addScore(scores);
@@ -106,6 +124,42 @@ public class Transaction {
     return   (thirtyMinutesAgo < getDateTime().getTime()) ? 10 : 5;
            }
 
+    public void execute() throws ConfirmReceptionException, MakeTransferException {
+             getActionType().getAction().execute(getState(), this);
+
+
+    }
+
+    public void cancel() {
+        getUser().substractReputation(20);
+        setState(new Cancelled() );
+
+    }
+
+    public void makeTransfer()  throws  MakeTransferException {
+        setState(new CVUSent());
+        getCounterPartyUser().moneyTransfer(getAddress(), getBank());
+        // notify sent
+
+    }
+
+    public Boolean checkTransfer (){
+        return  isCVUSent()  &&   isMoneyTransafered();
+    }
+
+    public Boolean  isMoneyTransafered(){
+        return getBank().getMoneyTransfers().contains(this.getAddress());
+    }
+
+    public void confirmReception() throws ConfirmReceptionException {
+
+        if (checkTransfer()) {
+            getUser().sendCryptoCurrency(getCryptoCurrency(), getCounterPartyUser());
+            setState(new CryptoCurrencySent());
+            // Finish Transaction
+
+        }
+    }
 
 }
 

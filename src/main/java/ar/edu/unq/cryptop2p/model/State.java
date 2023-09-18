@@ -11,9 +11,14 @@ public abstract  class State {
 
     public State()  {}
 
-    public abstract void execute(Action action, Executor executor) throws ConfirmReceptionException, MakeTransferException;
+    public abstract void makeTransfer(Transaction transaction) throws MakeTransferException, ConfirmReceptionException;
+    public abstract void confirmReception(Transaction transaction) throws ConfirmReceptionException;
+    public  abstract void cancel(Transaction transaction) ;
 
-    public abstract void makeTransfer(Executor executor) throws MakeTransferException, ConfirmReceptionException;
-    public abstract void confirmReception(Executor executor) throws ConfirmReceptionException;
-    public  abstract void cancel(Executor executor) ;
+    public abstract Boolean isIdle();
+    public abstract  Boolean isCVUSent();
+    public abstract  Boolean isCryptoCurrencySent();
+    public abstract  Boolean isCanceled();
+
+
 }

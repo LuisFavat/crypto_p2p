@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.builders;
 
+import ar.edu.unq.cryptop2p.helpers.ActionType;
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import lombok.AllArgsConstructor;
@@ -22,8 +23,9 @@ public class TransactionBuilder {
     private Double price;
     private Option option;
     private UserCrypto counterParty;
-    private State state;
+    private State state = new Idle();
     private Action action;
+    private ActionType actionType;
 
     public static TransactionBuilder aTransaction()
     {
@@ -73,6 +75,12 @@ public class TransactionBuilder {
         return this;
     }
 
+    public TransactionBuilder withActionType (ActionType anActionType)
+    {
+        actionType = anActionType;
+        return this;
+    }
+
     public TransactionBuilder withAction (Action anAction)
     {
         action = anAction;
@@ -104,6 +112,7 @@ public class TransactionBuilder {
         Transaction transaction = new Transaction(option);
         transaction.setCounterPartyUser(counterParty);
         transaction.setState(state);;
+        transaction.setActionType(actionType);
         transaction.setAction(action);
         return transaction;
     }
@@ -112,8 +121,9 @@ public class TransactionBuilder {
     {
         Transaction transaction = new Transaction();
         transaction.setCounterPartyUser(counterParty);
-        transaction.setState(state);;
+        transaction.setState(state);
         transaction.setAction(action);
+        transaction.setActionType(actionType);
         return transaction;
     }
 

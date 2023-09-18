@@ -119,12 +119,10 @@ public class UserCrypto implements Serializable {
         }
 
 
-        public Boolean checkTransfer (){
-            return  getBank().getMoneyTransfers().contains(getCvu());
-        }
+
 
      public void sendCryptoCurrency(CryptoCurrency cryptoCurrency, UserCrypto user){
-            user.getCryptoCurrencies().add(cryptoCurrency);
+               user.getCryptoCurrencies().add(cryptoCurrency);
      }
 
 

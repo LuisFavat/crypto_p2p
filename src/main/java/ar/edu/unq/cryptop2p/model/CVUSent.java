@@ -7,21 +7,22 @@ import org.jetbrains.annotations.NotNull;
 public class CVUSent extends State {
 
 
-    public void execute(@NotNull Action action, Executor executor) throws ConfirmReceptionException, MakeTransferException {  action.execute(this,executor);
-
-    }
-
-    public void makeTransfer(Executor executor) throws MakeTransferException, ConfirmReceptionException {
+    public void makeTransfer(Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
         {
             throw new MakeTransferException("Do not can to make a transfer cause state is CryptoCurrencySent");
         } // Do not can to make a transfer cause state is CryptoCurrencySent
     }
 
-    public void confirmReception(Executor executor) throws ConfirmReceptionException {
-        { executor.confirmReception();}
+    public void confirmReception(@NotNull Transaction transaction) throws ConfirmReceptionException {
+        { transaction.confirmReception();}
     }
 
-    public void cancel(Executor executor) {
-        { executor.cancel(); }
+    public void cancel(@NotNull Transaction transaction) {
+        { transaction.cancel(); }
     }
+
+    public Boolean isIdle()  {return false;};
+    public Boolean isCVUSent()    {return true;}
+    public Boolean isCryptoCurrencySent()   {return false;}
+    public Boolean isCanceled()   {return false;}
 }

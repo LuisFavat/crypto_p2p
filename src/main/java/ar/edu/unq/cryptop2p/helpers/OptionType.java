@@ -11,8 +11,8 @@ public enum  OptionType {
 
    private Option option;
 
-  private  OptionType ( Option option  ) {
-
+  private  OptionType ( Option anOption  ) {
+     option = anOption;
    }
 
 }
