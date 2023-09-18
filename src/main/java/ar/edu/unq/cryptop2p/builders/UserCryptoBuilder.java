@@ -23,6 +23,12 @@ public class UserCryptoBuilder {
         return new UserCryptoBuilder();
     }
 
+
+    public static UserCryptoBuilder aUser()
+    {
+        return new UserCryptoBuilder();
+    }
+
     public UserCryptoBuilder withId(long aId)
     {
         id = aId;
@@ -83,9 +89,9 @@ public class UserCryptoBuilder {
         return this;
     }
 
-    public UserCrypto build()
+    public UserCrypto build() throws Exception
     {
-        var user = new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
+        var user = new UserCrypto(id, name, surname, address, "Very_Secret!", email, cvu, cryptoAddress);
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);

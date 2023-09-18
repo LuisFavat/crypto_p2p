@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExecutorTest {
 
     @Test
-    void ItShouldBecomeToICVUSentStateAndMoneyTransfersIsNotEmptyWhenExecutingMakeTransferWithIdleState() throws ConfirmReceptionException, MakeTransferException {
+    void ItShouldBecomeToICVUSentStateAndMoneyTransfersIsNotEmptyWhenExecutingMakeTransferWithIdleState() throws Exception {
         var bank = aBank().build();
         var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
         var buyer =  aUserCrypto().build();
@@ -40,7 +40,7 @@ class ExecutorTest {
     }
 
     @Test
-    void ItShouldBecomeToCancelledStateAndMoneyTransfersIsEmptyWhenExecutingCancelWithIdleState() throws ConfirmReceptionException, MakeTransferException {
+    void ItShouldBecomeToCancelledStateAndMoneyTransfersIsEmptyWhenExecutingCancelWithIdleState() throws Exception {
         var bank = aBank().build();
         var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
         var buyer =  aUserCrypto().build();
@@ -60,7 +60,7 @@ class ExecutorTest {
     }
 
     @Test
-    void ItShouldBeCancelledStateAndMoneyTransfersIsEmptyWhenExecutingMakeTransferWithCancelledState() throws ConfirmReceptionException, MakeTransferException {
+    void ItShouldBeCancelledStateAndMoneyTransfersIsEmptyWhenExecutingMakeTransferWithCancelledState() throws Exception {
         var bank = aBank().build();
         var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
         var buyer =  aUserCrypto().build();
@@ -81,7 +81,7 @@ class ExecutorTest {
 
 
     @Test
-    void ItShouldThrowsMakeTransferExceptionWhenExecutingMakeTransferWithCVUSentState() throws ConfirmReceptionException, MakeTransferException {
+    void ItShouldThrowsMakeTransferExceptionWhenExecutingMakeTransferWithCVUSentState() throws Exception {
         var bank = aBank().build();
         var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
         var buyer =  aUserCrypto().build();

@@ -1,10 +1,17 @@
 package ar.edu.unq.cryptop2p.model;
 
-
+import ar.edu.unq.cryptop2p.model.validators.Validator;
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.*;
 
+import ar.edu.unq.cryptop2p.model.exceptions.AddressException;
+import ar.edu.unq.cryptop2p.model.exceptions.CryptoAddressException;
+import ar.edu.unq.cryptop2p.model.exceptions.CvuException;
+import ar.edu.unq.cryptop2p.model.exceptions.EmailException;
 import ar.edu.unq.cryptop2p.model.exceptions.InvalidReputationException;
+import ar.edu.unq.cryptop2p.model.exceptions.PasswordException;
+import ar.edu.unq.cryptop2p.model.exceptions.UserNameException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,20 +26,23 @@ import javax.swing.*;
 @Table(name = "userCrypto")
 public class UserCrypto implements Serializable {
 
+        private Validator validator = new Validator();
 
-    @Id
+        @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id_userCrypto")
         private Long id;
 
-       @Column(nullable = false)
-       private String name;
+        @Column(nullable = false)
+        private String name;
 
         @Column(nullable = false)
         private String surname;
 
         @Column(nullable = false)
         private  String address ;
+
+        private String password;
 
         @Column(nullable = false, unique = true)
         private  String  email;
@@ -58,22 +68,125 @@ public class UserCrypto implements Serializable {
         }
 
 
-        public UserCrypto(
+        public UserCrypto (
                 Long id,
                 String name,
                 String surname,
                 String address,
+                String password,
                 String email,
                 String cvu,
-                String cryptoAddress){
+                String cryptoAddress) throws Exception 
+        {
+        setName(name);
+        setSurame(surname);
+        setAddres(address);
+        setEmail(email);
+        setPassword(password);
+        setCvu(cvu);
+        setCryptoAddress(cryptoAddress);
         this.id= id;
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.email = email;
-        this.cvu = cvu;
-        this.cryptoAddress  = cryptoAddress;
-                }
+
+        }
+
+        public void setName(String aName) throws UserNameException {
+        if(!validator.validateNameLenght(aName))
+        {
+            throw new UserNameException( MessageFormat.format("Not valid name length. Must be between {0} and {1}", validator.minNameLenght(), validator.maxNameLenght()));
+        }
+        name = aName;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setSurame(String surname) throws UserNameException
+    {
+        if(!validator.validateLastNameLenght(surname))
+            throw new UserNameException(MessageFormat.format("Not valid name length. Must be between {0} and {1}", validator.minLastNameLength(), validator.maxLastNameLength()));
+        surname = surname;
+    }
+
+    public String getSurname()
+    {
+        return surname;
+    }
+
+    public void setAddres(String aAddress) throws AddressException
+    {
+        if(!validator.validateAddressLenght(aAddress))
+        {
+            throw new AddressException(validator.addressExceptionMessage());
+        }
+        address = aAddress;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public void setEmail(String aEmail) throws EmailException
+    {
+        if(!validator.validEmail(aEmail))
+        {
+            throw new EmailException("Invalid Email Format");
+        }
+        email = aEmail;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setPassword(String aPassword) throws PasswordException
+    {
+        if(!validator.validatePassword(aPassword))
+        {
+            throw new PasswordException(validator.getPasswordExpetionMessage());
+        }
+        password = aPassword;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    //region cvu
+    public void setCvu(String aCvu) throws Exception
+    {
+        if(!validator.validateCvuLength(aCvu))
+        {
+            throw new CvuException("Invalid CVU format. 22 digits needed.");
+        }
+        cvu = aCvu;
+    }
+
+    public String getCvu()
+    {
+        return cvu;
+    }
+    //endregion
+
+    //endregion cryptoAddress
+    public void setCryptoAddress(String aCryptoAddress) throws CryptoAddressException
+    {
+        if(!validator.validateCrytoAddress(aCryptoAddress))
+        {
+            throw new CryptoAddressException("The crypto address must be 8 digits long.");
+        }
+        cryptoAddress = aCryptoAddress;
+    }
+
+    public String getCryptoAddress()
+    {
+        return cryptoAddress;
+    }
+    //endregion
 
         public int getNumberOfOperation()
         {

@@ -32,15 +32,20 @@ public class InitServiceInMemory {
     public void initialize()  {
         if (className.equals("org.h2.Driver")) {
             logger.info("Init Data Using H2 DB");
-            fireInitialData() ;
+            try {
+                fireInitialData() ;
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
         }
     }
 
-    private void fireInitialData()  {
+    private void fireInitialData() throws Exception  {
     
-         UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña","dir1", "ale@gmail.com", "cvu123", "dircripto123" );
-         UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir2", "luis@gmail.com", "cvu456", "dircripto456");
+         UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña","dir1", "Very_Secret!", "ale@gmail.com", "cvu123", "dircripto123" );
+         UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir2", "Very_Secret!", "luis@gmail.com", "cvu456", "dircripto456");
         try {
         userService.register(ale) ;
         userService.register(luis);
