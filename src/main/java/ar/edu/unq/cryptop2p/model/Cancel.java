@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 public class Cancel  extends Action{
 
 
-    public  void execute(@NotNull State state, Transaction transaction) { state.cancel(transaction);}
+    public  void execute( Transaction transaction) { transaction.getState().cancel(transaction);}
 
 }

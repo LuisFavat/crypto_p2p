@@ -125,7 +125,7 @@ public class Transaction {
            }
 
     public void execute() throws ConfirmReceptionException, MakeTransferException {
-             getActionType().getAction().execute(getState(), this);
+             getActionType().getAction().execute( this);
 
 
     }
@@ -138,18 +138,15 @@ public class Transaction {
 
     public void makeTransfer()  throws  MakeTransferException {
         setState(new CVUSent());
-        getCounterPartyUser().moneyTransfer(getAddress(), getBank());
         // notify sent
 
     }
 
     public Boolean checkTransfer (){
-        return  isCVUSent()  &&   isMoneyTransafered();
+        return  isCVUSent() ;
     }
 
-    public Boolean  isMoneyTransafered(){
-        return getBank().getMoneyTransfers().contains(this.getAddress());
-    }
+
 
     public void confirmReception() throws ConfirmReceptionException {
 

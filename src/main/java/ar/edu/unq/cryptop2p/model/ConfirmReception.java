@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ConfirmReception extends Action {
 
-    public void  execute(@NotNull State state, Transaction transaction) throws ConfirmReceptionException {
-                   state.confirmReception(transaction);
+    public void  execute(Transaction transaction) throws ConfirmReceptionException {
+                   transaction.getState().confirmReception(transaction);
 
     };
 }

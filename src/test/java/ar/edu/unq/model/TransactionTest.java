@@ -1,7 +1,6 @@
 package ar.edu.unq.model;
 
 
-import static ar.edu.unq.cryptop2p.builders.BankBuilder.aBank;
 import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
 import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
@@ -147,79 +146,60 @@ public class TransactionTest {
     }
 
     @Test
-    void TransactionShouldBeCVUSentStateWhenExecutingMakeTransferActionWithIdleState() throws ConfirmReceptionException, MakeTransferException {
-        var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
-        var buyer =  aUserCrypto().build();
-        var optionPut = anyOption().withUser(seller).buildOptionPut();
-        var transaction = aTransaction()
-                .wwithOption(optionPut)
-                .withCounterPartyUser(buyer)
-               .withActionType(MAKETRANSFER).build();
+    void TransactionShouldBeCVUSentStateWhenExecutingMakeTransferActionWithIdleStateByDefault() throws ConfirmReceptionException, MakeTransferException {
+
+        var seller = aUserCrypto().build();
+        var transaction = aTransaction().withSeller(seller).withActionType(MAKETRANSFER).build();
 
         transaction.execute();;
 
         assertTrue(transaction.isCVUSent());
-        assertFalse(seller.getBank().getMoneyTransfers().isEmpty());
+
     }
 
     @Test
-    void TransactionShouldBeCanceledWhenExecutingCancelActionAndIdleState() throws ConfirmReceptionException, MakeTransferException {
-        var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
-        var buyer =  aUserCrypto().build();
+    void TransactionShouldBeCanceledWhenExecutingCancelActionAndIdleStateByDefault() throws ConfirmReceptionException, MakeTransferException {
+
+        var seller = aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
-        var transaction = aTransaction()
-                .wwithOption(optionPut)
-                .withCounterPartyUser(buyer)
-                .withActionType(CANCEL).build();
+        var transaction = aTransaction().wwithOption(optionPut).withActionType(CANCEL).build();
 
         transaction.execute();
 
         assertTrue(transaction.isCanceled());
-        assertTrue(seller.getBank().getMoneyTransfers().isEmpty());
+
     }
 
     @Test
     void TransactionShouldBeCanceledWhenExecutingMakeTransferActionWithCanceledState() throws ConfirmReceptionException, MakeTransferException {
-        var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
-        var buyer =  aUserCrypto().build();
-        var optionPut = anyOption().withUser(seller).buildOptionPut();
-        var transaction = aTransaction()
-                .wwithOption(optionPut)
-                .withCounterPartyUser(buyer)
-                .withState(new Cancelled())
-                .withActionType(MAKETRANSFER).build();
+
+        var seller = aUserCrypto().build();
+
+        var transaction = aTransaction().withSeller(seller).withState(new Cancelled()).withActionType(MAKETRANSFER).build();
 
         transaction.execute();;
 
         assertTrue(transaction.isCanceled());
-        assertTrue(seller.getBank().getMoneyTransfers().isEmpty());
+
     }
 
 
     @Test
     void TransactionShouldThrowsMakeTransferExceptionWhenExecutingMakeTransferActionWithCVUSentState() throws ConfirmReceptionException, MakeTransferException {
-        var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
-        var buyer =  aUserCrypto().build();
-        var optionPut = anyOption().withUser(seller).buildOptionPut();
-        var transaction = aTransaction()
-                .wwithOption(optionPut)
-                .withCounterPartyUser(buyer)
-                .withState(new CVUSent())
-                .withActionType(MAKETRANSFER).build();
+
+        var seller = aUserCrypto().build();
+
+        var transaction = aTransaction().withSeller(seller).withState(new CVUSent()).withActionType(MAKETRANSFER).build();
 
         assertThrows ( MakeTransferException.class , transaction::execute);
-        assertTrue(seller.getBank().getMoneyTransfers().isEmpty());
+
     }
 
 
     @Test
     void TransactionShouldThrowsConfirmExceptionWhenExecutingConfirmReceptionActionWithIdleState() throws ConfirmReceptionException, MakeTransferException {
-        var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
+
+        var seller = aUserCrypto().build();
         var buyer =  aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction()
@@ -228,8 +208,10 @@ public class TransactionTest {
                 .withActionType(CONFIRMRECEPTION).build();
 
         assertThrows ( ConfirmReceptionException.class , transaction::execute);
-        assertTrue(seller.getBank().getMoneyTransfers().isEmpty());
+
     }
+
+
 
     @Test
     void cancel() {

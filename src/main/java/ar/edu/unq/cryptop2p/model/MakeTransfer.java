@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 public class MakeTransfer extends Action {
 
 
-    public  void  execute(@NotNull State state, Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
-        state.makeTransfer(transaction);
+    public  void  execute( Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
+        transaction.getState().makeTransfer(transaction);
 
 
     }
