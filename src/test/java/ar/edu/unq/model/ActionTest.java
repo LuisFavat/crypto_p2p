@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ActionTest {
 
     @Test
-    void ItShouldBeCVUSentStateWhenMakeTransferActionExecuteTransactionWithIdleStateByDefault() throws ConfirmReceptionException, MakeTransferException {
+    void ItShouldBeCVUSentStateWhenMakeTransferActionExecuteTransactionWithIdleStateByDefault() throws Exception {
 
         var seller = aUserCrypto().build();
         var transaction = aTransaction().withSeller(seller).build();
@@ -25,7 +25,7 @@ public class ActionTest {
     }
 
     @Test
-    void ItShouldBeCanceledWhenMakeTransferActionExecuteTransactionWithCanceledState() throws ConfirmReceptionException, MakeTransferException {
+    void ItShouldBeCanceledWhenMakeTransferActionExecuteTransactionWithCanceledState() throws Exception {
 
         var seller = aUserCrypto().build();
 

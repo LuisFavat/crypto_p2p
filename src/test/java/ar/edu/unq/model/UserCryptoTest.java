@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserCryptoTest {
     @Test
-    void ItShouldBeGetThenNameWhenCreatingAUser() {
+    void ItShouldBeGetThenNameWhenCreatingAUser() throws Exception {
         var user = aUserCrypto().withName("Juan").build();
 
         assertEquals("Juan", user.getName());
@@ -16,7 +16,7 @@ public class UserCryptoTest {
 
 
     @Test
-    void ItShouldBeGetThenSurnameWhenCreatingAUser() {
+    void ItShouldBeGetThenSurnameWhenCreatingAUser() throws Exception {
         var user = aUserCrypto().withSurname("ChanKein").build();
 
         assertEquals("ChanKein", user.getSurname());
@@ -24,30 +24,30 @@ public class UserCryptoTest {
 
 
     @Test
-    void ItShouldBeGetThenAddressWhenCreatingAUser() {
+    void ItShouldBeGetThenAddressWhenCreatingAUser() throws Exception {
         var user = aUserCrypto().withAddress("Elm Street 120").build();
 
         assertEquals("Elm Street 120", user.getAddress());
     }
 
     @Test
-    void ItShouldBeGetThenCVUWhenCreatingAUser() {
-        var user = aUserCrypto().withCvu("1234AB").build();
+    void ItShouldBeGetThenCVUWhenCreatingAUser() throws Exception {
+        var user = aUserCrypto().withCvu("1234567890123456789012").build();
 
-        assertEquals("1234AB", user.getCvu());
+        assertEquals("1234567890123456789012", user.getCvu());
     }
 
 
     @Test
-    void ItShouldBeGetThenCryptoAddressUWhenCreatingAUser() {
-        var user = aUserCrypto().withCryptoAddress("fbb123").build();
+    void ItShouldBeGetThenCryptoAddressUWhenCreatingAUser() throws Exception {
+        var user = aUserCrypto().withCryptoAddress("12345678").build();
 
-        assertEquals("fbb123", user.getCryptoAddress());
+        assertEquals("12345678", user.getCryptoAddress());
     }
 
 
     @Test
-    void ItShouldBeIncreaseTheNumberOfOperationUWhenAddingOperations() {
+    void ItShouldBeIncreaseTheNumberOfOperationUWhenAddingOperations() throws Exception {
         var user = aUserCrypto().build();
         user.addOperation();
         user.addOperation();
@@ -57,7 +57,7 @@ public class UserCryptoTest {
     }
 
     @Test
-    void ItShouldBeIncreaseTheScoresUWhenAddingScores() {
+    void ItShouldBeIncreaseTheScoresUWhenAddingScores() throws Exception {
         var user = aUserCrypto().build();
         user.addScore(5);
         user.addScore(2);
@@ -65,7 +65,7 @@ public class UserCryptoTest {
     }
 
     @Test
-    void ItShouldBeGetTheReputationAccordingTheScoresAndOperations() throws InvalidReputationException {
+    void ItShouldBeGetTheReputationAccordingTheScoresAndOperations() throws Exception {
         var user = aUserCrypto().build();
         user.addOperation();
         user.addOperation();
@@ -77,7 +77,7 @@ public class UserCryptoTest {
 
 
     @Test
-    void ItShouldBeThrowsExceptionWhenGettingReputationWithoutOperations()  {
+    void ItShouldBeThrowsExceptionWhenGettingReputationWithoutOperations() throws Exception {
         var user = aUserCrypto().build();
         user.addScore(5);
         assertThrows( InvalidReputationException.class, user::reputation);

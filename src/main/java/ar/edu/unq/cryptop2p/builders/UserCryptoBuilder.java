@@ -1,17 +1,16 @@
 package ar.edu.unq.cryptop2p.builders;
 
-import ar.edu.unq.cryptop2p.model.Bank;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 
 public class UserCryptoBuilder {
 
     private long id        = 0L;
-    private String name    = "empty name";
-    private String surname = "empty surname";
-    private String address = "empty address";
-    private String email   = "empty email";
-    private String cvu     = "empty cvu";
-    private String cryptoAddress = "empty address";
+    private String name    = "Empty name";
+    private String surname = "Empty surname";
+    private String address = "Empty address";
+    private String email   = "empty@email.com";
+    private String cvu     = "1234567890123456789012";
+    private String cryptoAddress = "12345678";
     private int numberOfOperations = 0;
     private int reputation = 0;
     private int scores = 0;
@@ -19,6 +18,11 @@ public class UserCryptoBuilder {
 
 
     public static UserCryptoBuilder aUserCrypto()
+    {
+        return new UserCryptoBuilder();
+    }
+
+    public static UserCryptoBuilder aUser()
     {
         return new UserCryptoBuilder();
     }
@@ -85,9 +89,8 @@ public class UserCryptoBuilder {
 
 
 
-    public UserCrypto build()
-    {
-        var user = new UserCrypto(id, name, surname, address, email, cvu, cryptoAddress);
+    public UserCrypto build() throws Exception {
+        var user = new UserCrypto(id, name, surname, address, "Very_Secret!", email, cvu, cryptoAddress);
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);

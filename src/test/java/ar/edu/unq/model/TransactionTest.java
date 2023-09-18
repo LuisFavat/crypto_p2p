@@ -16,10 +16,9 @@ import org.junit.jupiter.api.Test;
 
 public class TransactionTest {
     
-    @Test
-    void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated()
-    {
-        var address = "12345678";
+    @Test //TODO Arreglar este test esta mal
+    void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated() throws Exception {
+        var address = "Rivadavia 1001";
         var user = aUserCrypto().withAddress(address).build();
         var  option = anyOption().withUser(user).build();
         var transaction = aTransaction().wwithOption(option).build();
@@ -74,8 +73,7 @@ public class TransactionTest {
     }
 
     @Test
-    void ShoudConsultTheNameOfTheUserOwnerOfTheOption()
-    {
+    void ShoudConsultTheNameOfTheUserOwnerOfTheOption() throws Exception {
 
 
         var user = aUserCrypto().withName("Victor").withSurname("Hugo").build();
@@ -87,8 +85,7 @@ public class TransactionTest {
     }
 
     @Test
-    void ShoudConsultTheNameOfTheInteresedUserInTheOption()
-    {
+    void ShoudConsultTheNameOfTheInteresedUserInTheOption() throws Exception {
 
         var interesed = aUserCrypto().withName("Jean").withSurname("Valjean").build();
         var option = anyOption().withUser(interesed).build();
@@ -98,9 +95,8 @@ public class TransactionTest {
 
     }
      
-    @Test //Todo mostrar la las operaciones de quien hizo la publicacion
-    void ShoudConsultTheNumberOfOperationOfTheOwnerOfTheOption()
-    {
+    @Test
+    void ShoudConsultTheNumberOfOperationOfTheOwnerOfTheOption() throws Exception {
         var numberOfOperations = 3;
 
         var owner = aUserCrypto().withNumberOfOperation(numberOfOperations).build();
@@ -111,9 +107,8 @@ public class TransactionTest {
     }
 
     //here! 
-    @Test //Todo mostrar la reputacion de quien hizo la publicacion
-    void ShoudConsultTheReputationOfTheOwnerOfTheOption()
-    {
+    @Test
+    void ShoudConsultTheReputationOfTheOwnerOfTheOption() throws Exception {
         var reputation = 97;
         var owner = aUserCrypto().withReputation(reputation).build();
         var option = anyOption().withUser(owner).build();
@@ -123,8 +118,7 @@ public class TransactionTest {
     }
  
     @Test
-    void ShoudShowCryptoAddressWhenIsAOptionCall()
-    {
+    void ShoudShowCryptoAddressWhenIsAOptionCall() throws Exception {
         var cryptoAddress = "meme1234";
         var seller = aUserCrypto().withCryptoAddress(cryptoAddress).build();
         var optionCall = anyOption().withUser(seller).buildOptionCall();
@@ -134,8 +128,7 @@ public class TransactionTest {
     }
 
     @Test
-    void ShoudShowCvuWhenIsAOptionPut()
-    {
+    void ShoudShowCvuWhenIsAOptionPut() throws Exception {
         var cryptoAddress = "0123456789012345678911";
         var buyer = aUserCrypto().withCvu(cryptoAddress).build();
         var optionPut = anyOption().withUser(buyer).buildOptionPut();
@@ -146,7 +139,7 @@ public class TransactionTest {
     }
 
     @Test
-    void TransactionShouldBeCVUSentStateWhenExecutingMakeTransferActionWithIdleStateByDefault() throws ConfirmReceptionException, MakeTransferException {
+    void TransactionShouldBeCVUSentStateWhenExecutingMakeTransferActionWithIdleStateByDefault() throws Exception {
 
         var seller = aUserCrypto().build();
         var transaction = aTransaction().withSeller(seller).withActionType(MAKETRANSFER).build();
@@ -158,7 +151,7 @@ public class TransactionTest {
     }
 
     @Test
-    void TransactionShouldBeCanceledWhenExecutingCancelActionAndIdleStateByDefault() throws ConfirmReceptionException, MakeTransferException {
+    void TransactionShouldBeCanceledWhenExecutingCancelActionAndIdleStateByDefault() throws Exception {
 
         var seller = aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
@@ -171,7 +164,7 @@ public class TransactionTest {
     }
 
     @Test
-    void TransactionShouldBeCanceledWhenExecutingMakeTransferActionWithCanceledState() throws ConfirmReceptionException, MakeTransferException {
+    void TransactionShouldBeCanceledWhenExecutingMakeTransferActionWithCanceledState() throws Exception {
 
         var seller = aUserCrypto().build();
 
@@ -185,7 +178,7 @@ public class TransactionTest {
 
 
     @Test
-    void TransactionShouldThrowsMakeTransferExceptionWhenExecutingMakeTransferActionWithCVUSentState() throws ConfirmReceptionException, MakeTransferException {
+    void TransactionShouldThrowsMakeTransferExceptionWhenExecutingMakeTransferActionWithCVUSentState() throws Exception {
 
         var seller = aUserCrypto().build();
 
@@ -197,7 +190,7 @@ public class TransactionTest {
 
 
     @Test
-    void TransactionShouldThrowsConfirmExceptionWhenExecutingConfirmReceptionActionWithIdleState() throws ConfirmReceptionException, MakeTransferException {
+    void TransactionShouldThrowsConfirmExceptionWhenExecutingConfirmReceptionActionWithIdleState() throws Exception {
 
         var seller = aUserCrypto().build();
         var buyer =  aUserCrypto().build();
@@ -214,7 +207,7 @@ public class TransactionTest {
 
 
     @Test
-    void cancel() {
+    void cancel() throws Exception {
         var seller = aUserCrypto().withReputation(100).build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction().wwithOption(optionPut).build();
