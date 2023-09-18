@@ -15,9 +15,8 @@ import ar.edu.unq.cryptop2p.model.Transaction;
 public class TransactionTest {
     
     @Test
-    void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated()
-    {
-        var address = "12345678";
+    void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated() throws Exception {
+        var address = "1234567890";
         var user = aUserCrypto().withAddress(address).build();
         var  option = anyOption().withUser(user).build();
         var transaction = aTransaction().wwithOption(option).build();
@@ -72,8 +71,7 @@ public class TransactionTest {
     }
 
     @Test
-    void ShoudConsultTheNameOfTheUserOwnerOfTheOption()
-    {
+    void ShoudConsultTheNameOfTheUserOwnerOfTheOption() throws Exception {
 
 
         var user = aUserCrypto().withName("Victor").withSurname("Hugo").build();
@@ -85,8 +83,7 @@ public class TransactionTest {
     }
 
     @Test
-    void ShoudConsultTheNameOfTheInteresedUserInTheOption()
-    {
+    void ShoudConsultTheNameOfTheInteresedUserInTheOption() throws Exception {
 
         var interesed = aUserCrypto().withName("Jean").withSurname("Valjean").build();
         var option = anyOption().withUser(interesed).build();
@@ -96,9 +93,8 @@ public class TransactionTest {
 
     }
      
-    @Test //Todo mostrar la las operaciones de quien hizo la publicacion
-    void ShoudConsultTheNumberOfOperationOfTheOwnerOfTheOption()
-    {
+    @Test
+    void ShoudConsultTheNumberOfOperationOfTheOwnerOfTheOption() throws Exception {
         var numberOfOperations = 3;
 
         var owner = aUserCrypto().withNumberOfOperation(numberOfOperations).build();
@@ -109,9 +105,8 @@ public class TransactionTest {
     }
 
     //here! 
-    @Test //Todo mostrar la reputacion de quien hizo la publicacion
-    void ShoudConsultTheReputationOfTheOwnerOfTheOption()
-    {
+    @Test
+    void ShoudConsultTheReputationOfTheOwnerOfTheOption() throws Exception {
         var reputation = 97;
         var owner = aUserCrypto().withReputation(reputation).build();
         var option = anyOption().withUser(owner).build();
@@ -121,8 +116,7 @@ public class TransactionTest {
     }
  
     @Test
-    void ShoudShowCryptoAddressWhenIsAOptionCall()
-    {
+    void ShoudShowCryptoAddressWhenIsAOptionCall() throws Exception {
         var cryptoAddress = "meme1234";
         var seller = aUserCrypto().withCryptoAddress(cryptoAddress).build();
         var optionCall = anyOption().withUser(seller).buildOptionCall();
@@ -132,8 +126,7 @@ public class TransactionTest {
     }
 
     @Test
-    void ShoudShowCvuWhenIsAOptionPut()
-    {
+    void ShoudShowCvuWhenIsAOptionPut() throws Exception {
         var cryptoAddress = "0123456789012345678911";
         var buyer = aUserCrypto().withCvu(cryptoAddress).build();
         var optionPut = anyOption().withUser(buyer).buildOptionPut();

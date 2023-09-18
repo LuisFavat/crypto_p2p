@@ -32,17 +32,17 @@ public class UserCryptoTest {
 
     @Test
     void ItShouldBeGetThenCVUWhenCreatingAUser() throws Exception {
-        var user = aUserCrypto().withCvu("1234AB").build();
+        var user = aUserCrypto().withCvu("1234567890123456789012").build();
 
-        assertEquals("1234AB", user.getCvu());
+        assertEquals("1234567890123456789012", user.getCvu());
     }
 
 
     @Test
     void ItShouldBeGetThenCryptoAddressUWhenCreatingAUser() throws Exception {
-        var user = aUserCrypto().withCryptoAddress("fbb123").build();
+        var user = aUserCrypto().withCryptoAddress("12345678").build();
 
-        assertEquals("fbb123", user.getCryptoAddress());
+        assertEquals("12345678", user.getCryptoAddress());
     }
 
 

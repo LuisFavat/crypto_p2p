@@ -76,15 +76,19 @@ public class UserCrypto implements Serializable {
                 String password,
                 String email,
                 String cvu,
-                String cryptoAddress) throws Exception 
-        {
-        setName(name);
-        setSurame(surname);
-        setAddres(address);
-        setEmail(email);
-        setPassword(password);
-        setCvu(cvu);
-        setCryptoAddress(cryptoAddress);
+                String cryptoAddress) throws Exception {
+
+
+                setName(name);
+                setSurame(surname);
+                setAddres(address);
+                setEmail(email);
+                setPassword(password);
+                setCvu(cvu);
+                setCryptoAddress(cryptoAddress);
+
+
+
         this.id= id;
 
         }
@@ -102,11 +106,11 @@ public class UserCrypto implements Serializable {
         return name;
     }
 
-    public void setSurame(String surname) throws UserNameException
+    public void setSurame(String aSurname) throws UserNameException
     {
-        if(!validator.validateLastNameLenght(surname))
+        if(!validator.validateLastNameLenght(aSurname))
             throw new UserNameException(MessageFormat.format("Not valid name length. Must be between {0} and {1}", validator.minLastNameLength(), validator.maxLastNameLength()));
-        surname = surname;
+        surname = aSurname;
     }
 
     public String getSurname()
@@ -223,7 +227,6 @@ public class UserCrypto implements Serializable {
                reputation = 0;
            }
        }
-
 
 
         public void moneyTransfer (String cvu, Bank bank){

@@ -22,7 +22,7 @@ class ExecutorTest {
     @Test
     void ItShouldBecomeToICVUSentStateAndMoneyTransfersIsNotEmptyWhenExecutingMakeTransferWithIdleState() throws Exception {
         var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
+        var seller = aUserCrypto().withCvu("1234567890123456789012").withBank(bank).build();
         var buyer =  aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction()
@@ -42,7 +42,7 @@ class ExecutorTest {
     @Test
     void ItShouldBecomeToCancelledStateAndMoneyTransfersIsEmptyWhenExecutingCancelWithIdleState() throws Exception {
         var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
+        var seller = aUserCrypto().withCvu("1234567890123456789012").withBank(bank).build();
         var buyer =  aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction()
@@ -62,7 +62,7 @@ class ExecutorTest {
     @Test
     void ItShouldBeCancelledStateAndMoneyTransfersIsEmptyWhenExecutingMakeTransferWithCancelledState() throws Exception {
         var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
+        var seller = aUserCrypto().withCvu("1234567890123456789012").withBank(bank).build();
         var buyer =  aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction()
@@ -83,7 +83,7 @@ class ExecutorTest {
     @Test
     void ItShouldThrowsMakeTransferExceptionWhenExecutingMakeTransferWithCVUSentState() throws Exception {
         var bank = aBank().build();
-        var seller = aUserCrypto().withCvu("CVU1").withBank(bank).build();
+        var seller = aUserCrypto().withCvu("1234567890123456789012").withBank(bank).build();
         var buyer =  aUserCrypto().build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction()
