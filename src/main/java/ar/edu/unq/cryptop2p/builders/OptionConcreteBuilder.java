@@ -50,11 +50,13 @@ public class OptionConcreteBuilder {
 
     public Option build ()  { return new OptionCall(criptocurrency,  price,  cryptoAmount, user);}
 
-    public Option buildOptionCall ()  {  var optionCall = new OptionCall(criptocurrency,  price,  cryptoAmount, user);
+    public Option buildOptionCall ()  {
 
-              return optionCall ;}
+        return new OptionCall(criptocurrency,  price,  cryptoAmount, user);
+    }
 
     public Option buildOptionPut () {
-        var optionPut = new OptionPut(criptocurrency, price, cryptoAmount, user);
-           return optionPut; }
+
+        return new OptionPut(criptocurrency, price, cryptoAmount, user);
+    }
 }

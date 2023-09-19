@@ -14,7 +14,7 @@ import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 import org.junit.jupiter.api.Test;
 
 
-public class TransactionTest {
+class TransactionTest {
     
     @Test //TODO Arreglar este test esta mal
     void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated() throws Exception {
