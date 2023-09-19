@@ -148,7 +148,7 @@ public class UserCrypto implements Serializable {
     }
 
     //region cvu
-    public void setCvu(String aCvu) throws Exception
+    public void setCvu(String aCvu) throws CvuException
     {
         if(!validator.validateCvuLength(aCvu))
         {

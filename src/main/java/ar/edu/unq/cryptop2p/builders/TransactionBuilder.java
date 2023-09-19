@@ -50,7 +50,6 @@ public class TransactionBuilder {
         return this;
     } 
 
-
     public TransactionBuilder withBuyer(UserCrypto aBuyer)
     {
         buyer = aBuyer;
@@ -87,8 +86,6 @@ public class TransactionBuilder {
         return this;
     }
 
-
-
     public TransactionBuilder withUnits(int anyUnits)
     {   units = anyUnits;
         return this;
@@ -106,12 +103,11 @@ public class TransactionBuilder {
         return this;
     }
 
-
     public Transaction build()
     {
         Transaction transaction = new Transaction(option);
         transaction.setCounterPartyUser(counterParty);
-        transaction.setState(state);;
+        transaction.setState(state);
         transaction.setActionType(actionType);
         transaction.setAction(action);
         return transaction;
@@ -126,8 +122,6 @@ public class TransactionBuilder {
         transaction.setActionType(actionType);
         return transaction;
     }
-
-    
 }
 
 

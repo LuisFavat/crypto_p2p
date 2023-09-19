@@ -43,7 +43,7 @@ public abstract class Option {
     protected int scores;
 
 
-    public Option(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
+    protected Option(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         this.cryptocurrency = cryptocurrency;
         this.price = price;
         this.cryptoAmount = cryptoAmount;

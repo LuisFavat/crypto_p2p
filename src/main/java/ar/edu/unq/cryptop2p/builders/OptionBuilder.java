@@ -16,10 +16,6 @@ public abstract class OptionBuilder {
     private  double price = 0.00;
     private OptionType tyoe ;
 
-
-  // public static OptionBuilder anOption() {};
-
-
     public OptionBuilder withCryptoAmount(float aCryptoAmount)
     {   cryptoAmount = aCryptoAmount;
         return this;
@@ -30,8 +26,6 @@ public abstract class OptionBuilder {
         price = aPrice;
         return this;
     }
-
-
 
     public OptionBuilder withCryptoCurrency (CryptoCurrency aCryptoCurrency)
     {
