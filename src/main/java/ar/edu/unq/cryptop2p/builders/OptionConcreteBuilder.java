@@ -14,8 +14,6 @@ public class OptionConcreteBuilder {
     private float cryptoAmount = 0 ;
     private  double price = 0.00;
     private String address ="" ;
-    private float reputation = 0;
-    private int scores = 0;
     private OptionType type ;
 
     public static OptionConcreteBuilder anyOption() {return new OptionConcreteBuilder(); }
@@ -36,15 +34,7 @@ public class OptionConcreteBuilder {
         return this;
     }
 
-    public OptionConcreteBuilder withCReputation(float aReputation)
-    {   reputation = aReputation;
-        return this;
-    }
 
-    public OptionConcreteBuilder withCScores(int  anyScores)
-    {   scores = anyScores;
-        return this;
-    }
 
     public OptionConcreteBuilder withCryptoCurrency (CryptoCurrency aCryptoCurrency)
     {
@@ -61,13 +51,10 @@ public class OptionConcreteBuilder {
     public Option build ()  { return new OptionCall(criptocurrency,  price,  cryptoAmount, user);}
 
     public Option buildOptionCall ()  {  var optionCall = new OptionCall(criptocurrency,  price,  cryptoAmount, user);
-              optionCall.setReputation(reputation);
-              optionCall.setScores(scores);
+
               return optionCall ;}
 
     public Option buildOptionPut () {
         var optionPut = new OptionPut(criptocurrency, price, cryptoAmount, user);
-        optionPut.setReputation(reputation);
-        optionPut.setScores(scores);
-          return optionPut; }
+           return optionPut; }
 }

@@ -110,7 +110,7 @@ public class TransactionTest {
     @Test
     void ShoudConsultTheReputationOfTheOwnerOfTheOption() throws Exception {
         var reputation = 97;
-        var owner = aUserCrypto().withReputation(reputation).build();
+        var owner = aUserCrypto().withScores(reputation).withNumberOfOperation(1).build();
         var option = anyOption().withUser(owner).build();
         var transaction = aTransaction().wwithOption(option).build();
 
@@ -208,7 +208,7 @@ public class TransactionTest {
 
     @Test
     void cancel() throws Exception {
-        var seller = aUserCrypto().withReputation(100).build();
+        var seller = aUserCrypto().withScores(100).withNumberOfOperation(1).build();
         var optionPut = anyOption().withUser(seller).buildOptionPut();
         var transaction = aTransaction().wwithOption(optionPut).build();
 

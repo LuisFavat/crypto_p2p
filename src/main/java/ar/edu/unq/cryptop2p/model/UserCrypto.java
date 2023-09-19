@@ -18,7 +18,6 @@ import lombok.Setter;
 @Table(name = "userCrypto")
 public class UserCrypto implements Serializable {
 
-    private Validator validator = new Validator();
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id_userCrypto")
@@ -51,6 +50,10 @@ public class UserCrypto implements Serializable {
 
        @Transient
        private LinkedList<CryptoCurrency> cryptoCurrencies;
+
+
+    @Transient
+    private  Validator  validator = new Validator();
 
 
         public UserCrypto() {
@@ -197,18 +200,20 @@ public class UserCrypto implements Serializable {
                 reputation = aReputation;
         }
 
-        public float reputation() throws InvalidReputationException {
+        public int reputation()  {
             if (numberOfOperation <= 0) {
-                throw new InvalidReputationException("error: division by zero");
+               reputation = scores;
             }
-            setReputation( scores / numberOfOperation);
+            else {
+              reputation =  (scores / numberOfOperation);
+               }
             return  reputation;
         }
 
         public  void substractReputation(int takenscores) {
-           reputation -= takenscores;
-           if (reputation < 0) {
-               reputation = 0;
+           scores -= takenscores;
+           if (scores < 0) {
+               scores = 0;
            }
        }
 

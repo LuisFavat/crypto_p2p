@@ -27,9 +27,9 @@ public class InitServiceInMemory {
     @Value("${spring.datasource.driverClassName:NONE}")
     private String className;
 
-    //TODO ver si lanzar excepcion
+
     @PostConstruct
-    public void initialize() throws Exception {
+    public void initialize() throws Exception  {
         if (className.equals("org.h2.Driver")) {
             logger.info("Init Data Using H2 DB");
             fireInitialData() ;
@@ -37,8 +37,8 @@ public class InitServiceInMemory {
         }
     }
 
-    //TODO ver si lanzar excepcion
-    private void fireInitialData() throws Exception {
+
+    private void fireInitialData() throws Exception  {
     
          UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña","dir1", "Very_Secret!", "ale@gmail.com", "cvu123", "dircripto123" );
          UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir2", "Very_Secret!", "luis@gmail.com", "cvu456", "dircripto456");

@@ -77,7 +77,7 @@ public abstract class Option {
 
     public float reputation()
     {
-        return user.getReputation();
+        return user.reputation();
     }
 
     public boolean validateOptionPriceInARangeOfFiveUpAndDown() {

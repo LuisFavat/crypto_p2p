@@ -65,6 +65,20 @@ public class UserCryptoTest {
     }
 
     @Test
+    void ItShouldBeDecreaseTheReputationUWhenSubstractingReputation() throws Exception {
+        var user = aUserCrypto().withScores(20).withNumberOfOperation(1).build();
+        user.substractReputation(5);
+        assertEquals(15, user.reputation());
+    }
+
+    @Test
+    void ItShouldBeZeroWhenIntendSubstractingReputationWithNegaiveValue() throws Exception {
+        var user = aUserCrypto().withScores(20).withNumberOfOperation(1).build();
+        user.substractReputation(25);
+        assertEquals(0, user.reputation());
+    }
+
+    @Test
     void ItShouldBeGetTheReputationAccordingTheScoresAndOperations() throws Exception {
         var user = aUserCrypto().build();
         user.addOperation();
@@ -77,10 +91,10 @@ public class UserCryptoTest {
 
 
     @Test
-    void ItShouldBeThrowsExceptionWhenGettingReputationWithoutOperations() throws Exception {
+    void ItShouldBeReturnOnlyTheScoresWhenGettingReputationWithoutOperations() throws Exception {
         var user = aUserCrypto().build();
         user.addScore(5);
-        assertThrows( InvalidReputationException.class, user::reputation);
+        assertEquals( 5, user.reputation());
     }
 
 }
