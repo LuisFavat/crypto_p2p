@@ -15,7 +15,17 @@ java {
 repositories {
 	mavenCentral()
 }
+plugins {
+	id "org.sonarqube" version "4.3.1.3277"
+}
 
+sonar {
+	properties {
+		property "sonar.projectKey", "LuisFavat_crypto_p2p"
+		property "sonar.organization", "luisf"
+		property "sonar.host.url", "https://sonarcloud.io"
+	}
+}
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
