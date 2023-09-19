@@ -6,7 +6,7 @@ import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-public class UserCryptoTest {
+class UserCryptoTest {
     @Test
     void ItShouldBeGetThenNameWhenCreatingAUser() throws Exception {
         var user = aUserCrypto().withName("Juan").build();

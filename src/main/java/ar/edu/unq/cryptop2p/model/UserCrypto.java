@@ -52,8 +52,8 @@ public class UserCrypto implements Serializable {
        private LinkedList<CryptoCurrency> cryptoCurrencies;
 
 
-    @Transient
-    private  Validator  validator = new Validator();
+        @Transient
+        private  Validator  validator = new Validator();
 
 
         public UserCrypto() {
