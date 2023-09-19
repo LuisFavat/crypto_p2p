@@ -6,15 +6,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class Cancelled extends State{
 
+    public  void  makeTransfer(Transaction transaction)  {}
 
+    public  void confirmReception(Transaction transaction)  {}
 
-   // public void execute(@NotNull Action action, Transaction transaction) throws ConfirmReceptionException, MakeTransferException {  action.execute(this,transaction);}
-
-    public  void  makeTransfer(Transaction transaction)  {} // Do nothing
-
-    public  void confirmReception(Transaction transaction)  {}// Do nothing
-
-    public   void  cancel (Transaction transaction)  {} // Do nothing
+    public   void  cancel (Transaction transaction)  {}
 
     public Boolean isIdle()  {return false;};
     public Boolean isCVUSent()    {return false;}

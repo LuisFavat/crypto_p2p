@@ -217,14 +217,4 @@ class TransactionTest {
       assertEquals(80, transaction.reputation());
       assertTrue(transaction.isCanceled());
     }
-
-    @Test
-    void makeTransfer() {
-    }
-
-    @Test
-    void confirmReception() {
-    }
-
-
 }

@@ -6,6 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CryptoP2pApplicationTests {
 
+    @Test
+    void buildApp()
+    {
 
+    }
 
 }
