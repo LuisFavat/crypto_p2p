@@ -1,7 +1,7 @@
 package ar.edu.unq.cryptop2p.service.initializer;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
+import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
@@ -29,7 +29,7 @@ public class InitServiceInMemory {
 
 
     @PostConstruct
-    public void initialize() throws Exception  {
+    public void initialize()    {
         if (className.equals("org.h2.Driver")) {
             logger.info("Init Data Using H2 DB");
              fireInitialData() ;
@@ -38,24 +38,17 @@ public class InitServiceInMemory {
     }
 
 
-    private void fireInitialData() throws Exception  {
-    UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña","dir1132123123", "Very_Secret!", "ale@gmail.com", "1234567890123456789012", "12345678" );
-    UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir1132123140", "Extremly_Secret!", "luis@gmail.com", "1234567890123456789015", "12345679" );
+    private void fireInitialData() {
+        {
+            UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com", "1234567890123456789012", "12345678");
+            UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com", "1234567890123456789015", "12345679");
 
-
-       //  UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña","dir1", "Very_Secret!", "ale@gmail.com", "cvu123", "dircripto123" );
-      //   UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier","dir2", "Very_Secret!", "luis@gmail.com", "cvu456", "dircripto456");
-        try {
-        userService.register(ale) ;
-        userService.register(luis);
-        }
-        catch (UserNameExistsException e) {
-           e.fillInStackTrace();
+            try {
+                userService.register(ale);
+                userService.register(luis);
+            } catch (UserNameExistsException e) {
+                e.fillInStackTrace();
+            }
         }
     }
-
-
-
-
-
 }

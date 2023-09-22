@@ -1,5 +1,7 @@
 package ar.edu.unq.cryptop2p.utils;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -8,12 +10,12 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
-//import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-//@EnableSwagger2
+@EnableSwagger2
 public class SwaggerConfig {
 
     @Bean
@@ -28,14 +30,13 @@ public class SwaggerConfig {
     }
 
 
-    private ApiInfo getApiInfo() {
+    @Contract(" -> new")
+    private @NotNull ApiInfo getApiInfo() {
         return new ApiInfo(
                 "Cryptop2p Grupo H",
                 "Proyecto: Cryptop2p Grupo H" +
-                          "Universidad:" +
-                                  "Universidad Nacional de Quilmes - UNQ"+
-                          "Materia: " +
-                                  "Dapps (Desarrollo de aplicaciones)"+
+                          "Universidad: Universidad Nacional de Quilmes - UNQ" +
+                          "Materia" + "Dapps (Desarrollo de aplicaciones)"+
                           "Integrantes: " +
                                   "Alejandro Fariña" +
                                    "Luis Favatier",

@@ -4,6 +4,7 @@ import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@Data
+
 public class OptionPostDTO {
     private OptionType type;
     private CryptoCurrency cryptocurrency;

@@ -134,9 +134,7 @@ public class Transaction {
 
     public void makeTransfer()  throws  MakeTransferException {
         setState(new CVUSent());
-        // notify sent
-
-    }
+          }
 
     public Boolean checkTransfer (){
         return  isCVUSent() ;
@@ -147,9 +145,8 @@ public class Transaction {
     public void confirmReception() throws ConfirmReceptionException {
 
         if (checkTransfer()) {
-            getUser().sendCryptoCurrency(getCryptoCurrency(), getCounterPartyUser());
             setState(new CryptoCurrencySent());
-            // Finish Transaction
+            addOperation();
 
         }
     }

@@ -26,6 +26,7 @@ sonar {
 	}
 }
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -49,6 +50,8 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:2.9.2'
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
+	testImplementation 'com.tngtech.archunit:archunit-junit4:1.0.1'
+
 }
 
 tasks.named('test') {
@@ -56,3 +59,28 @@ tasks.named('test') {
 }
 
 
+test {
+//    if ({ { spring.profiles.active } }.equals("dev")) {
+//    filter {
+	//exclude all tests from a package.
+//        excludeTestsMatching "ar.edu.unq.cryptop2p.webservice.*"
+//    }//}
+	useJUnitPlatform()
+	testLogging.showStandardStreams(true)
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required.set(true)
+		csv.required.set(false)
+		html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+	}
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+}

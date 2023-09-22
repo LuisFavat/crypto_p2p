@@ -5,17 +5,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
-    private int minPasswordLength = 6;
-    private int maxPasswordLength = 30;
-    private String passwordExpetionMessage = "Invalid password format.";
-    private int minLength = 3;
-    private int maxLength = 30;
-    private int cvuLength = 22;
-    private int cryptoAddressLength = 8;
-    private int minAddressLenght = 10;
-    private int maxAddressLenght = 30;
+    private static int minPasswordLength = 6;
+    private static int maxPasswordLength = 30;
+    private static String passwordExpetionMessage = "Invalid password format.";
+    private static int minLength = 3;
+    private static int maxLength = 30;
+    private static int cvuLength = 22;
+    private static int cryptoAddressLength = 8;
+    private static int minAddressLenght = 10;
+    private static int maxAddressLenght = 30;
 
-    public boolean validateLenght(String aString, int minLength, int maxLength)
+    public static boolean validateLenght(String aString, int minLength, int maxLength)
     {
         boolean isValid = aString.length() >= minLength && aString.length() <= maxLength;
         if(!isValid)
@@ -28,22 +28,22 @@ public class Validator {
 
     //region Email
 
-    public boolean validEmail(String aEmail)
+    public static boolean validEmail(String aEmail)
     {
         return validateAtSign(aEmail) && validateDotCom(aEmail) && validateCharBeforeAtSign(aEmail);
     }
 
-    private boolean validateAtSign(String aEmail)
+    private  static boolean validateAtSign(String aEmail)
     {
         return aEmail.contains("@");
     }
 
-    private boolean validateDotCom(String aEmail)
+    private static boolean validateDotCom(String aEmail)
     {
         return aEmail.contains(".com");
     }
 
-    private boolean validateCharBeforeAtSign(String aEmail) throws StringIndexOutOfBoundsException
+    private static boolean validateCharBeforeAtSign(String aEmail) throws StringIndexOutOfBoundsException
     {
         int atSignIndex = aEmail.indexOf("@");
         try
@@ -61,12 +61,12 @@ public class Validator {
     //endregion
 
     //region password
-    public boolean validatePassword(String aPassword)
+    public static boolean validatePassword(String aPassword)
     {
         return hasAtLeastOneLowerCase(aPassword) & hasAtLeastOneUpperCase(aPassword) & hasSpecialCharacter(aPassword) & validateLenght(aPassword, minPasswordLength, maxPasswordLength);
     }
 
-    public String getPasswordExpetionMessage()
+    public static String getPasswordExpetionMessage()
     {
         String msg = passwordExpetionMessage;
         passwordExpetionMessage = "Invalid password format.";
@@ -75,7 +75,7 @@ public class Validator {
 
 
 
-    private boolean hasAtLeastOneLowerCase(String aPassword)
+    private static boolean hasAtLeastOneLowerCase(String aPassword)
     {
         String upperCase = aPassword.toUpperCase();
         boolean valid = !upperCase.equals(aPassword);
@@ -89,7 +89,7 @@ public class Validator {
         return valid;
     }
 
-    private boolean hasAtLeastOneUpperCase(String aPassword)
+    private static boolean hasAtLeastOneUpperCase(String aPassword)
     {
         String lowerCase = aPassword.toLowerCase();
         boolean valid = !lowerCase.equals(aPassword);//si la frase en minusculas no es igual a la frase original significa que por lo menos tiene una mayuscula
@@ -100,7 +100,7 @@ public class Validator {
         return  valid;
     }
 
-    private boolean hasSpecialCharacter(String aPassword)
+    private static boolean hasSpecialCharacter(String aPassword)
     {
         // otra forma : aPassword.contains("?") && aPassword.contains("¿")... etc
         Pattern special = Pattern.compile ("[?!¡@¿.,´)#_]");
@@ -118,57 +118,57 @@ public class Validator {
     //endregion
 
     //region name
-    public boolean validateNameLenght(String aName)
+    public static boolean validateNameLenght(String aName)
     {
         return validateLenght(aName, minLength, maxLength);
     }
 
-    public int minNameLenght()
+    public static int minNameLenght()
     {
         return minLength;
     }
 
-    public int maxNameLenght()
+    public static int maxNameLenght()
     {
         return maxLength;
     }
     //endregion
 
     //region lastname
-    public int minLastNameLength()
+    public static int minLastNameLength()
     {
         return minLength;
     }
 
-    public int maxLastNameLength()
+    public static int maxLastNameLength()
     {
         return maxLength;
     }
 
-    public boolean validateAddressLenght(String aAddress)
+    public static boolean validateAddressLenght(String aAddress)
     {
         return validateLenght(aAddress, minAddressLenght, maxAddressLenght);
     }
 
-    public String addressExceptionMessage()
+    public static String addressExceptionMessage()
     {
         return MessageFormat.format("Incorrect length must be between {0} and {1}.", minAddressLenght, maxAddressLenght);
     }
 
-    public boolean validateLastNameLenght(String aLastName)
+    public static boolean validateLastNameLenght(String aLastName)
     {
         return validateLenght(aLastName, minLength, maxLength);
     }
     //endregion
 
     //region CVU
-    public boolean validateCvuLength(String aCvu)
+    public static boolean validateCvuLength(String aCvu)
     {
         return validateLenght(aCvu, cvuLength, cvuLength);
     }
     //endregion
 
-    public boolean validateCrytoAddress(String aCryptoAddress)
+    public static boolean validateCrytoAddress(String aCryptoAddress)
     {
         return validateLenght(aCryptoAddress, cryptoAddressLength, cryptoAddressLength);
     }
