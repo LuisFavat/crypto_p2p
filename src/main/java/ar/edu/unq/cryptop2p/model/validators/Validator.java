@@ -1,19 +1,17 @@
 package ar.edu.unq.cryptop2p.model.validators;
 
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
+
 import java.text.MessageFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
-    private static int minPasswordLength = 6;
-    private static int maxPasswordLength = 30;
     private static String passwordExpetionMessage = "Invalid password format.";
-    private static int minLength = 3;
-    private static int maxLength = 30;
-    private static int cvuLength = 22;
-    private static int cryptoAddressLength = 8;
-    private static int minAddressLenght = 10;
-    private static int maxAddressLenght = 30;
+    private static final int minLength = 3;
+    private static final int maxLength = 30;
+    private static final int minAddressLenght = 10;
+    private static final int maxAddressLenght = 30;
 
     public static boolean validateLenght(String aString, int minLength, int maxLength)
     {
@@ -61,43 +59,63 @@ public class Validator {
     //endregion
 
     //region password
-    public static boolean validatePassword(String aPassword)
+    public static void validatePassword(String aPassword)
     {
-        return hasAtLeastOneLowerCase(aPassword) & hasAtLeastOneUpperCase(aPassword) & hasSpecialCharacter(aPassword) & validateLenght(aPassword, minPasswordLength, maxPasswordLength);
+        int minPasswordLength = 6;
+        int maxPasswordLength = 30;
+        validatehasAtLeastOneLowerCase(aPassword);
+        validatehasAtLeastOneUpperCase(aPassword);
+        validatehasSpecialCharacter(aPassword);
+        validatePasswordLenght(aPassword, minPasswordLength, maxPasswordLength);
+
     }
 
-    public static String getPasswordExpetionMessage()
+    public static void validatePasswordLenght(String aString, int minLength ,int maxLength) throws InvalidUserException
     {
-        String msg = passwordExpetionMessage;
-        passwordExpetionMessage = "Invalid password format.";
-        return msg;
+        if ( ! validateLenght(aString, minLength,  maxLength))
+        {
+            throw new InvalidUserException(MessageFormat.format("Invalid password format. Incorrect length must be between {0} and {1}.", minLength, maxLength));
+        }
+
     }
 
+    public static void validatehasAtLeastOneLowerCase(String aPassword) throws InvalidUserException
+    {
+       if ( ! hasAtLeastOneLowerCase(aPassword) )
+        {
+            throw new InvalidUserException("Invalid password format. At least one valid lowercase is needed.");
+        }
+
+    }
+
+    public static void validatehasAtLeastOneUpperCase(String aPassword) throws InvalidUserException
+    {
+        if ( ! hasAtLeastOneUpperCase(aPassword) )
+        {
+            throw new InvalidUserException("Invalid password format. At least one valid uppercase is needed.");
+        }
+
+    }
+
+    public static void validatehasSpecialCharacter(String aPassword) throws InvalidUserException
+    {
+        if ( ! hasSpecialCharacter(aPassword) )
+        {
+            throw new InvalidUserException("Invalid password format. At least one special character is needed.");
+        }
+
+    }
 
 
     private static boolean hasAtLeastOneLowerCase(String aPassword)
     {
-        String upperCase = aPassword.toUpperCase();
-        boolean valid = !upperCase.equals(aPassword);
-
-        if(!valid)
-        {
-            passwordExpetionMessage += " At least one valid lowercase is needed.";
-        }
-
-        // si son distintas significa que tiene por lo menos una miniscula
-        return valid;
+        return ! aPassword.toUpperCase().equals(aPassword);
     }
 
     private static boolean hasAtLeastOneUpperCase(String aPassword)
     {
-        String lowerCase = aPassword.toLowerCase();
-        boolean valid = !lowerCase.equals(aPassword);//si la frase en minusculas no es igual a la frase original significa que por lo menos tiene una mayuscula
-        if(!valid)
-        {
-            passwordExpetionMessage += " At least one valid uppercase is needed.";
-        }
-        return  valid;
+       return !aPassword.toLowerCase().equals(aPassword);//si la frase en minusculas no es igual a la frase original significa que por lo menos tiene una mayuscula
+
     }
 
     private static boolean hasSpecialCharacter(String aPassword)
@@ -105,14 +123,8 @@ public class Validator {
         // otra forma : aPassword.contains("?") && aPassword.contains("¿")... etc
         Pattern special = Pattern.compile ("[?!¡@¿.,´)#_]");
         Matcher hasSpecial = special.matcher(aPassword);
+        return  hasSpecial.find();
 
-        boolean isValid = hasSpecial.find();
-
-        if(!isValid)
-        {
-            passwordExpetionMessage += " At least one special character is needed.";
-        }
-        return isValid;
     }
 
     //endregion
@@ -164,12 +176,14 @@ public class Validator {
     //region CVU
     public static boolean validateCvuLength(String aCvu)
     {
+        int cvuLength = 22;
         return validateLenght(aCvu, cvuLength, cvuLength);
     }
     //endregion
 
     public static boolean validateCrytoAddress(String aCryptoAddress)
     {
+        int cryptoAddressLength = 8;
         return validateLenght(aCryptoAddress, cryptoAddressLength, cryptoAddressLength);
     }
 }

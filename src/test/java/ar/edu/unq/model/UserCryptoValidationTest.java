@@ -11,13 +11,14 @@ public class UserCryptoValidationTest {
     @Test
     void ValidationOnUserNameCaseLessThanMinimunLength()
     {
-        Exception myException = null;
+        Exception myException =  null;
         var nameWithLessLenghtThanMinumun = "lu";
-        UserCrypto user;
 
         try
         {
-            user = aUser().withName(nameWithLessLenghtThanMinumun).build();
+           aUser().withName(nameWithLessLenghtThanMinumun).build();
+
+
         }
         catch (Exception ex)
         {
@@ -47,7 +48,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserNameCaseInTheMaximumRange() throws Exception
+    void ValidationOnUserNameCaseInTheMaximumRange()
     {
         var nameInTheMaxRange = "123456789_123456789_123456789_";
 
@@ -57,7 +58,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserNameCaseInTheMinimumRange() throws Exception
+    void ValidationOnUserNameCaseInTheMinimumRange()
     {
         var nameInTheMinRange = "Lee";
 
@@ -109,7 +110,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserLastNameCaseInTheMaximumRange() throws Exception
+    void ValidationOnUserLastNameCaseInTheMaximumRange()
     {
         var lastNameInTheMaxRange = "123456789_123456789_123456789_";
 
@@ -119,7 +120,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserLastNameCaseInTheMinimumRange() throws Exception
+    void ValidationOnUserLastNameCaseInTheMinimumRange()
     {
         var lastNameInTheMinRange = "Lee";
 
@@ -131,7 +132,7 @@ public class UserCryptoValidationTest {
 
     //region Email
     @Test
-    public void ValidationOnEmailCaseWithOutAtSign() throws Exception
+    public void ValidationOnEmailCaseWithOutAtSign()
     {
         var email = "luisgmail.com";
         UserCrypto user;
@@ -150,7 +151,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithAtSign() throws Exception
+    public void ValidationOnEmailCaseWithAtSign()
     {
         var email = "luis@gmail.com";
 
@@ -160,7 +161,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithOutDotCom() throws Exception
+    public void ValidationOnEmailCaseWithOutDotCom()
     {
         var email = "luis@gmailcom";
         UserCrypto user;
@@ -179,7 +180,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithDotCom() throws Exception
+    public void ValidationOnEmailCaseWithDotCom()
     {
         var email = "luis@gmail.com.ar";
 
@@ -191,7 +192,7 @@ public class UserCryptoValidationTest {
 
 
     @Test
-    public void ValidationOnEmailCaseWithOutCharBeforeAtSign() throws Exception
+    public void ValidationOnEmailCaseWithOutCharBeforeAtSign()
     {
         var email = "@gmailcom";
         UserCrypto user;
@@ -210,7 +211,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithCharBeforeAtSign() throws Exception
+    public void ValidationOnEmailCaseWithCharBeforeAtSign()
     {
         String email = "l@gmail.com.ar";
 
@@ -223,7 +224,7 @@ public class UserCryptoValidationTest {
 
     //region password
     @Test
-    public void ValidationOnPasswordCaseLessThanMinimumLowerCase() throws Exception
+    public void ValidationOnPasswordCaseLessThanMinimumLowerCase()
     {
         var password = "VERY_SECRET";
         UserCrypto user;
@@ -243,7 +244,7 @@ public class UserCryptoValidationTest {
 
 
     @Test
-    public void ValidationOnPasswordCaseLessThanMinimumUpperCase() throws Exception
+    public void ValidationOnPasswordCaseLessThanMinimumUpperCase()
     {
         var password = "very_secret";
         UserCrypto user;
@@ -264,7 +265,7 @@ public class UserCryptoValidationTest {
 
 
     @Test
-    public void ValidationOnPasswordCaseWithOutSpecialCharacter() throws Exception
+    public void ValidationOnPasswordCaseWithOutSpecialCharacter()
     {
         var password = "VerySecret";
         UserCrypto user;
@@ -283,7 +284,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnPasswordCaseWithLessThanMinimumLength() throws Exception
+    public void ValidationOnPasswordCaseWithLessThanMinimumLength()
     {
         var password = "Very!";
         UserCrypto user;
@@ -302,7 +303,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnPasswordCaseCorrectFormat() throws Exception
+    public void ValidationOnPasswordCaseCorrectFormat()
     {
         String password = "vEry_secret";
 
@@ -315,7 +316,7 @@ public class UserCryptoValidationTest {
 
     //region CVU
     @Test
-    public void ValidationOnCVUCaseCorrectFormat() throws Exception
+    public void ValidationOnCVUCaseCorrectFormat()
     {
         String cvu = "123456789_123456789_12";//22 caracteres
 
@@ -325,7 +326,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnCVUCaseLessThanMinimum() throws Exception
+    public void ValidationOnCVUCaseLessThanMinimum()
     {
         String cvu = "123456789_123456789_1";//21 caracteres
         Exception myException = null;
@@ -343,14 +344,14 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnCVUCaseMoreThanMaximum() throws Exception
+    public void ValidationOnCVUCaseMoreThanMaximum()
     {
         String cvu = "123456789_123456789_123";//23 caracteres
         Exception myException = null;
 
         try
         {
-            UserCrypto user = user = aUserWithCVU(cvu);
+            UserCrypto user =  aUserWithCVU(cvu);
         }
         catch (Exception e)
         {
@@ -363,7 +364,7 @@ public class UserCryptoValidationTest {
 
     //region CryptoAddress
     @Test
-    public void ValidationOnCrytoAddressCaseCorrectFormat() throws Exception
+    public void ValidationOnCrytoAddressCaseCorrectFormat()
     {
         String cryptoAddress = "12345678";
 
@@ -373,7 +374,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnCryptoAddressCaseLessThanMinimum() throws Exception
+    public void ValidationOnCryptoAddressCaseLessThanMinimum()
     {
         String cryptoAddress = "1234567";
         Exception myException = null;
@@ -391,7 +392,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnCryptoAddressCaseMoreThanMaximum() throws Exception
+    public void ValidationOnCryptoAddressCaseMoreThanMaximum()
     {
         String cryptoAddress = "123456789";
         Exception myException = null;
@@ -410,7 +411,7 @@ public class UserCryptoValidationTest {
     //endregion
 
     @Test
-    public void ValidationOnAddressCaseMoreThanMaximumLenght() throws Exception
+    public void ValidationOnAddressCaseMoreThanMaximumLenght()
     {
         String address = "123456789_123456789_123456789_1";
         Exception myException = null;
@@ -427,7 +428,7 @@ public class UserCryptoValidationTest {
         assertEquals("Incorrect length must be between 10 and 30.", myException.getMessage());
     }
     @Test
-    public void ValidationOnAddressCaseLessThanMinimumLenght() throws Exception
+    public void ValidationOnAddressCaseLessThanMinimumLenght()
     {
         String address = "123456789";
         Exception myException = null;
@@ -444,7 +445,7 @@ public class UserCryptoValidationTest {
         assertEquals("Incorrect length must be between 10 and 30.", myException.getMessage());
     }
     @Test
-    public void ValidationOnAddressCaseCorrectFormat() throws Exception
+    public void ValidationOnAddressCaseCorrectFormat()
     {
         String address = "Francia N220";
 

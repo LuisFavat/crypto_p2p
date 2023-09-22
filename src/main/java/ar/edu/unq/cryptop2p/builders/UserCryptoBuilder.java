@@ -1,7 +1,12 @@
 package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.exceptions.UserNameException;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class UserCryptoBuilder {
 
     private long id        = 0L;
@@ -89,11 +94,21 @@ public class UserCryptoBuilder {
 
 
 
-    public UserCrypto build() throws Exception {
+    public UserCrypto build()  {
         var user = new UserCrypto(id, name, surname, address, "Very_Secret!", email, cvu, cryptoAddress);
+       /*
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setAddres(address);
+        user.setPassword("Very_Secret!");
+        user.setEmail(email);
+        user.setCvu(cvu);
+        user.setCryptoAddress(address);
+        */
+        user.validate();
         return user;
     }
 

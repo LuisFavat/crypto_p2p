@@ -5,15 +5,17 @@ import java.text.MessageFormat;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "userCrypto")
 public class UserCrypto implements Serializable {
 
@@ -22,7 +24,6 @@ public class UserCrypto implements Serializable {
         @Column(name = "id_userCrypto")
         private Long id;
 
-      @Size(min = 3, max = 30, message = "Name must be between 3 and 30 characters")
        @Column(nullable = false)
        private String name;
 
@@ -31,9 +32,8 @@ public class UserCrypto implements Serializable {
 
         @Column(nullable = false)
         private  String address ;
-
-      @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*=])(?=\\S+$).{6,}$", message = "Password must contain at " +
-           "least 1 lowercase, 1 uppercase, 1 special character, and at least 6 characters")
+      
+        @Column(nullable = false)
         private String password;
 
         @Column(nullable = false, unique = true)
@@ -50,11 +50,6 @@ public class UserCrypto implements Serializable {
         private int reputation;
 
 
-
-        public UserCrypto() {
-        }
-
-
         public UserCrypto(
                 Long id,
                 String name,
@@ -65,64 +60,73 @@ public class UserCrypto implements Serializable {
                 String cvu,
                 String cryptoAddress
         ) {
-        this.id= id;
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.email= email;
-        this.password= password;
-        this.cvu = cvu;
-        this.cryptoAddress= cryptoAddress;
+       this.id= id;
+       this.name = name;
+       this.surname = surname;
+       this.address = address;
+       this.email= email;
+       this.password= password;
+       this.cvu = cvu;
+       this.cryptoAddress= cryptoAddress;
+
                 }
 
-    public void setName(String aName) throws UserNameException {
-        if(! validateNameLenght(aName))
+
+     public void validate() {
+               setName(name);
+               setSurname(surname);
+               setAddres(address);
+               setEmail(email);
+               setPassword(password);
+               setCvu(cvu);
+               setCryptoAddress(cryptoAddress);
+     }
+
+    public void setName(String aName) throws InvalidUserException {
+        if(!validateNameLenght(aName))
         {
-            throw new UserNameException( MessageFormat.format("Not valid name length. Must be between {0} and {1}", minNameLenght(), maxNameLenght()));
+            throw new InvalidUserException( MessageFormat.format("Not valid name length. Must be between {0} and {1}", minNameLenght(), maxNameLenght()));
         }
         name = aName;
     }
 
-    public void setSurame(String aSurname) throws UserNameException
+    public void setSurname(String aSurname) throws InvalidUserException
     {
         if(!validateLastNameLenght(aSurname))
-            throw new UserNameException(MessageFormat.format("Not valid name length. Must be between {0} and {1}", minLastNameLength(), maxLastNameLength()));
+            throw new InvalidUserException(MessageFormat.format("Not valid name length. Must be between {0} and {1}", minLastNameLength(), maxLastNameLength()));
         surname = aSurname;
     }
 
-    public void setAddres(String aAddress) throws AddressException
+    public void setAddres(String aAddress) throws InvalidUserException
     {
         if(!validateAddressLenght(aAddress))
         {
-            throw new AddressException(addressExceptionMessage());
+            throw new InvalidUserException(addressExceptionMessage());
         }
         address = aAddress;
     }
 
-    public void setEmail(String aEmail) throws EmailException
+    public void setEmail(String aEmail) throws InvalidUserException
     {
         if(!validEmail(aEmail))
         {
-            throw new EmailException("Invalid Email Format");
+            throw new InvalidUserException("Invalid Email Format");
         }
         email = aEmail;
     }
 
-    public void setPassword(String aPassword) throws PasswordException
+    public void setPassword(String aPassword) throws InvalidUserException
     {
-        if(!validatePassword(aPassword))
-        {
-            throw new PasswordException(getPasswordExpetionMessage());
-        }
+        validatePassword(aPassword);
         password = aPassword;
     }
 
     //region cvu
-    public void setCvu(String aCvu) throws CvuException
+    public void setCvu(String aCvu) throws InvalidUserException
     {
         if(!validateCvuLength(aCvu))
         {
-            throw new CvuException("Invalid CVU format. 22 digits needed.");
+            throw new InvalidUserException("Invalid CVU format. 22 digits needed.");
         }
         cvu = aCvu;
     }
@@ -130,33 +134,23 @@ public class UserCrypto implements Serializable {
     //endregion
 
     //endregion cryptoAddress
-    public void setCryptoAddress(String aCryptoAddress) throws CryptoAddressException
+    public void setCryptoAddress(String aCryptoAddress) throws InvalidUserException
     {
-        if(validateCrytoAddress(aCryptoAddress))
+        if(!validateCrytoAddress(aCryptoAddress))
         {
-            throw new CryptoAddressException("The crypto address must be 8 digits long.");
+            throw new InvalidUserException("The crypto address must be 8 digits long.");
         }
         cryptoAddress = aCryptoAddress;
     }
 
-        //TODO test
+
         public void addOperation()
         {
                 numberOfOperation += 1;
         }
         public  void addScore(int givenscores) {scores += givenscores; }
 
-        public void setNumberOfOperation(int aNumberOfOperations)
-        {
-                numberOfOperation = aNumberOfOperations;
-        }
-
-        public void setReputation(int aReputation)
-        {
-                reputation = aReputation;
-        }
-
-        public int reputation()  {
+       public int reputation()  {
             if (numberOfOperation <= 0) {
                reputation = scores;
             }
