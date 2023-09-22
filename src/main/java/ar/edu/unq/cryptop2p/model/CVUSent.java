@@ -10,7 +10,7 @@ public class CVUSent extends State {
     public void makeTransfer(Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
         {
             throw new MakeTransferException("Do not can to make a transfer cause state is CryptoCurrencySent");
-        } // Do not can to make a transfer cause state is CryptoCurrencySent
+        }
     }
 
     public void confirmReception(@NotNull Transaction transaction) throws ConfirmReceptionException {

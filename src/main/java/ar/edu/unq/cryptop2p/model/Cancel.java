@@ -1,6 +1,6 @@
 package ar.edu.unq.cryptop2p.model;
 
-import org.jetbrains.annotations.NotNull;
+
 
 public class Cancel  extends Action{
 

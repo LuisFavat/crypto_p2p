@@ -96,18 +96,11 @@ public class UserCryptoBuilder {
 
     public UserCrypto build()  {
         var user = new UserCrypto(id, name, surname, address, "Very_Secret!", email, cvu, cryptoAddress);
-       /*
+
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setAddres(address);
-        user.setPassword("Very_Secret!");
-        user.setEmail(email);
-        user.setCvu(cvu);
-        user.setCryptoAddress(address);
-        */
+
         user.validate();
         return user;
     }
