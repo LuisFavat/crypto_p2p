@@ -2,6 +2,7 @@ package ar.edu.unq.cryptop2p.webservice;
 
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,5 +41,24 @@ public class UserCryptoController {
         return ResponseEntity.ok().body(users);
 
     }
+
+
+    /**get user by id**/
+    @GetMapping("/{id}")
+    ResponseEntity<UserCrypto>  userById(@PathVariable("id") int id) throws NotFoundException  {
+            UserCrypto entity = userService.findByID(id);
+            ResponseEntity.status(200);
+            return ResponseEntity.ok().body(entity);
+
+    }
+
+    /**get user by email**/
+    @GetMapping("/email/{email}")
+    ResponseEntity<UserCrypto> userByEmail(@PathVariable("email") String email) throws NotFoundException{
+        UserCrypto entity = userService.findByEmail(email);
+        ResponseEntity.status(200);
+        return ResponseEntity.ok().body(entity);
+    }
+
 
 }

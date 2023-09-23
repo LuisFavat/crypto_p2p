@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Configuration
 @Repository
-public interface OptionRepository extends JpaRepository<Option,Long> {
+public interface OptionRepository extends JpaRepository<Option, Integer> {
 
 }
