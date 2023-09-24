@@ -2,6 +2,7 @@ package ar.edu.unq.cryptop2p.webservice;
 
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
@@ -28,8 +29,8 @@ public class UserCryptoController {
     /**register a user*/
     @Operation(summary = "Register a user")
     @PostMapping("/register")
-    public  ResponseEntity<UserCrypto> register(@RequestBody UserCrypto userdata ) throws UserNameExistsException {
-        UserCrypto entity =  userService.register(userdata) ;
+    public  ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata ) throws UserNameExistsException {
+        UserCrypto entity =  userService.register(userdata.toModel()) ;
         ResponseEntity.status(201);
         return ResponseEntity.ok().body(entity);
     }

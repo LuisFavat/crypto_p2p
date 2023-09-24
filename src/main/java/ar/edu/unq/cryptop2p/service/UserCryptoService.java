@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.service;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.persistence.UserCryptoRepository;
@@ -19,8 +20,8 @@ public class UserCryptoService {
     private UserCryptoRepository userRepository;
 
     @Transactional
-    public UserCrypto register(UserCrypto user)  throws UserNameExistsException {
-
+    public UserCrypto register(UserCrypto user)  throws UserNameExistsException, InvalidUserException {
+        user.validate();;
         if (existByEmail(user.getEmail())) {
             throw new UserNameExistsException("User with email: "+ user.getEmail() +" is used");
                                         }

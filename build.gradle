@@ -49,6 +49,18 @@ dependencies {
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger2:2.9.2'
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.11")
+	//implementation("org.springdoc:springdoc-openapi-data-rest:1.6.12")
+
+
+	implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
+
+	implementation ("org.springframework.boot:spring-boot-starter-aop")
+	implementation ("ch.qos.logback:logback-classic")
+	implementation ("org.slf4j:jul-to-slf4j")
+	implementation ("org.slf4j:log4j-over-slf4j")
 
 	testImplementation 'com.tngtech.archunit:archunit-junit4:1.0.1'
 

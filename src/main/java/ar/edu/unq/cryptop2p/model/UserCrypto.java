@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "userCrypto")
 public class UserCrypto implements Serializable {
 
@@ -59,6 +57,9 @@ public class UserCrypto implements Serializable {
                 String email,
                 String cvu,
                 String cryptoAddress
+              //  int numberOfOperation,
+               // int scores,
+               // int reputation
         ) {
        this.id= id;
        this.name = name;
@@ -68,11 +69,14 @@ public class UserCrypto implements Serializable {
        this.password= password;
        this.cvu = cvu;
        this.cryptoAddress= cryptoAddress;
+     //  this.numberOfOperation = numberOfOperation;
+     //  this.scores = scores;
+      // this.reputation =  reputation;
 
                 }
 
 
-     public void validate() {
+    public void validate() throws InvalidUserException {
                setName(name);
                setSurname(surname);
                setAddres(address);
@@ -93,7 +97,7 @@ public class UserCrypto implements Serializable {
     public void setSurname(String aSurname) throws InvalidUserException
     {
         if(!validateLastNameLenght(aSurname))
-            throw new InvalidUserException(MessageFormat.format("Not valid name length. Must be between {0} and {1}", minLastNameLength(), maxLastNameLength()));
+            throw new InvalidUserException(MessageFormat.format("Not valid surname length. Must be between {0} and {1}", minLastNameLength(), maxLastNameLength()));
         surname = aSurname;
     }
 
