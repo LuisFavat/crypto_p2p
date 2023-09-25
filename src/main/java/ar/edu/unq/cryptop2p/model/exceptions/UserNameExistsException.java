@@ -1,10 +1,8 @@
 package ar.edu.unq.cryptop2p.model.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UserNameExistsException extends RuntimeException{
+
+public class UserNameExistsException extends Exception{
 
     public UserNameExistsException(String message) {super(message);}
 

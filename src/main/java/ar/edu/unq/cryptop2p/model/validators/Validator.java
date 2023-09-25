@@ -1,12 +1,19 @@
 package ar.edu.unq.cryptop2p.model.validators;
 
 import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
+import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
+import org.springframework.http.HttpStatus;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
+    private static String message = "";
+    private static  HashMap notFoundResponse ;
+    private static HashMap badRequestRespponse;
     private static String passwordExpetionMessage = "Invalid password format.";
     private static final int minLength = 3;
     private static final int maxLength = 30;
@@ -59,7 +66,7 @@ public class Validator {
     //endregion
 
     //region password
-    public static void validatePassword(String aPassword)
+    public static  void  validatePassword(String aPassword) throws InvalidUserException
     {
         int minPasswordLength = 6;
         int maxPasswordLength = 30;
@@ -70,11 +77,13 @@ public class Validator {
 
     }
 
-    public static void validatePasswordLenght(String aString, int minLength ,int maxLength) throws InvalidUserException
-    {
+    public static void validatePasswordLenght(String aString, int minLength ,int maxLength) throws InvalidUserException {
         if ( ! validateLenght(aString, minLength,  maxLength))
         {
-            throw new InvalidUserException(MessageFormat.format("Invalid password format. Incorrect length must be between {0} and {1}.", minLength, maxLength));
+            message =   MessageFormat.format("Invalid password format. Incorrect length must be between {0} and {1}.", minLength, maxLength);
+            badRequestResponse(message);
+            throw new InvalidUserException(message);
+
         }
 
     }
@@ -83,7 +92,9 @@ public class Validator {
     {
        if ( ! hasAtLeastOneLowerCase(aPassword) )
         {
-            throw new InvalidUserException("Invalid password format. At least one valid lowercase is needed.");
+            message = "Invalid password format. At least one valid lowercase is needed.";
+            badRequestResponse(message);
+            throw new InvalidUserException(message);
         }
 
     }
@@ -91,8 +102,9 @@ public class Validator {
     public static void validatehasAtLeastOneUpperCase(String aPassword) throws InvalidUserException
     {
         if ( ! hasAtLeastOneUpperCase(aPassword) )
-        {
-            throw new InvalidUserException("Invalid password format. At least one valid uppercase is needed.");
+        {   message = "Invalid password format. At least one valid uppercase is needed.";
+            badRequestResponse(message);
+            throw new InvalidUserException(message);
         }
 
     }
@@ -100,8 +112,9 @@ public class Validator {
     public static void validatehasSpecialCharacter(String aPassword) throws InvalidUserException
     {
         if ( ! hasSpecialCharacter(aPassword) )
-        {
-            throw new InvalidUserException("Invalid password format. At least one special character is needed.");
+        {   message = "Invalid password format. At least one special character is needed.";
+            badRequestResponse(message);
+            throw new InvalidUserException(message);
         }
 
     }
@@ -186,4 +199,32 @@ public class Validator {
         int cryptoAddressLength = 8;
         return validateLenght(aCryptoAddress, cryptoAddressLength, cryptoAddressLength);
     }
+
+
+    public static void notFoundResponse (String message){
+        HashMap  mapResult = new HashMap();
+        mapResult.put("Message", message);
+        mapResult.put("Status", HttpStatus.NOT_FOUND);
+        notFoundResponse = mapResult;
+    }
+
+
+    public static void badRequestResponse (String message){
+        HashMap  mapResult = new HashMap();
+        mapResult.put("Message", message);
+        mapResult.put("Status", HttpStatus.BAD_REQUEST);
+        badRequestRespponse = mapResult;
+    }
+
+    public static HashMap getNotFoundResponse(){
+        return  notFoundResponse;
+    }
+
+    public static HashMap getBadRequestResponse(){
+        return  badRequestRespponse;
+    }
+
+
+
+
 }

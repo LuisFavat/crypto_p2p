@@ -6,8 +6,10 @@ import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.persistence.UserCryptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -21,16 +23,19 @@ public class UserCryptoService {
 
     @Transactional
     public UserCrypto register(UserCrypto user)  throws UserNameExistsException, InvalidUserException {
-        user.validate();;
+        user.validate();
         if (existByEmail(user.getEmail())) {
-            throw new UserNameExistsException("User with email: "+ user.getEmail() +" is used");
-                                        }
+            String message = "User with email: "+ user.getEmail() +" is used";
+            badRequestResponse(message);
+            throw new UserNameExistsException(message);
+            }
         return userRepository.save(user);
     }
 
     private Boolean existByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
+
 
 
     @Transactional
@@ -42,7 +47,9 @@ public class UserCryptoService {
     public UserCrypto findByID(long id) throws NotFoundException {
         var  user = userRepository.findById(id);
        if (user.isEmpty()) {
-            throw new NotFoundException(MessageFormat.format(" User with Id: {0} not found.", id));
+            String message = MessageFormat.format(" User with Id: {0} not found.", id);
+            notFoundResponse(message);
+            throw new NotFoundException(message);
         }
         return user.get();
 
@@ -52,7 +59,9 @@ public class UserCryptoService {
     public UserCrypto findByEmail( String email) throws NotFoundException{
         var user =userRepository.findByEmail(email);
         if (user.isEmpty()){
-            throw new NotFoundException(MessageFormat.format(" User with enail: {0} not found.", email));
+            String message = MessageFormat.format(" User with enail: {0} not found.", email);
+            notFoundResponse(message);
+            throw new NotFoundException(message);
         }
           return user.get() ;
     }

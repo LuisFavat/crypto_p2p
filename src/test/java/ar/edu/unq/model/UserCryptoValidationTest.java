@@ -1,6 +1,8 @@
 package ar.edu.unq.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
 import org.junit.jupiter.api.Test;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUser;
@@ -48,8 +50,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserNameCaseInTheMaximumRange()
-    {
+    void ValidationOnUserNameCaseInTheMaximumRange() throws InvalidUserException {
         var nameInTheMaxRange = "123456789_123456789_123456789_";
 
         var user = aUserWithName(nameInTheMaxRange);
@@ -58,8 +59,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserNameCaseInTheMinimumRange()
-    {
+    void ValidationOnUserNameCaseInTheMinimumRange() throws InvalidUserException {
         var nameInTheMinRange = "Lee";
 
         var user = aUserWithName(nameInTheMinRange);
@@ -110,8 +110,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserLastNameCaseInTheMaximumRange()
-    {
+    void ValidationOnUserLastNameCaseInTheMaximumRange() throws InvalidUserException {
         var lastNameInTheMaxRange = "123456789_123456789_123456789_";
 
         var user = aUserWithLastName(lastNameInTheMaxRange);
@@ -120,8 +119,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserLastNameCaseInTheMinimumRange()
-    {
+    void ValidationOnUserLastNameCaseInTheMinimumRange() throws InvalidUserException {
         var lastNameInTheMinRange = "Lee";
 
         var user = aUserWithLastName(lastNameInTheMinRange);
@@ -151,8 +149,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithAtSign()
-    {
+    public void ValidationOnEmailCaseWithAtSign() throws InvalidUserException {
         var email = "luis@gmail.com";
 
         UserCrypto user =  aUserWithEmail(email);
@@ -180,8 +177,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithDotCom()
-    {
+    public void ValidationOnEmailCaseWithDotCom() throws InvalidUserException {
         var email = "luis@gmail.com.ar";
 
         UserCrypto user = aUserWithEmail(email);
@@ -211,8 +207,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithCharBeforeAtSign()
-    {
+    public void ValidationOnEmailCaseWithCharBeforeAtSign() throws InvalidUserException {
         String email = "l@gmail.com.ar";
 
         UserCrypto user = aUserWithEmail(email);
@@ -303,8 +298,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnPasswordCaseCorrectFormat()
-    {
+    public void ValidationOnPasswordCaseCorrectFormat() throws InvalidUserException {
         String password = "vEry_secret";
 
         UserCrypto user = user = aUserWithPassword(password);
@@ -316,8 +310,7 @@ public class UserCryptoValidationTest {
 
     //region CVU
     @Test
-    public void ValidationOnCVUCaseCorrectFormat()
-    {
+    public void ValidationOnCVUCaseCorrectFormat() throws InvalidUserException {
         String cvu = "123456789_123456789_12";//22 caracteres
 
         UserCrypto user = user = aUserWithCVU(cvu);
@@ -364,8 +357,7 @@ public class UserCryptoValidationTest {
 
     //region CryptoAddress
     @Test
-    public void ValidationOnCrytoAddressCaseCorrectFormat()
-    {
+    public void ValidationOnCrytoAddressCaseCorrectFormat() throws InvalidUserException {
         String cryptoAddress = "12345678";
 
         UserCrypto user = aUserWithCryptoAddress(cryptoAddress);
@@ -445,8 +437,7 @@ public class UserCryptoValidationTest {
         assertEquals("Incorrect length must be between 10 and 30.", myException.getMessage());
     }
     @Test
-    public void ValidationOnAddressCaseCorrectFormat()
-    {
+    public void ValidationOnAddressCaseCorrectFormat() throws InvalidUserException {
         String address = "Francia N220";
 
         UserCrypto user = aUserWithAddress(address);

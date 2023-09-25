@@ -46,7 +46,7 @@ public class InitServiceInMemory {
             try {
                 userService.register(ale);
                 userService.register(luis);
-            } catch (UserNameExistsException e) {
+            } catch (Exception e) {
                 e.fillInStackTrace();
             }
         }
