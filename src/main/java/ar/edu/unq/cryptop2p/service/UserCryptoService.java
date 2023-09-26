@@ -6,7 +6,6 @@ import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.persistence.UserCryptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
