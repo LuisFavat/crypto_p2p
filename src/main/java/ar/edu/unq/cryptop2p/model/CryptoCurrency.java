@@ -18,9 +18,12 @@ public class CryptoCurrency {
 
     private String name;
     private Double price;
+    private String dateTime;
+
+    @Transient
     private final Double percentDown = 0.95;
     private final Double percentUp= 1.05;
-    private String dateTime;
+
 
     public CryptoCurrency(String name) {
         this.name = name;

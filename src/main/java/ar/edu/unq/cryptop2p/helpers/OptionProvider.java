@@ -1,12 +1,12 @@
 package ar.edu.unq.cryptop2p.helpers;
 
 import ar.edu.unq.cryptop2p.model.Option;
-import ar.edu.unq.cryptop2p.model.dto.OptionPostDTO;
+import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import org.jetbrains.annotations.NotNull;
 
 public class OptionProvider {
     @NotNull
-   public static  Option provide (@NotNull OptionPostDTO optionPostDTO){
+   public static  Option provide (@NotNull OptionPostDto optionPostDTO){
      var  anOption =   optionPostDTO.getType().getOption();
      anOption.setPrice(optionPostDTO.getPrice());
      anOption.setUser(optionPostDTO.getUser());

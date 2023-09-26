@@ -10,14 +10,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CryptoCurrencyLastQuoteDTO {
+public class CryptoCurrencyLastQuoteDto {
     @JsonProperty("symbol")
     private String name;
     @JsonProperty("price")
     private String lastQuote;
 
     private String dateTime;
-    public CryptoCurrencyLastQuoteDTO(String name, String lastQuote){
+    public CryptoCurrencyLastQuoteDto(String name, String lastQuote){
         this.name = name;
         this.lastQuote = lastQuote;
     }

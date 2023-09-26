@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Data
 
-public class OptionPostDTO {
+public class OptionPostDto {
     private OptionType type;
     private CryptoCurrency cryptocurrency;
     private Double price;

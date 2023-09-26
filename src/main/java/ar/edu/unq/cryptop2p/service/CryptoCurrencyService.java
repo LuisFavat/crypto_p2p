@@ -3,7 +3,7 @@ package ar.edu.unq.cryptop2p.service;
 
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
-import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDTO;
+import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.persistence.CryptoCurrencyRepository;
 import ar.edu.unq.cryptop2p.service.integration.BinanceProxyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class CryptoCurrencyService {
 	BinanceProxyService binanceProxyService;
 
 
-	public List<CryptoCurrencyLastQuoteDTO>  getCryptoCurrenciesLatestQuotes() {
+	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
 
 		 var cryptoNames = CryptoCurrencyEnum.values();
 		 var cryptos = Arrays.stream(cryptoNames).map((crypto -> getCryptoCurrencyValue(crypto.name() ))).toList();
@@ -30,8 +30,8 @@ public class CryptoCurrencyService {
     
     
 
-    public CryptoCurrencyLastQuoteDTO getCryptoCurrencyValue(String symbol) {
-		CryptoCurrencyLastQuoteDTO entity = binanceProxyService.getCryptoCurrencyValue(symbol);
+    public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) {
+		CryptoCurrencyLastQuoteDto entity = binanceProxyService.getCryptoCurrencyValue(symbol);
 		if (entity != null) {
 			entity.setDateTime(CurrentDateTime.getNewDateString());
 		}

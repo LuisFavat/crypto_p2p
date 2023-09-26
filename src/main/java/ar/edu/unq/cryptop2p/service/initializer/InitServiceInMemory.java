@@ -1,7 +1,6 @@
 package ar.edu.unq.cryptop2p.service.initializer;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
