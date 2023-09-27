@@ -1,5 +1,6 @@
-package ar.edu.unq.cryptop2p.model;
+package ar.edu.unq.cryptop2p.model.states;
 
+import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 import lombok.Getter;

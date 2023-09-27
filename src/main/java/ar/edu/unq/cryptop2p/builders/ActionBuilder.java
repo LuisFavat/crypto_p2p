@@ -1,7 +1,7 @@
 package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.helpers.ActionType;
-import ar.edu.unq.cryptop2p.model.Action;
+import ar.edu.unq.cryptop2p.model.actions.Action;
 import lombok.Getter;
 
 

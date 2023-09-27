@@ -8,9 +8,11 @@ import static ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder.anyOption;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ar.edu.unq.cryptop2p.helpers.ActionType.*;
-import ar.edu.unq.cryptop2p.model.*;
+
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
+import ar.edu.unq.cryptop2p.model.states.CVUSent;
+import ar.edu.unq.cryptop2p.model.states.Cancelled;
 import org.junit.jupiter.api.Test;
 
 

@@ -2,8 +2,10 @@ package ar.edu.unq.cryptop2p.model;
 
 import ar.edu.unq.cryptop2p.helpers.ActionType;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+import ar.edu.unq.cryptop2p.model.actions.Action;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
+import ar.edu.unq.cryptop2p.model.states.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
