@@ -13,8 +13,8 @@ import lombok.Setter;
 public class OptionCall extends Option {
 
 
-    public OptionCall(CryptoCurrency cryptocurrency, Double price, float units, UserCrypto user){
-            super(cryptocurrency, price, units, user);
+    public OptionCall(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user){
+            super(cryptocurrency, price, cryptoAmount, user);
         }
 
         public String getVirtualAddress ()

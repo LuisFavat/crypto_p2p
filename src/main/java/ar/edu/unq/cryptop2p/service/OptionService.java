@@ -6,6 +6,7 @@ import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.OptionCall;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidResourceException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PriceNotInAValidRangeException;
 import ar.edu.unq.cryptop2p.persistence.OptionRepository;
@@ -33,7 +34,7 @@ public class OptionService {
 
     @Autowired
     private CryptoCurrencyService cryptoService;
-
+/*
   //  @Transactional
     public Option checkOptionPrice(@NotNull Option option) throws  PriceNotInAValidRangeException {
 
@@ -46,16 +47,15 @@ public class OptionService {
         }
        return optionRepository.save(option);
     }
-
+*/
 
     @Transactional (propagation = Propagation.REQUIRES_NEW)
-    public Option  post (OptionPostDto optionPostDto) throws PriceNotInAValidRangeException, NotFoundException {
+    public Option  post (OptionPostDto optionPostDto) throws PriceNotInAValidRangeException, NotFoundException, InvalidResourceException {
         UserCrypto user = userService.findByID(optionPostDto.getUserId());
         CryptoCurrency crypto = cryptoService.findByName(optionPostDto.getCryptoCurrencyName());
-
         var option = provide(optionPostDto, user,crypto);
-       return  checkOptionPrice(option);
-
+        option.checkOptionPrice();
+        return optionRepository.save(option);
     }
 
     @Transactional

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @Getter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidUserException extends Exception {
+public class InvalidResourceException extends Exception {
 
-               public InvalidUserException(String message) {
+               public InvalidResourceException(String message) {
                super(message);
 
 

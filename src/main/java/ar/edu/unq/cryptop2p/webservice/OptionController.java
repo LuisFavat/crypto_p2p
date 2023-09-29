@@ -4,6 +4,7 @@ package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
+import ar.edu.unq.cryptop2p.model.dto.OptionViewDto;
 import ar.edu.unq.cryptop2p.service.OptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class OptionController {
     public ResponseEntity<Option> post(@RequestBody OptionPostDto optionPostDto ){
         ResponseEntity response;
         try {
-            Option entity =  optionService.post(optionPostDto);
+            OptionViewDto entity = OptionViewDto.fromModel( optionService.post(optionPostDto) );
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception e) {
@@ -42,7 +43,6 @@ public class OptionController {
             response = ResponseEntity.ok().body(result);
         }
         return response ;
-
     }
 
 

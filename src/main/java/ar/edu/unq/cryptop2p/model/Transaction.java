@@ -41,9 +41,7 @@ public class Transaction {
         return option.getUser();
     }
 
-    public String getAddress() {
-        return option.getVirtualAddress();
-    }
+    public String getAddress() {return option.getVirtualAddress(); }
 
     public CryptoCurrency getCryptoCurrency() {
         return option.getCryptocurrency();
@@ -73,9 +71,7 @@ public class Transaction {
         return option.reputation();
     }
 
-    public String address() {
-        return option.getAddress();
-    }
+    public String address() {return option.getAddress(); }
 
     public  boolean  IsValidPriceToPost() {return option.IsValidPriceToPost();};
 

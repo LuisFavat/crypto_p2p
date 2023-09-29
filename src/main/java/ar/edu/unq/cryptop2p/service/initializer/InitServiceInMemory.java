@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.service.initializer;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
@@ -39,12 +40,12 @@ public class InitServiceInMemory {
 
     private void fireInitialData() {
         {
-            UserCrypto ale = new UserCrypto(0L, "Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com", "1234567890123456789012", "12345678");
-            UserCrypto luis = new UserCrypto(0L, "Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com", "1234567890123456789015", "12345679");
+            UserRegisterDto ale = new UserRegisterDto( "Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com", "1234567890123456789012", "12345678");
+            UserRegisterDto luis = new UserRegisterDto( "Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com", "1234567890123456789015", "12345679");
 
             try {
-                userService.register(ale);
-                userService.register(luis);
+                userService.register(ale.toModel());
+                userService.register(luis.toModel());
             } catch (Exception e) {
                 e.fillInStackTrace();
             }

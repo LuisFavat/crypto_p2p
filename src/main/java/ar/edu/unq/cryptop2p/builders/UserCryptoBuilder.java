@@ -1,8 +1,7 @@
 package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
-import ar.edu.unq.cryptop2p.model.exceptions.UserNameException;
+import ar.edu.unq.cryptop2p.model.exceptions.InvalidResourceException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -95,7 +94,7 @@ public class UserCryptoBuilder {
 
 
 
-    public UserCrypto build() throws InvalidUserException {
+    public UserCrypto build() throws InvalidResourceException {
         var user = new UserCrypto(id, name, surname, address, "Very_Secret!", email, cvu, cryptoAddress);
 
         user.setReputation(reputation);

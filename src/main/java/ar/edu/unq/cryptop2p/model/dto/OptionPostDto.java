@@ -25,7 +25,7 @@ import static ar.edu.unq.cryptop2p.helpers.OptionProvider.*;
 public class OptionPostDto implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
-    private OptionType type;
+    private OptionType operation;
 
     @NotNull
     private String cryptoCurrencyName;

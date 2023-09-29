@@ -12,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OptionPut  extends Option {
 
-    public OptionPut(CryptoCurrency cryptocurrency, Double price, float units, UserCrypto user) {
-        super(cryptocurrency, price, units, user);
+    public OptionPut(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
+        super(cryptocurrency, price, cryptoAmount, user);
     }
 
     public String getVirtualAddress() {

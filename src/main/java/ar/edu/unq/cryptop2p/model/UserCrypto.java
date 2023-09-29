@@ -2,8 +2,6 @@ package ar.edu.unq.cryptop2p.model;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
@@ -12,7 +10,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 
 @Entity
@@ -48,8 +45,13 @@ public class UserCrypto implements Serializable {
         @Column
         private String cryptoAddress ;
 
+        @Column
         private int numberOfOperation;
-        private int scores;
+
+        @Column
+        private int scores ;
+
+        @Column
         private int reputation;
 
 
@@ -76,7 +78,7 @@ public class UserCrypto implements Serializable {
                 }
 
 
-    public void validate() throws InvalidUserException {
+    public void validate() throws InvalidResourceException {
                setName(name);
                setSurname(surname);
                setAddres(address);
@@ -87,59 +89,59 @@ public class UserCrypto implements Serializable {
 
      }
 
-    public void setName(String aName) throws InvalidUserException {
+    public void setName(String aName) throws InvalidResourceException {
           if(!validateNameLenght(aName))
           {
             String message =  MessageFormat.format("Not valid name length. Must be between {0} and {1}", minNameLenght(), maxNameLenght());
             badRequestResponse(message);
-            throw new InvalidUserException(message);
+            throw new InvalidResourceException(message);
          }
         name = aName;
     }
 
-    public void setSurname(String aSurname) throws InvalidUserException
+    public void setSurname(String aSurname) throws InvalidResourceException
     {
         String message = MessageFormat.format("Not valid surname length. Must be between {0} and {1}", minLastNameLength(), maxLastNameLength());
         if(!validateLastNameLenght(aSurname)) {
             badRequestResponse(message);
-            throw new InvalidUserException(message);
+            throw new InvalidResourceException(message);
         }
            surname = aSurname;
     }
 
-    public void setAddres(String aAddress) throws InvalidUserException
+    public void setAddres(String aAddress) throws InvalidResourceException
     {
         if(!validateAddressLenght(aAddress))
         {   String  message = addressExceptionMessage();
             badRequestResponse(message);
-            throw new InvalidUserException(message);
+            throw new InvalidResourceException(message);
         }
         address = aAddress;
     }
 
-    public void setEmail(String aEmail) throws InvalidUserException
+    public void setEmail(String aEmail) throws InvalidResourceException
     {
         if(!validEmail(aEmail))
         {  String message = "Invalid Email Format";
             badRequestResponse(message);
-            throw new InvalidUserException(message);
+            throw new InvalidResourceException(message);
         }
         email = aEmail;
     }
 
-    public void setPassword(String aPassword) throws InvalidUserException
+    public void setPassword(String aPassword) throws InvalidResourceException
     {
         validatePassword(aPassword);
         password = aPassword;
     }
 
     //region cvu
-    public void setCvu(String aCvu) throws InvalidUserException
+    public void setCvu(String aCvu) throws InvalidResourceException
     {
         if(!validateCvuLength(aCvu))
         {    String message = "Invalid CVU format. 22 digits needed.";
             badRequestResponse(message);
-            throw new InvalidUserException(message);
+            throw new InvalidResourceException(message);
         }
         cvu = aCvu;
     }
@@ -147,12 +149,12 @@ public class UserCrypto implements Serializable {
     //endregion
 
     //endregion cryptoAddress
-    public void setCryptoAddress(String aCryptoAddress) throws InvalidUserException
+    public void setCryptoAddress(String aCryptoAddress) throws InvalidResourceException
     {
         if(!validateCrytoAddress(aCryptoAddress))
         {   String message = "The crypto address must be 8 digits long.";
             badRequestResponse(message);
-            throw new InvalidUserException(message);
+            throw new InvalidResourceException(message);
         }
         cryptoAddress = aCryptoAddress;
     }
