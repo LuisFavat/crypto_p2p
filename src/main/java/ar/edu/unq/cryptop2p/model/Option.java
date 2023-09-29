@@ -1,10 +1,13 @@
 package ar.edu.unq.cryptop2p.model;
 
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+import ar.edu.unq.cryptop2p.helpers.OptionType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -13,6 +16,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+
 @Table(name = "options")
 
 public abstract class Option {
@@ -21,20 +25,34 @@ public abstract class Option {
     @Column(name = "id_options")
     private int id;
 
-    @Transient
+
+    @Column(nullable = false)
+    private OptionType type;
+
+    @NotNull
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_cryptocurrency", referencedColumnName = "id_cryptocurrency")
     private CryptoCurrency cryptocurrency;
 
+    @NotNull
+    @Min(value = 0)
     @Column(nullable = false)
     private float cryptoAmount;
 
+    @NotNull
+    @Min(value = 0)
     @Column(nullable = false)
     private Double price;
 
-    @Transient
+    @NotNull
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     protected UserCrypto user;
 
-    @Transient
-    protected Date dateTime;
+
+    @Column
+    @DateTimeFormat
+    private Date dateTime;
 
     @Transient
     protected float reputation;
@@ -48,8 +66,9 @@ public abstract class Option {
         this.price = price;
         this.cryptoAmount = cryptoAmount;
         this.user = user;
-        this.dateTime = CurrentDateTime.getNewDate();
+        this.dateTime =  CurrentDateTime.getNewDate();
     }
+
 
 
     public Double amountPriceInPesos() {

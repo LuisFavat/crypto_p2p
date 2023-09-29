@@ -3,15 +3,11 @@ package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
-import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
-import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
-import io.swagger.models.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +28,7 @@ public class UserCryptoController {
     /**register a user*/
     @Operation(summary = "Register a user")
     @PostMapping("/register")
-    public  ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata ) throws UserNameExistsException, InvalidUserException {
+    public  ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata ) {
          ResponseEntity response;
           try {
                 UserCrypto entity =  userService.register(userdata.toModel());
@@ -56,6 +52,7 @@ public class UserCryptoController {
 
 
     /**get user by id**/
+    @Operation(summary = "Get a user by Id")
     @GetMapping("/{id}")
     ResponseEntity<UserCrypto>  userById(@PathVariable("id") int id) throws NotFoundException {
             ResponseEntity response;
@@ -64,7 +61,7 @@ public class UserCryptoController {
                 ResponseEntity.status(200);
                 response = ResponseEntity.ok().body(entity);
             } catch (Exception e) {
-                HashMap result = getNotFoundResponse();
+                HashMap result = getResponse();
                 response = ResponseEntity.ok().body(result);
             }
             return response;
@@ -73,6 +70,7 @@ public class UserCryptoController {
 
 
     /**get user by email**/
+    @Operation(summary = "Get a user by email")
     @GetMapping("/email/{email}")
     ResponseEntity<UserCrypto> userByEmail(@PathVariable("email") String email) throws NotFoundException{
          ResponseEntity response;

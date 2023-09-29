@@ -1,7 +1,6 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
@@ -12,12 +11,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.getBadRequestResponse;
-import static ar.edu.unq.cryptop2p.model.validators.Validator.getNotFoundResponse;
+
 
 @RestController
 @Transactional
@@ -69,7 +69,6 @@ public class CryptoCurrencyController {
     @GetMapping("/cryptos")
     public ResponseEntity <List<CryptoCurrency>>getAll(){
         List<CryptoCurrency> cryptos = cryptoService.getAll();
-        ResponseEntity.status(201);
         return ResponseEntity.ok().body(cryptos);
     }
 
@@ -79,10 +78,10 @@ public class CryptoCurrencyController {
         ResponseEntity response;
         try {
             CryptoCurrency entity = cryptoService.findByName(name);
-            ResponseEntity.status(201);
+            ResponseEntity.status(200);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception e) {
-            HashMap result = getNotFoundResponse();
+            HashMap result = getResponse();
             response = ResponseEntity.ok().body(result);
         }
         return response;

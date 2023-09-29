@@ -1,12 +1,10 @@
 package ar.edu.unq.cryptop2p.model.validators;
 
 import ar.edu.unq.cryptop2p.model.exceptions.InvalidUserException;
-import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +12,8 @@ public class Validator {
     private static String message = "";
     private static  HashMap notFoundResponse ;
     private static HashMap badRequestRespponse;
+    private static HashMap invalidRangeRequestResponse;
+    private static HashMap response;
     private static String passwordExpetionMessage = "Invalid password format.";
     private static final int minLength = 3;
     private static final int maxLength = 30;
@@ -216,6 +216,14 @@ public class Validator {
         badRequestRespponse = mapResult;
     }
 
+
+    public static void InvalidRangeRequestResponse (String message){
+        HashMap  mapResult = new HashMap();
+        mapResult.put("Message", message);
+        mapResult.put("Status", HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+        invalidRangeRequestResponse = mapResult;
+    }
+
     public static HashMap getNotFoundResponse(){
         return  notFoundResponse;
     }
@@ -224,7 +232,16 @@ public class Validator {
         return  badRequestRespponse;
     }
 
+    public static HashMap getInvalidRangeRequestResponse(){return invalidRangeRequestResponse;}
 
+    public static void response(String message, HttpStatus status){
+        HashMap  mapResult = new HashMap();
+        mapResult.put("Message", message);
+        mapResult.put("Status",status );
+        response = mapResult;
+       }
 
-
+    public static HashMap getResponse(){
+        return response;
+    }
 }

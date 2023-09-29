@@ -12,6 +12,7 @@ import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
 import ar.edu.unq.cryptop2p.persistence.CryptoCurrencyRepository;
 import ar.edu.unq.cryptop2p.service.integration.BinanceProxyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
-import static ar.edu.unq.cryptop2p.model.validators.Validator.badRequestResponse;
-import static ar.edu.unq.cryptop2p.model.validators.Validator.notFoundResponse;
+import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 @Service
 public class CryptoCurrencyService {
@@ -70,7 +70,8 @@ public class CryptoCurrencyService {
 		var  crypto = cryptoRepository.findByName(name);
 		if (crypto.isEmpty()) {
 			String message = MessageFormat.format(" CruyptoCurrency with name: {0} not found.", name);
-			notFoundResponse(message);
+			response(message, HttpStatus.NOT_FOUND);
+			//notFoundResponse(message);
 			throw new NotFoundException(message);
 		}
 		return crypto.get();
