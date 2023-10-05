@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.service;
 
 
+import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
@@ -26,6 +27,17 @@ public class TransactionService {
 
     @Autowired
     private UserCryptoService userService;
+
+    @Autowired
+    private OptionService optionService;
+
+
+    @Transactional
+     public Transaction create(int id_Option) throws NotFoundException {
+        Option option = optionService.findByID(id_Option);
+        Transaction transaction = new Transaction (option);
+        return transactionRepository.save(transaction);
+     }
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

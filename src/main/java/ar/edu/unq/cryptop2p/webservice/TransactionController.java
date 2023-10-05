@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
+import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.TransactionService;
@@ -41,6 +42,22 @@ public class TransactionController {
             }
             return response ;
         }
+
+    @Operation(summary = "Create transaction")
+    @PostMapping("/create")
+    public ResponseEntity<Transaction> create(@RequestBody TransactionCreateDto transactionData){
+        ResponseEntity response;
+        try {
+            Transaction entity = transactionService.create(transactionData.getIdOption());
+            ResponseEntity.status(201);
+            response = ResponseEntity.ok().body(entity);
+        } catch (Exception  e) {
+
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+        }
+        return response ;
+    }
 
 
     /**get transaction by id**/

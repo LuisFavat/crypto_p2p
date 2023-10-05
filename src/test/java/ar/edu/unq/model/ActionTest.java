@@ -10,8 +10,7 @@ import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
 import static ar.edu.unq.cryptop2p.helpers.ActionType.MAKETRANSFER;
 import static ar.edu.unq.cryptop2p.builders.ActionBuilder.anAction;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ActionTest {
 
@@ -35,12 +34,11 @@ public class ActionTest {
         var transaction = aTransaction().withSeller(seller).withState(CANCELLED).build();
 
         var makeTransfer = anAction(MAKETRANSFER).build();
-       // makeTransfer.execute(transaction);
-         // makeTransfer.execute(transaction);
-         assertThrows ( MakeTransferException.class , ()-> makeTransfer.execute(transaction));
-       //  assertThrows(MakeTransferException.class, (Transaction t) -> makeTransfer.execute(transaction));
+
+        assertThrows ( MakeTransferException.class , ()-> makeTransfer.execute(transaction));
 
         assertTrue(transaction.isCanceled());
+
 
     }
 
