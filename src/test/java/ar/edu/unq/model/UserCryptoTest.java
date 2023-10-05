@@ -1,6 +1,6 @@
 package ar.edu.unq.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import ar.edu.unq.cryptop2p.model.exceptions.InvalidReputationException;
+
 import org.junit.jupiter.api.Test;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
 import static org.junit.jupiter.api.Assertions.assertThrows;

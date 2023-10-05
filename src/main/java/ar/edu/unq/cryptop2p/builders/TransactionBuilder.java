@@ -1,11 +1,13 @@
 package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.helpers.ActionType;
+import ar.edu.unq.cryptop2p.helpers.StateType;
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.actions.Action;
 import ar.edu.unq.cryptop2p.model.states.Idle;
 import ar.edu.unq.cryptop2p.model.states.State;
+import jakarta.persistence.EnumType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,7 @@ public class TransactionBuilder {
     private Double price;
     private Option option;
     private UserCrypto counterParty;
-    private State state = new Idle();
+    private StateType stateType = StateType.UDLE;
     private Action action;
     private ActionType actionType;
 
@@ -71,9 +73,9 @@ public class TransactionBuilder {
         return this;
     }
 
-    public TransactionBuilder withState (State aState)
+    public TransactionBuilder withState (StateType aStateType)
     {
-        state = aState;
+        stateType = aStateType;
         return this;
     }
 
@@ -110,21 +112,13 @@ public class TransactionBuilder {
     {
         Transaction transaction = new Transaction(option);
         transaction.setCounterPartyUser(counterParty);
-        transaction.setState(state);
+        transaction.setStateType(stateType);
         transaction.setActionType(actionType);
         transaction.setAction(action);
         return transaction;
     }
 
-    public Transaction buildWithoutOption()
-    {
-        Transaction transaction = new Transaction();
-        transaction.setCounterPartyUser(counterParty);
-        transaction.setState(state);
-        transaction.setAction(action);
-        transaction.setActionType(actionType);
-        return transaction;
-    }
+
 }
 
 

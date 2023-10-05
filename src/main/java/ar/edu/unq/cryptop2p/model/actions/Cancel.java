@@ -2,11 +2,13 @@ package ar.edu.unq.cryptop2p.model.actions;
 
 
 import ar.edu.unq.cryptop2p.model.Transaction;
-import ar.edu.unq.cryptop2p.model.actions.Action;
+import ar.edu.unq.cryptop2p.model.exceptions.CancelException;
 
 public class Cancel  extends Action {
 
 
-    public  void execute( Transaction transaction) { transaction.getState().cancel(transaction);}
+    public  Transaction execute(Transaction transaction) throws CancelException {  return transaction.getState().cancel(transaction);
+
+    }
 
 }

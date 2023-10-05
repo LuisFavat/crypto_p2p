@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 
 @Entity
@@ -78,7 +79,7 @@ public class UserCrypto implements Serializable {
                 }
 
 
-    public void validate() throws InvalidResourceException {
+    public void validate() throws PreconditionFailedException {
                setName(name);
                setSurname(surname);
                setAddres(address);
@@ -89,59 +90,54 @@ public class UserCrypto implements Serializable {
 
      }
 
-    public void setName(String aName) throws InvalidResourceException {
+    public void setName(String aName) throws PreconditionFailedException {
           if(!validateNameLenght(aName))
           {
             String message =  MessageFormat.format("Not valid name length. Must be between {0} and {1}", minNameLenght(), maxNameLenght());
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
          }
         name = aName;
     }
 
-    public void setSurname(String aSurname) throws InvalidResourceException
-    {
+    public void setSurname(String aSurname) throws  PreconditionFailedException {
         String message = MessageFormat.format("Not valid surname length. Must be between {0} and {1}", minLastNameLength(), maxLastNameLength());
         if(!validateLastNameLenght(aSurname)) {
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
            surname = aSurname;
     }
 
-    public void setAddres(String aAddress) throws InvalidResourceException
-    {
+    public void setAddres(String aAddress) throws PreconditionFailedException {
         if(!validateAddressLenght(aAddress))
         {   String  message = addressExceptionMessage();
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
         address = aAddress;
     }
 
-    public void setEmail(String aEmail) throws InvalidResourceException
-    {
+    public void setEmail(String aEmail) throws PreconditionFailedException {
         if(!validEmail(aEmail))
         {  String message = "Invalid Email Format";
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
         email = aEmail;
     }
 
-    public void setPassword(String aPassword) throws InvalidResourceException
-    {
+    public void setPassword(String aPassword) throws PreconditionFailedException {
         validatePassword(aPassword);
         password = aPassword;
     }
 
     //region cvu
-    public void setCvu(String aCvu) throws InvalidResourceException
-    {
+    public void setCvu(String aCvu) throws PreconditionFailedException {
         if(!validateCvuLength(aCvu))
         {    String message = "Invalid CVU format. 22 digits needed.";
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
         cvu = aCvu;
     }
@@ -149,12 +145,11 @@ public class UserCrypto implements Serializable {
     //endregion
 
     //endregion cryptoAddress
-    public void setCryptoAddress(String aCryptoAddress) throws InvalidResourceException
-    {
+    public void setCryptoAddress(String aCryptoAddress) throws  PreconditionFailedException {
         if(!validateCrytoAddress(aCryptoAddress))
         {   String message = "The crypto address must be 8 digits long.";
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
         cryptoAddress = aCryptoAddress;
     }

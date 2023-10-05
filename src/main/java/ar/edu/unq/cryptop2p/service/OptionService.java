@@ -1,14 +1,8 @@
 package ar.edu.unq.cryptop2p.service;
 
-import ar.edu.unq.cryptop2p.helpers.OptionProvider;
-import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.Option;
-import ar.edu.unq.cryptop2p.model.OptionCall;
-import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
-import ar.edu.unq.cryptop2p.model.exceptions.InvalidResourceException;
-import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
-import ar.edu.unq.cryptop2p.model.exceptions.PriceNotInAValidRangeException;
+import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.persistence.OptionRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -18,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import  static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import static ar.edu.unq.cryptop2p.helpers.OptionProvider.*;
@@ -34,23 +29,9 @@ public class OptionService {
 
     @Autowired
     private CryptoCurrencyService cryptoService;
-/*
-  //  @Transactional
-    public Option checkOptionPrice(@NotNull Option option) throws  PriceNotInAValidRangeException {
-
-        if ( ! option.validateOptionPriceInARangeOfFiveUpAndDown()) {
-            var message = "You cannot post, the option Price" +
-            option.getPrice() + " is outside the reference price" + option.quote();
-            response(message,HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
-            //InvalidRangeRequestResponse(message);
-            throw new PriceNotInAValidRangeException(message);
-        }
-       return optionRepository.save(option);
-    }
-*/
 
     @Transactional (propagation = Propagation.REQUIRES_NEW)
-    public Option  post (OptionPostDto optionPostDto) throws PriceNotInAValidRangeException, NotFoundException, InvalidResourceException {
+    public Option  post (@NotNull OptionPostDto optionPostDto) throws NotFoundException, BadRequestException {
         UserCrypto user = userService.findByID(optionPostDto.getUserId());
         CryptoCurrency crypto = cryptoService.findByName(optionPostDto.getCryptoCurrencyName());
         var option = provide(optionPostDto, user,crypto);
@@ -63,6 +44,17 @@ public class OptionService {
       return   optionRepository.findAll();
     }
 
+    @Transactional
+    public Option findByID(int id) throws NotFoundException {
+        var  option = optionRepository.findById(id);
+        if (option.isEmpty()) {
+            String message = MessageFormat.format(" Option with Id: {0} not found.", id);
+            response(message, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(message);
+        }
+        return option.get();
+
+    }
 
 
    }

@@ -8,18 +8,18 @@ import org.jetbrains.annotations.NotNull;
 public class CVUSent extends State {
 
 
-    public void makeTransfer(Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
+    public Transaction makeTransfer(Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
         {
-            throw new MakeTransferException("Do not can to make a transfer cause state is CryptoCurrencySent");
+            throw new MakeTransferException("Do not can to repeat to make a transfer cause CVU Has just been sent");
         }
     }
 
-    public void confirmReception(@NotNull Transaction transaction) throws ConfirmReceptionException {
-        { transaction.confirmReception();}
+    public Transaction confirmReception(@NotNull Transaction transaction)  {
+        {return  transaction.confirmReception();}
     }
 
-    public void cancel(@NotNull Transaction transaction) {
-        { transaction.cancel(); }
+    public Transaction cancel(@NotNull Transaction transaction) {
+        { return transaction.cancel(); }
     }
 
     public Boolean isIdle()  {return false;};

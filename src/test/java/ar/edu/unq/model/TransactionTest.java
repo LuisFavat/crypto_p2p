@@ -8,17 +8,16 @@ import static ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder.anyOption;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ar.edu.unq.cryptop2p.helpers.ActionType.*;
-
+import static ar.edu.unq.cryptop2p.helpers.StateType.*;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
-import ar.edu.unq.cryptop2p.model.states.CVUSent;
-import ar.edu.unq.cryptop2p.model.states.Cancelled;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import org.junit.jupiter.api.Test;
 
 
 class TransactionTest {
     
-    @Test //TODO Arreglar este test esta mal
+    @Test
     void ShouldHaveTheAddressOfTheOptionWhenIsInstanciated() throws Exception {
         var address = "Rivadavia 1001";
         var user = aUserCrypto().withAddress(address).build();
@@ -166,15 +165,16 @@ class TransactionTest {
     }
 
     @Test
-    void TransactionShouldBeCanceledWhenExecutingMakeTransferActionWithCanceledState() throws Exception {
+    void TransactionShouldBeCanceledWhenExecutingMakeTransferActionWithCanceledState() throws PreconditionFailedException {
 
         var seller = aUserCrypto().build();
 
-        var transaction = aTransaction().withSeller(seller).withState(new Cancelled()).withActionType(MAKETRANSFER).build();
+        var transaction = aTransaction().withSeller(seller).withState(CANCELLED).withActionType(MAKETRANSFER).build();
 
-        transaction.execute();;
+       // transaction.execute();;
 
         assertTrue(transaction.isCanceled());
+        assertThrows ( MakeTransferException.class , transaction::execute);
 
     }
 
@@ -184,7 +184,7 @@ class TransactionTest {
 
         var seller = aUserCrypto().build();
 
-        var transaction = aTransaction().withSeller(seller).withState(new CVUSent()).withActionType(MAKETRANSFER).build();
+        var transaction = aTransaction().withSeller(seller).withState(CVUSENT).withActionType(MAKETRANSFER).build();
 
         assertThrows ( MakeTransferException.class , transaction::execute);
 

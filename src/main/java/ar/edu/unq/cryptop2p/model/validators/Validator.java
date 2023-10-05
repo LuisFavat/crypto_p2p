@@ -1,6 +1,6 @@
 package ar.edu.unq.cryptop2p.model.validators;
 
-import ar.edu.unq.cryptop2p.model.exceptions.InvalidResourceException;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import org.springframework.http.HttpStatus;
 
 import java.text.MessageFormat;
@@ -10,9 +10,6 @@ import java.util.regex.Pattern;
 
 public class Validator {
     private static String message = "";
-    private static  HashMap notFoundResponse ;
-    private static HashMap badRequestRespponse;
-    private static HashMap invalidRangeRequestResponse;
     private static HashMap response;
     private static String passwordExpetionMessage = "Invalid password format.";
     private static final int minLength = 3;
@@ -66,8 +63,7 @@ public class Validator {
     //endregion
 
     //region password
-    public static  void  validatePassword(String aPassword) throws InvalidResourceException
-    {
+    public static  void  validatePassword(String aPassword) throws PreconditionFailedException {
         int minPasswordLength = 6;
         int maxPasswordLength = 30;
         validatehasAtLeastOneLowerCase(aPassword);
@@ -77,44 +73,41 @@ public class Validator {
 
     }
 
-    public static void validatePasswordLenght(String aString, int minLength ,int maxLength) throws InvalidResourceException {
+    public static void validatePasswordLenght(String aString, int minLength ,int maxLength) throws  PreconditionFailedException {
         if ( ! validateLenght(aString, minLength,  maxLength))
         {
             message =   MessageFormat.format("Invalid password format. Incorrect length must be between {0} and {1}.", minLength, maxLength);
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
 
         }
 
     }
 
-    public static void validatehasAtLeastOneLowerCase(String aPassword) throws InvalidResourceException
-    {
+    public static void validatehasAtLeastOneLowerCase(String aPassword) throws PreconditionFailedException {
        if ( ! hasAtLeastOneLowerCase(aPassword) )
         {
             message = "Invalid password format. At least one valid lowercase is needed.";
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
 
     }
 
-    public static void validatehasAtLeastOneUpperCase(String aPassword) throws InvalidResourceException
-    {
+    public static void validatehasAtLeastOneUpperCase(String aPassword) throws PreconditionFailedException {
         if ( ! hasAtLeastOneUpperCase(aPassword) )
         {   message = "Invalid password format. At least one valid uppercase is needed.";
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
 
     }
 
-    public static void validatehasSpecialCharacter(String aPassword) throws InvalidResourceException
-    {
+    public static void validatehasSpecialCharacter(String aPassword) throws PreconditionFailedException {
         if ( ! hasSpecialCharacter(aPassword) )
         {   message = "Invalid password format. At least one special character is needed.";
-            badRequestResponse(message);
-            throw new InvalidResourceException(message);
+            response(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedException(message);
         }
 
     }
@@ -200,39 +193,6 @@ public class Validator {
         return validateLenght(aCryptoAddress, cryptoAddressLength, cryptoAddressLength);
     }
 
-
-    public static void notFoundResponse (String message){
-        HashMap  mapResult = new HashMap();
-        mapResult.put("Message", message);
-        mapResult.put("Status", HttpStatus.NOT_FOUND);
-        notFoundResponse = mapResult;
-    }
-
-
-    public static void badRequestResponse (String message){
-        HashMap  mapResult = new HashMap();
-        mapResult.put("Message", message);
-        mapResult.put("Status", HttpStatus.BAD_REQUEST);
-        badRequestRespponse = mapResult;
-    }
-
-
-    public static void InvalidRangeRequestResponse (String message){
-        HashMap  mapResult = new HashMap();
-        mapResult.put("Message", message);
-        mapResult.put("Status", HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
-        invalidRangeRequestResponse = mapResult;
-    }
-
-    public static HashMap getNotFoundResponse(){
-        return  notFoundResponse;
-    }
-
-    public static HashMap getBadRequestResponse(){
-        return  badRequestRespponse;
-    }
-
-    public static HashMap getInvalidRangeRequestResponse(){return invalidRangeRequestResponse;}
 
     public static void response(String message, HttpStatus status){
         HashMap  mapResult = new HashMap();

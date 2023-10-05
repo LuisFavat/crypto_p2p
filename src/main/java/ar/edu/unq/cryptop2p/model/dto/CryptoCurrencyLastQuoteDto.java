@@ -1,16 +1,16 @@
 package ar.edu.unq.cryptop2p.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CryptoCurrencyLastQuoteDto {
+@Data
+public class CryptoCurrencyLastQuoteDto implements Serializable {
     @JsonProperty("symbol")
     private String name;
     @JsonProperty("price")

@@ -2,8 +2,7 @@ package ar.edu.unq.cryptop2p.model;
 
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.helpers.OptionType;
-import ar.edu.unq.cryptop2p.model.exceptions.PriceNotInAValidRangeException;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -122,13 +121,13 @@ public abstract class Option {
         return this.getPrice() <= this.getCryptocurrency().fivePercentUp();
     }
 
-    public  void  checkOptionPrice() throws PriceNotInAValidRangeException {
+
+    public  void  checkOptionPrice() throws  BadRequestException {
         if (!validateOptionPriceInARangeOfFiveUpAndDown()) {
             var message = "You cannot post, the option Price" +
                     getPrice() + " is outside the reference price" + quote();
-            response(message, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
-            //InvalidRangeRequestResponse(message);
-            throw new PriceNotInAValidRangeException(message);
+            response(message, HttpStatus.EXPECTATION_FAILED);
+            throw new BadRequestException(message);
         }
     }
 

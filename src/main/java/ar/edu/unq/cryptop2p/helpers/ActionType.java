@@ -15,11 +15,8 @@ import lombok.Getter;
         CANCEL ( new Cancel());
 
 
-     private Action action;
-           private  ActionType (Action anAction ) {
-            action =  anAction;
-
-               }
+           private Action action;
+           private  ActionType (Action anAction ) {action =  anAction;}
         }
 
 

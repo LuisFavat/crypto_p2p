@@ -1,10 +1,9 @@
 package ar.edu.unq.cryptop2p.webservice;
 
-
-
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import ar.edu.unq.cryptop2p.model.dto.OptionViewDto;
+import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.OptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
-import org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl;
+//import org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl;
 //import  org.springframework.aop.framework.CglibAopProy;
 
 @RestController
@@ -43,6 +42,23 @@ public class OptionController {
             response = ResponseEntity.ok().body(result);
         }
         return response ;
+    }
+
+
+    /**get option by id**/
+    @Operation(summary = "Get an option by Id")
+    @GetMapping("/{id}")
+    ResponseEntity<Option> findById(@PathVariable("id") int id) throws NotFoundException {
+        ResponseEntity response;
+        try {
+            Option entity = optionService.findByID(id);
+            ResponseEntity.status(200);
+            response = ResponseEntity.ok().body(entity);
+        } catch (Exception e) {
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+        }
+        return response;
     }
 
 

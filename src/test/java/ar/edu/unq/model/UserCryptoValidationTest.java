@@ -2,7 +2,7 @@ package ar.edu.unq.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ar.edu.unq.cryptop2p.model.exceptions.InvalidResourceException;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import org.junit.jupiter.api.Test;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUser;
@@ -50,7 +50,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserNameCaseInTheMaximumRange() throws InvalidResourceException {
+    void ValidationOnUserNameCaseInTheMaximumRange() throws PreconditionFailedException {
         var nameInTheMaxRange = "123456789_123456789_123456789_";
 
         var user = aUserWithName(nameInTheMaxRange);
@@ -59,7 +59,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserNameCaseInTheMinimumRange() throws InvalidResourceException {
+    void ValidationOnUserNameCaseInTheMinimumRange() throws PreconditionFailedException {
         var nameInTheMinRange = "Lee";
 
         var user = aUserWithName(nameInTheMinRange);
@@ -110,7 +110,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserLastNameCaseInTheMaximumRange() throws InvalidResourceException {
+    void ValidationOnUserLastNameCaseInTheMaximumRange() throws PreconditionFailedException {
         var lastNameInTheMaxRange = "123456789_123456789_123456789_";
 
         var user = aUserWithLastName(lastNameInTheMaxRange);
@@ -119,7 +119,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    void ValidationOnUserLastNameCaseInTheMinimumRange() throws InvalidResourceException {
+    void ValidationOnUserLastNameCaseInTheMinimumRange() throws PreconditionFailedException {
         var lastNameInTheMinRange = "Lee";
 
         var user = aUserWithLastName(lastNameInTheMinRange);
@@ -149,7 +149,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithAtSign() throws InvalidResourceException {
+    public void ValidationOnEmailCaseWithAtSign() throws PreconditionFailedException {
         var email = "luis@gmail.com";
 
         UserCrypto user =  aUserWithEmail(email);
@@ -177,7 +177,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithDotCom() throws InvalidResourceException {
+    public void ValidationOnEmailCaseWithDotCom() throws PreconditionFailedException {
         var email = "luis@gmail.com.ar";
 
         UserCrypto user = aUserWithEmail(email);
@@ -207,7 +207,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnEmailCaseWithCharBeforeAtSign() throws InvalidResourceException {
+    public void ValidationOnEmailCaseWithCharBeforeAtSign() throws PreconditionFailedException {
         String email = "l@gmail.com.ar";
 
         UserCrypto user = aUserWithEmail(email);
@@ -298,7 +298,7 @@ public class UserCryptoValidationTest {
     }
 
     @Test
-    public void ValidationOnPasswordCaseCorrectFormat() throws InvalidResourceException {
+    public void ValidationOnPasswordCaseCorrectFormat() throws  PreconditionFailedException {
         String password = "vEry_secret";
 
         UserCrypto user = user = aUserWithPassword(password);
@@ -310,7 +310,7 @@ public class UserCryptoValidationTest {
 
     //region CVU
     @Test
-    public void ValidationOnCVUCaseCorrectFormat() throws InvalidResourceException {
+    public void ValidationOnCVUCaseCorrectFormat() throws PreconditionFailedException {
         String cvu = "123456789_123456789_12";//22 caracteres
 
         UserCrypto user = user = aUserWithCVU(cvu);
@@ -357,7 +357,7 @@ public class UserCryptoValidationTest {
 
     //region CryptoAddress
     @Test
-    public void ValidationOnCrytoAddressCaseCorrectFormat() throws InvalidResourceException {
+    public void ValidationOnCrytoAddressCaseCorrectFormat() throws PreconditionFailedException {
         String cryptoAddress = "12345678";
 
         UserCrypto user = aUserWithCryptoAddress(cryptoAddress);
@@ -437,7 +437,7 @@ public class UserCryptoValidationTest {
         assertEquals("Incorrect length must be between 10 and 30.", myException.getMessage());
     }
     @Test
-    public void ValidationOnAddressCaseCorrectFormat() throws InvalidResourceException {
+    public void ValidationOnAddressCaseCorrectFormat() throws PreconditionFailedException {
         String address = "Francia N220";
 
         UserCrypto user = aUserWithAddress(address);

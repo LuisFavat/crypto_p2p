@@ -35,7 +35,7 @@ public class UserCryptoController {
                 ResponseEntity.status(201);
                 response = ResponseEntity.ok().body(entity);
             } catch (Exception e) {
-                HashMap result = getBadRequestResponse();
+                HashMap result = getResponse();
                 response = ResponseEntity.ok().body(result);
                 }
             return response ;
@@ -79,7 +79,7 @@ public class UserCryptoController {
                 ResponseEntity.status(200);
                 response = ResponseEntity.ok().body(entity);
             } catch (Exception e) {
-                HashMap result = getNotFoundResponse();
+                HashMap result = getResponse();
                 response = ResponseEntity.ok().body(result);
             }
             return response;

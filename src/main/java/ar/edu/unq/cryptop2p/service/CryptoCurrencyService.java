@@ -4,13 +4,12 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
-import ar.edu.unq.cryptop2p.model.exceptions.UserNameExistsException;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.persistence.CryptoCurrencyRepository;
 import ar.edu.unq.cryptop2p.service.integration.BinanceProxyService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -48,16 +47,16 @@ public class CryptoCurrencyService {
 	}
 
 	@Transactional
-	public CryptoCurrency create(CryptoCurrency crypto) throws UserNameExistsException {
+	public CryptoCurrency create(@NotNull CryptoCurrency crypto) throws PreconditionFailedException {
 		if (existByName(crypto.getName())){
 			String message = "Crypto: "+ crypto.getName() + "already exists, please try with another name";
-			badRequestResponse(message);
-			throw new UserNameExistsException(message);
+			response(message, HttpStatus.PRECONDITION_FAILED);
+			throw new PreconditionFailedException(message);
 		}
 		return cryptoRepository.save(crypto);
 	}
 
-	private Boolean existByName(String name) {return cryptoRepository.findByName(name).isPresent(); }
+	private @NotNull Boolean existByName(String name) {return cryptoRepository.findByName(name).isPresent(); }
 
 
 	@Transactional
@@ -71,7 +70,6 @@ public class CryptoCurrencyService {
 		if (crypto.isEmpty()) {
 			String message = MessageFormat.format(" CruyptoCurrency with name: {0} not found.", name);
 			response(message, HttpStatus.NOT_FOUND);
-			//notFoundResponse(message);
 			throw new NotFoundException(message);
 		}
 		return crypto.get();

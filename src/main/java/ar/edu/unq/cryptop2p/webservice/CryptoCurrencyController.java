@@ -16,8 +16,6 @@ import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 import java.util.HashMap;
 import java.util.List;
 
-import static ar.edu.unq.cryptop2p.model.validators.Validator.getBadRequestResponse;
-
 
 @RestController
 @Transactional
@@ -57,7 +55,7 @@ public class CryptoCurrencyController {
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception e) {
-            HashMap result = getBadRequestResponse();
+            HashMap result = getResponse();
             response = ResponseEntity.ok().body(result);
         }
         return response ;

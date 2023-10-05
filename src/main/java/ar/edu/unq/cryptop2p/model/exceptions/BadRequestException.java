@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Setter
 @Getter
-@ResponseStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
-public class PriceNotInAValidRangeException extends Exception {
-
-
-    public PriceNotInAValidRangeException(String message) {super(message); }
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends Exception{
+    public BadRequestException (String message) {super(message); }
 }

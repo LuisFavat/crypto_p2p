@@ -7,8 +7,8 @@ import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 public class MakeTransfer extends Action {
 
 
-    public  void  execute( Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
-        transaction.getState().makeTransfer(transaction);
+    public  Transaction  execute(Transaction transaction) throws MakeTransferException, ConfirmReceptionException {
+       return transaction.getState().makeTransfer(transaction);
 
 
     }

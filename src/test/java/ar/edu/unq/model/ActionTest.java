@@ -1,11 +1,16 @@
 package ar.edu.unq.model;
 
-import ar.edu.unq.cryptop2p.model.states.Cancelled;
+import static ar.edu.unq.cryptop2p.helpers.StateType.*;
+import ar.edu.unq.cryptop2p.model.exceptions.CancelException;
+import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
+import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import org.junit.jupiter.api.Test;
 import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.cryptop2p.builders.UserCryptoBuilder.aUserCrypto;
 import static ar.edu.unq.cryptop2p.helpers.ActionType.MAKETRANSFER;
 import static ar.edu.unq.cryptop2p.builders.ActionBuilder.anAction;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ActionTest {
@@ -17,22 +22,27 @@ public class ActionTest {
         var transaction = aTransaction().withSeller(seller).build();
 
         var makeTransfer = anAction(MAKETRANSFER).build();
-        makeTransfer.execute(transaction);
-        assertTrue(transaction.isCVUSent());
+        var aTransaction = makeTransfer.execute(transaction);
+        assertTrue(aTransaction.isCVUSent());
 
     }
 
     @Test
-    void ItShouldBeCanceledWhenMakeTransferActionExecuteTransactionWithCanceledState() throws Exception {
+    void ItShouldBeCanceledWhenMakeTransferActionExecuteTransactionWithCanceledState() throws ConfirmReceptionException, MakeTransferException, CancelException, PreconditionFailedException {
 
         var seller = aUserCrypto().build();
 
-        var transaction = aTransaction().withSeller(seller).withState(new Cancelled()).build();
+        var transaction = aTransaction().withSeller(seller).withState(CANCELLED).build();
 
         var makeTransfer = anAction(MAKETRANSFER).build();
-        makeTransfer.execute(transaction);
+       // makeTransfer.execute(transaction);
+         // makeTransfer.execute(transaction);
+         assertThrows ( MakeTransferException.class , ()-> makeTransfer.execute(transaction));
+       //  assertThrows(MakeTransferException.class, (Transaction t) -> makeTransfer.execute(transaction));
 
         assertTrue(transaction.isCanceled());
 
     }
-}
+
+    }
+
