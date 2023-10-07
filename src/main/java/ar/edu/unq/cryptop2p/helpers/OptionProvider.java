@@ -37,7 +37,7 @@ public class OptionProvider {
   }
 
   public static  boolean  hasValidOperation(OptionType operation){
-       return  Arrays.stream(OptionType.values()).toList().contains(operation);
+       return  (Arrays.stream(OptionType.values()).toList()).contains(operation);
   }
 
 }

@@ -9,9 +9,9 @@ import ar.edu.unq.cryptop2p.model.exceptions.CancelException;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 import ar.edu.unq.cryptop2p.model.states.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +23,7 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "transaction")
@@ -33,10 +34,11 @@ public class Transaction {
     @Column(name = "id_transaction")
     private int id;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_options", referencedColumnName = "id_options")
-    @JsonManagedReference
     private Option option;
+
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -45,6 +47,7 @@ public class Transaction {
     @NotNull
     @Enumerated(EnumType.STRING)
     private ActionType actionType;
+
 
     @Transient
     private UserCrypto counterPartyUser;
@@ -55,9 +58,11 @@ public class Transaction {
     @Transient
     private Action action;
 
+
     public Transaction(Option aOption) {
-        option = aOption;
+        this.option = aOption;
     }
+
 
     public Action getAction() {
         return getActionType().getAction();

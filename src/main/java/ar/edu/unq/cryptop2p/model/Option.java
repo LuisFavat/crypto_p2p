@@ -3,6 +3,7 @@ package ar.edu.unq.cryptop2p.model;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -51,7 +52,11 @@ public abstract class Option {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     protected UserCrypto user;
-
+/*
+    @OneToOne(mappedBy = "option", cascade = CascadeType.MERGE)
+    @JsonBackReference
+    private Transaction transaction;
+*/
 
     @Column
     @DateTimeFormat

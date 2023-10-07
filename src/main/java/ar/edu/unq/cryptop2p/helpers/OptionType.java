@@ -9,6 +9,7 @@ public enum  OptionType {
    OPTIONCALL (new OptionCall() ) ,
    OPTIONPUT (new OptionPut()) ;
 
+
    private Option option;
 
   private  OptionType ( Option anOption  ) {

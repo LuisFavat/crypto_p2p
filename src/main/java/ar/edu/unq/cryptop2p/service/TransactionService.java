@@ -32,11 +32,12 @@ public class TransactionService {
     private OptionService optionService;
 
 
-    @Transactional
-     public Transaction create(int id_Option) throws NotFoundException {
+      @Transactional(propagation = Propagation.REQUIRES_NEW)
+         public Transaction create(int id_Option) throws NotFoundException {
         Option option = optionService.findByID(id_Option);
-        Transaction transaction = new Transaction (option);
-        return transactionRepository.save(transaction);
+        Transaction transaction = new Transaction(option);
+        Transaction transactionSaved = transactionRepository.save(transaction);
+          return transactionSaved;
      }
 
 
