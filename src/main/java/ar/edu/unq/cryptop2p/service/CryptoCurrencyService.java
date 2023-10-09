@@ -23,8 +23,9 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 @Service
 public class CryptoCurrencyService {
+
     @Autowired
-	CryptoCurrencyRepository cryptoRepository;
+	CryptoCurrencyRepository  cryptoRepository ;
 
 	@Autowired
 	BinanceProxyService binanceProxyService;

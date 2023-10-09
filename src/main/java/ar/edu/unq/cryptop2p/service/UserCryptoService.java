@@ -4,7 +4,8 @@ import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.persistence.UserCryptoRepository;
-import org.jetbrains.annotations.NotNull;
+
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class UserCryptoService {
     private UserCryptoRepository userRepository;
 
     @Transactional
-    public UserCrypto register(@NotNull UserCrypto user) throws  PreconditionFailedException {
+    public UserCrypto register( UserCrypto user) throws  PreconditionFailedException {
         user.validate();
         if (existByEmail(user.getEmail())) {
             String message = "User with email: "+ user.getEmail() +" is used";
@@ -32,7 +33,7 @@ public class UserCryptoService {
         return userRepository.save(user);
     }
 
-    private @NotNull Boolean existByEmail(String email) {
+    private  Boolean existByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
 

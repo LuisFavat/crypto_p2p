@@ -16,6 +16,7 @@ public class UserCryptoBuilder {
     private String email   = "empty@email.com";
     private String cvu     = "1234567890123456789012";
     private String cryptoAddress = "12345678";
+    private String password = "Very_Secret!";
     private int numberOfOperations = 0;
     private int reputation = 0;
     private int scores = 0;
@@ -53,6 +54,12 @@ public class UserCryptoBuilder {
     public UserCryptoBuilder withAddress(String anAddress)
     {
         address = anAddress;
+        return this;
+    }
+
+    public UserCryptoBuilder withPassword (String aPassword)
+    {
+        password = aPassword;
         return this;
     }
 
@@ -95,7 +102,7 @@ public class UserCryptoBuilder {
 
 
     public UserCrypto build() throws PreconditionFailedException {
-        var user = new UserCrypto(id, name, surname, address, "Very_Secret!", email, cvu, cryptoAddress);
+        var user = new UserCrypto(id, name, surname, address, password, email, cvu, cryptoAddress);
 
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);

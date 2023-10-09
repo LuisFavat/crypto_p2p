@@ -46,7 +46,7 @@ public class Transaction {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ActionType actionType;
+    private ActionType actionType = ActionType.MAKETRANSFER;
 
 
     @Transient
