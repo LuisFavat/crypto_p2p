@@ -3,6 +3,7 @@ package ar.edu.unq.cryptop2p.webservice;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
+import ar.edu.unq.cryptop2p.model.dto.TransactionViewDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,10 +30,10 @@ public class TransactionController {
 
         @Operation(summary = "Process transaction")
         @PostMapping("/process")
-        public ResponseEntity<Transaction> process(@RequestBody TransactionProcessDto transactionData){
+        public ResponseEntity<TransactionViewDto> process(@RequestBody TransactionProcessDto transactionData){
             ResponseEntity response;
             try {
-                Transaction entity = transactionService.process(transactionData);
+                TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.process(transactionData));
                 ResponseEntity.status(201);
                 response = ResponseEntity.ok().body(entity);
             } catch (Exception  e) {
@@ -45,10 +46,10 @@ public class TransactionController {
 
     @Operation(summary = "Create transaction")
     @PostMapping("/create")
-    public ResponseEntity<Transaction> create(@RequestBody TransactionCreateDto transactionData){
+    public ResponseEntity<TransactionViewDto> create(@RequestBody TransactionCreateDto transactionData){
         ResponseEntity response;
         try {
-            Transaction entity = transactionService.create(transactionData.getIdOption());
+            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption()));
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception  e) {
@@ -63,10 +64,10 @@ public class TransactionController {
     /**get transaction by id**/
     @Operation(summary = "Get a  transaction by Id")
     @GetMapping("/{id}")
-    ResponseEntity<Transaction> findById(@PathVariable("id") int id) throws NotFoundException {
+    ResponseEntity<TransactionViewDto> findById(@PathVariable("id") int id) throws NotFoundException {
         ResponseEntity response;
         try {
-            Transaction entity = transactionService.findByID(id);
+            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.findByID(id));
             ResponseEntity.status(200);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception e) {
@@ -79,8 +80,8 @@ public class TransactionController {
 
     @Operation(summary = "Get all transactions")
     @GetMapping("/transactions")
-    public ResponseEntity <List<Transaction>>getAll(){
-        List<Transaction> transactions = transactionService.findAll();
+    public ResponseEntity <List<TransactionViewDto>>getAll(){
+        List<TransactionViewDto> transactions = transactionService.findAll().stream().map( transaction -> TransactionViewDto.fromModel( transaction) ).toList();
         return ResponseEntity.ok().body(transactions);
     }
  }

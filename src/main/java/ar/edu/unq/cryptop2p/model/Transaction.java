@@ -2,6 +2,7 @@ package ar.edu.unq.cryptop2p.model;
 
 import ar.edu.unq.cryptop2p.helpers.ActionType;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.helpers.StateType;
 import ar.edu.unq.cryptop2p.model.actions.Action;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
@@ -27,7 +29,7 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 @Getter
 @Setter
 @Table(name = "transaction")
-public class Transaction {
+public class Transaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +48,7 @@ public class Transaction {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ActionType actionType = ActionType.MAKETRANSFER;
+    private ActionType actionType = ActionType.NONE;
 
 
     @Transient
@@ -76,8 +78,15 @@ public class Transaction {
         return counterPartyUser;
     }
 
-    public Date getDateTime() {
-        return option.getDateTime();
+    public Double getPrice() {
+        return getOption().getPrice();
+    }
+
+    public OptionType getOperationType() {
+        return getOption().getOperation();
+    }
+
+    public Date getDateTime() { return getOption().getDateTime();
     }
 
     public UserCrypto getUser() {
@@ -89,15 +98,15 @@ public class Transaction {
     }
 
     public CryptoCurrency getCryptoCurrency() {
-        return option.getCryptocurrency();
+        return getOption().getCryptocurrency();
     }
 
     public float getAmountOfCryptoCurrency() {
-        return option.getCryptoAmount();
+        return getOption().getCryptoAmount();
     }
 
     public Double cryptoPrice() {
-        return option.quote();
+        return getOption().quote();
     }
 
     public Double transactionAmount() {
@@ -105,15 +114,15 @@ public class Transaction {
     }
 
     public String nameOfTheOwnerOfTheOption() {
-        return option.nameOfTheOwner();
+        return getOption().nameOfTheOwner();
     }
 
     public int numberOfOperations() {
-        return option.numberOfOperation();
+        return getOption().numberOfOperation();
     }
 
     public float reputation() {
-        return option.reputation();
+        return getOption().reputation();
     }
 
     public String address() {
@@ -182,7 +191,7 @@ public class Transaction {
         return this;
     }
 
-    public Transaction makeTransfer() throws MakeTransferException {
+    public Transaction makeTransfer() {
         //setState(new CVUSent());
         setStateType(StateType.CVUSENT);
         return this;

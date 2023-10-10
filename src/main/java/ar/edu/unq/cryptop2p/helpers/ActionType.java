@@ -4,6 +4,7 @@ import ar.edu.unq.cryptop2p.model.actions.Action;
 import ar.edu.unq.cryptop2p.model.actions.Cancel;
 import ar.edu.unq.cryptop2p.model.actions.ConfirmReception;
 import ar.edu.unq.cryptop2p.model.actions.MakeTransfer;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 
 @Getter
@@ -12,12 +13,17 @@ import lombok.Getter;
 
         MAKETRANSFER (new MakeTransfer())   ,
         CONFIRMRECEPTION( new ConfirmReception()) ,
-        CANCEL ( new Cancel());
+        CANCEL ( new Cancel()),
+        NONE;
 
 
            private Action action;
            private  ActionType (Action anAction ) {action =  anAction;}
-        }
+
+    ActionType() {
+
+    }
+}
 
 
 

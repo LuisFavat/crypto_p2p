@@ -11,6 +11,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
@@ -23,7 +24,7 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 @Table(name = "options")
 
-public abstract class Option {
+public abstract class Option implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_options")
@@ -52,11 +53,7 @@ public abstract class Option {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     protected UserCrypto user;
-/*
-    @OneToOne(mappedBy = "option", cascade = CascadeType.MERGE)
-    @JsonBackReference
-    private Transaction transaction;
-*/
+
 
     @Column
     @DateTimeFormat

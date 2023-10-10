@@ -46,8 +46,8 @@ public class TransactionService {
         Transaction transaction = provideTransaction(transactionData);
         checkNotSameUser(transaction, transactionData);
         transaction.checkValidPriceToPost();
-        transaction.execute();
-        return transactionRepository.save(transaction);
+       var transactionProcessed =  transaction.execute();
+        return transactionRepository.save(transactionProcessed);
     }
 
     public Transaction provideTransaction(@NotNull TransactionProcessDto transactionData) throws NotFoundException {
