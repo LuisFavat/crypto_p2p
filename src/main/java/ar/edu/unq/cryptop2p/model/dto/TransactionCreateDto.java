@@ -15,4 +15,8 @@ public class TransactionCreateDto implements Serializable {
     @NotNull
     private int idOption;
 
+    @NotNull
+    private Long idCounterParty;
+
+
 }

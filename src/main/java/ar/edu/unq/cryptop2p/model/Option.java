@@ -60,7 +60,7 @@ public abstract class Option implements Serializable {
     private Date dateTime;
 
    @Column
-   protected int numberOfOperation;
+   protected int numberOfOperation ;
 
     @Column
     protected float reputation;
@@ -105,6 +105,11 @@ public abstract class Option implements Serializable {
     public float reputation()
     {
         return user.reputation();
+    }
+
+    public int scores()
+    {
+        return user.getScores();
     }
 
     public boolean validateOptionPriceInARangeOfFiveUpAndDown() {

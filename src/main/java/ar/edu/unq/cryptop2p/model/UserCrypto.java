@@ -159,7 +159,7 @@ public class UserCrypto implements Serializable {
         {
                 numberOfOperation += 1;
         }
-        public  void addScore(int givenscores) {scores += givenscores; }
+        public  void addScore(int givenscores) {scores  += givenscores; }
 
        public int reputation()  {
             if (numberOfOperation <= 0) {

@@ -81,9 +81,9 @@ class TransactionServiceTest {
         var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
         var  optionPutSaved = optionService.post(optioPostDto);
         var options = optionService.findAll();
-        var transaction =  transactionService.create(optionPutSaved.getId());
+        var transaction =  transactionService.create(optionPutSaved.getId(),counterParty.getId());
        var transactions = transactionService.findAll();
-       var transactionData = new TransactionProcessDto(transaction.getId(), MAKETRANSFER,counterParty.getId());
+       var transactionData = new TransactionProcessDto(transaction.getId(), MAKETRANSFER);
        var transactionProcessed = transactionService.process(transactionData);
 
         assertFalse(options.isEmpty());
@@ -94,7 +94,22 @@ class TransactionServiceTest {
         assertEquals(9.7,transactionProcessed.getPrice());
         assertEquals(10,transactionProcessed.cryptoPrice());
 
+        var transactionData2 = new TransactionProcessDto(transaction.getId(),MAKETRANSFER);
 
+      assertThrows ( MakeTransferException.class , () -> transactionService.process(transactionData2));
+
+
+        var transactionData3 = new TransactionProcessDto(transaction.getId(),CONFIRMRECEPTION);
+        var transactionProcessed2 = transactionService.process(transactionData3);
+
+        assertEquals(CRYPTOCURRENTSENT, transactionProcessed2.getStateType());
+        assertEquals(CONFIRMRECEPTION,transactionProcessed2.getActionType());
+        assertEquals(OPTIONPUT, transactionProcessed2.getOperationType());
+        assertEquals(9.7,transactionProcessed2.getPrice());
+        assertEquals(10,transactionProcessed2.cryptoPrice());
+        assertEquals(1,transactionProcessed2.numberOfOperations());
+        assertEquals(10,transactionProcessed2.scores());
+        assertEquals(10,transactionProcessed2.reputation());
 
 
     }

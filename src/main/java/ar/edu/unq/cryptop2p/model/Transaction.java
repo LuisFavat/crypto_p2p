@@ -50,8 +50,10 @@ public class Transaction implements Serializable {
     @Enumerated(EnumType.STRING)
     private ActionType actionType = ActionType.NONE;
 
-
-    @Transient
+   // @Transient
+   @NotNull
+   @ManyToOne(cascade = CascadeType.MERGE)
+   @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     private UserCrypto counterPartyUser;
 
     @Transient
@@ -121,6 +123,10 @@ public class Transaction implements Serializable {
         return getOption().numberOfOperation();
     }
 
+    public int scores() {
+        return getOption().scores();
+    }
+
     public float reputation() {
         return getOption().reputation();
     }
@@ -142,14 +148,16 @@ public class Transaction implements Serializable {
         if (!isCanceled()) {
             addOperationsToUsers();
             addScoresToUsers(gainScores());
-
-        }
+         }
     }
 
     private void addOperationsToUsers() {
         getUser().addOperation();
         getCounterPartyUser().addOperation();
     }
+
+
+
 
     public boolean isCVUSent() {
         return (getState().isCVUSent());
@@ -179,7 +187,7 @@ public class Transaction implements Serializable {
     }
 
     public Transaction execute() throws ConfirmReceptionException, MakeTransferException, CancelException {
-        return getActionType().getAction().execute(this);
+        return getAction().execute(this);
 
 
     }

@@ -26,7 +26,5 @@ public class TransactionProcessDto implements Serializable {
     @Enumerated(EnumType.STRING)
     private ActionType actionType;
 
-    @NotNull
-    private Long idCounterParty;
 
 }

@@ -32,21 +32,24 @@ public class TransactionService {
     private OptionService optionService;
 
 
-      @Transactional(propagation = Propagation.REQUIRES_NEW)
-         public Transaction create(int id_Option) throws NotFoundException {
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Transaction create(int id_Option,Long id_counterPartyUser) throws NotFoundException {
         Option option = optionService.findByID(id_Option);
+         UserCrypto counterPartyUser = userService.findByID(id_counterPartyUser);
         Transaction transaction = new Transaction(option);
+        transaction.setCounterPartyUser(counterPartyUser);
         Transaction transactionSaved = transactionRepository.save(transaction);
-          return transactionSaved;
-     }
+        return transactionSaved;
+    }
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Transaction process (TransactionProcessDto transactionData) throws ConfirmReceptionException, MakeTransferException, CancelException, BadRequestException, NotFoundException {
         Transaction transaction = provideTransaction(transactionData);
-        checkNotSameUser(transaction, transactionData);
+       // checkNotSameUser(transaction, transactionData);
         transaction.checkValidPriceToPost();
-       var transactionProcessed =  transaction.execute();
+        var transactionProcessed =  transaction.execute();
         return transactionRepository.save(transactionProcessed);
     }
 
@@ -55,12 +58,12 @@ public class TransactionService {
     transaction.setActionType(transactionData.getActionType());
     return transaction;
     }
-
+/*
     public void checkNotSameUser (@NotNull Transaction transaction, @NotNull TransactionProcessDto transactionData) throws NotFoundException, BadRequestException {
         UserCrypto userCounterParty = userService.findByID(transactionData.getIdCounterParty());
         transaction.checkNotSameUser(userCounterParty);
      }
-
+*/
     @Transactional
     public  List<Transaction> findAll() {
         return  transactionRepository.findAll();

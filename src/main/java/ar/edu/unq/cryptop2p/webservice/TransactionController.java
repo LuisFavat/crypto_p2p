@@ -49,7 +49,7 @@ public class TransactionController {
     public ResponseEntity<TransactionViewDto> create(@RequestBody TransactionCreateDto transactionData){
         ResponseEntity response;
         try {
-            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption()));
+            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption(), transactionData.getIdCounterParty()));
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception  e) {
