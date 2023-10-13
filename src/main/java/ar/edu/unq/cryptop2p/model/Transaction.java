@@ -19,6 +19,8 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
@@ -96,7 +98,7 @@ public class Transaction implements Serializable {
     }
 
     public String getAddress() {
-        return getOption().getVirtualAddress();
+        return getOption().virtualAddress();
     }
 
     public CryptoCurrency getCryptoCurrency() {
@@ -118,6 +120,8 @@ public class Transaction implements Serializable {
     public String nameOfTheOwnerOfTheOption() {
         return getOption().nameOfTheOwner();
     }
+
+    public String nameOfTheCounterParty() {return getCounterPartyUser().getName() + " " +getCounterPartyUser().getSurname();}
 
     public int numberOfOperations() {
         return getOption().numberOfOperation();
@@ -219,6 +223,19 @@ public class Transaction implements Serializable {
 
         }
         return this;
+    }
+
+    public void  checkValidAction() throws  BadRequestException {
+        if ( ! hasValidAction()) {
+            var message = MessageFormat.format("Sorry, {0} is not a valid action, please valid actions must be : {1} only ",getActionType(),Arrays.toString(ActionType.values()));
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+
+    }
+
+    public boolean  hasValidAction(){
+        return  (Arrays.stream(ActionType.values()).toList()).contains(getActionType());
     }
 
 

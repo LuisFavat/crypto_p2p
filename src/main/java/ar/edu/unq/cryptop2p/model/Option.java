@@ -11,6 +11,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,30 +25,35 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 @Table(name = "options")
 
-public abstract class Option implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+
+public abstract class Option implements  Serializable {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "id_options")
-    private int id;
+   protected int id;
 
 
     @Column(nullable = false)
-    private OptionType operation;
+    protected OptionType operation;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_cryptocurrency", referencedColumnName = "id_cryptocurrency")
-    private CryptoCurrency cryptocurrency;
+    protected CryptoCurrency cryptocurrency;
 
     @NotNull
     @Min(value = 0)
     @Column(nullable = false)
-    private float cryptoAmount;
+    protected float cryptoAmount;
 
     @NotNull
     @Min(value = 0)
     @Column(nullable = false)
-    private Double price;
+    protected Double price;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -57,7 +63,7 @@ public abstract class Option implements Serializable {
 
     @Column
     @DateTimeFormat
-    private Date dateTime;
+    protected Date dateTime;
 
    @Column
    protected int numberOfOperation ;
@@ -83,7 +89,7 @@ public abstract class Option implements Serializable {
         return this.price * this.cryptoAmount;
     }
 
-    public abstract String getVirtualAddress();
+    public abstract String virtualAddress();
 
     public String getAddress() {return user.getAddress();};
 

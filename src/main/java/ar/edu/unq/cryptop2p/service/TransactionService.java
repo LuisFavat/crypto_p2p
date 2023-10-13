@@ -47,6 +47,7 @@ public class TransactionService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Transaction process (TransactionProcessDto transactionData) throws ConfirmReceptionException, MakeTransferException, CancelException, BadRequestException, NotFoundException {
         Transaction transaction = provideTransaction(transactionData);
+        transaction.checkValidAction();
        // checkNotSameUser(transaction, transactionData);
         transaction.checkValidPriceToPost();
         var transactionProcessed =  transaction.execute();

@@ -13,11 +13,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @Data
-public class TransactionViewDto {
+public class TransactionViewDto implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private OptionType operation;
@@ -27,6 +29,9 @@ public class TransactionViewDto {
 
     @NotNull
     private String nameOfTheOwner;
+
+    @NotNull
+    private String nameOfTheCounterParty;
 
     @NotNull
     @Min(value = 0)
@@ -55,7 +60,7 @@ public class TransactionViewDto {
 
     public static TransactionViewDto fromModel (Transaction transaction){
 
-        return new TransactionViewDto  (transaction.getOperationType(), transaction.getCryptoCurrency().getName(), transaction.nameOfTheOwnerOfTheOption(), transaction.getPrice(), transaction.getAmountOfCryptoCurrency(),transaction.transactionAmount(), transaction.numberOfOperations(),transaction.reputation(),transaction.getAddress(),transaction.getActionType());
+        return new TransactionViewDto  (transaction.getOperationType(), transaction.getCryptoCurrency().getName(), transaction.nameOfTheOwnerOfTheOption(), transaction.nameOfTheCounterParty(),transaction.getPrice(), transaction.getAmountOfCryptoCurrency(),transaction.transactionAmount(), transaction.numberOfOperations(),transaction.reputation(),transaction.getAddress(),transaction.getActionType());
 
     }
 }

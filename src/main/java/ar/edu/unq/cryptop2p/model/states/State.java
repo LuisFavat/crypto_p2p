@@ -22,5 +22,4 @@ public abstract  class State {
     public abstract  Boolean isCryptoCurrencySent();
     public abstract  Boolean isCanceled();
 
-
 }

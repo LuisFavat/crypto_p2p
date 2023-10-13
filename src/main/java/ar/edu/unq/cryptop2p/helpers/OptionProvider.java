@@ -8,6 +8,7 @@ import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
@@ -29,7 +30,7 @@ public class OptionProvider {
 
   public static  void  checkValidOperation(OptionType operation) throws  BadRequestException {
     if ( ! hasValidOperation(operation)) {
-     var message = "Sorry, this option has not a valid operation, please operations must be :" + Arrays.toString(OptionType.values()) + "only";
+     var message = MessageFormat.format("Sorry, {0} is not a valid operation, please operations must be: {1} only ",operation,Arrays.toString(OptionType.values()));
      response(message, HttpStatus.BAD_REQUEST);
     throw new BadRequestException(message);
     }

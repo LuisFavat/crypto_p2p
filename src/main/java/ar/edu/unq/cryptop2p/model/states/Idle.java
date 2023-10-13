@@ -4,6 +4,9 @@ import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
+
+import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 public class Idle extends State {
 
@@ -12,7 +15,10 @@ public class Idle extends State {
 
 
     public Transaction confirmReception(Transaction transaction)  throws ConfirmReceptionException
-    {throw new ConfirmReceptionException( " Do not can to Confirm Reception cause the tansfer has not been done yet") ;}
+    {
+      var message = "Do not can confirm reception cause the tansfer has not been done yet";
+      response(message, HttpStatus.PRECONDITION_FAILED);
+      throw new ConfirmReceptionException(message ) ;}
 
 
 

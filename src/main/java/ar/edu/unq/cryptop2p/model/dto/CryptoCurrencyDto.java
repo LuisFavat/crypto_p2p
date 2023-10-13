@@ -9,11 +9,10 @@ import java.io.Serializable;
 public class CryptoCurrencyDto implements Serializable {
     private final String name;
     private final Double price;
-    private String dateTime;
+
 
     public CryptoCurrency toModel() {
-        dateTime = CurrentDateTime.getNewDateString();
-        var crypto = new CryptoCurrency (name,price);
+         var crypto = new CryptoCurrency (name,price);
          crypto.setDateTime(CurrentDateTime.getNewDateString());
         return crypto;
     }

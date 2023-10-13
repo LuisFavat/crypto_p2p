@@ -1,7 +1,7 @@
 package ar.edu.unq.cryptop2p.model;
 
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,13 +10,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+
+@Table(name = "options_put")
+@PrimaryKeyJoinColumn(name = "id_options")
 public class OptionPut  extends Option {
+
 
     public OptionPut(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user) {
         super(cryptocurrency, price, cryptoAmount, user);
     }
 
-    public String getVirtualAddress() {
+    public String virtualAddress() {
         return user.getCvu();
     }
 

@@ -19,22 +19,23 @@ import java.io.Serializable;
 @Data
 
 public class OptionPostDto implements Serializable {
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private OptionType operation;
+
+   @NotNull
+   @Enumerated(EnumType.STRING)
+   private final OptionType operation;
 
     @NotNull
-    private String cryptoCurrencyName;
-
-    @NotNull
-    @Min(value = 0)
-    private Double price;
+    private final String cryptoCurrencyName;
 
     @NotNull
     @Min(value = 0)
-    private float cryptoAmount;
+    private final Double price;
 
     @NotNull
-    private Long userId;
+    @Min(value = 0)
+    private final float cryptoAmount;
+
+    @NotNull
+    private final Long userId;
 
 }
