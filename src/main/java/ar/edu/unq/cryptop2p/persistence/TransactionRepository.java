@@ -15,10 +15,10 @@ public interface TransactionRepository extends JpaRepository<Transaction,Integer
 
 
     //jpa query
-    @Query("SELECT SUM(t.cryptoAmount) " +
-            "FROM Transaction  t  LEFT JOIN options_call" +
+    @Query("SELECT SUM(t.crypto_amount) " +
+            "FROM Transaction  t  LEFT JOIN options_call LEFT JOIN cryptocurrency" +
             "WHERE t.id_userCrypto = %?1% AND t.executionDay >= %?2% AND t.excutionDay <= %?3% " +
-            "GROUP BY t.cryptocurrency.name")
-    public TradedCryptoAmountDTO findAllBetween(int userID, LocalDate startRange, LocalDate endRange);
+            "GROUP BY t.name")
+    TradedCryptoAmountDTO findAllBetween(int userID, LocalDate startRange, LocalDate endRange);
 
 }
