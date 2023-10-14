@@ -61,13 +61,13 @@ public class OptionController {
         return response;
     }
 
-
     @Operation(summary = "Get all options")
     @GetMapping("/options")
     public ResponseEntity <List<Option>>getAll(){
         List<Option> options = optionService.findAll();
        return ResponseEntity.ok().body(options);
     }
+
 
 
 }

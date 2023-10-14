@@ -2,10 +2,13 @@ package ar.edu.unq.cryptop2p.model;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +27,10 @@ public class UserCrypto implements Serializable {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id_userCrypto")
         private Long id;
+
+       @JsonIgnore
+       @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+       private Set<Option> optioms = new HashSet<>();
 
        @Column(nullable = false)
        private String name;
@@ -153,6 +160,9 @@ public class UserCrypto implements Serializable {
         }
         cryptoAddress = aCryptoAddress;
     }
+
+
+
 
 
         public void addOperation()
