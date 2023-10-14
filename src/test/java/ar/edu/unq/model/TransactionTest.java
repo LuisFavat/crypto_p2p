@@ -14,6 +14,8 @@ import ar.edu.unq.cryptop2p.model.exceptions.MakeTransferException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 
 class TransactionTest {
     
@@ -218,5 +220,19 @@ class TransactionTest {
 
       assertEquals(80, transaction.reputation());
       assertTrue(transaction.isCanceled());
+    }
+
+    @Test
+    void cancel12() throws PreconditionFailedException {
+        var seller = aUserCrypto().withScores(100).withNumberOfOperation(1).build();
+        var optionPut = anyOption().withUser(seller).buildOptionPut();
+        var transaction = aTransaction().wwithOption(optionPut).build();
+
+        var a = LocalDate.now();
+        var b = 1;
+
+
+
+
     }
 }

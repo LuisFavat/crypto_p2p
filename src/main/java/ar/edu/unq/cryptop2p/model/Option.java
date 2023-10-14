@@ -81,6 +81,7 @@ public abstract class Option implements  Serializable {
         this.cryptoAmount = cryptoAmount;
         this.user = user;
         this.dateTime =  CurrentDateTime.getNewDate();
+        System.out.println("");
     }
 
 

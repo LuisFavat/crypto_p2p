@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
+import ar.edu.unq.cryptop2p.model.dto.TradedCryptoAmountDTO;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionViewDto;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -84,4 +86,12 @@ public class TransactionController {
         List<TransactionViewDto> transactions = transactionService.findAll().stream().map( transaction -> TransactionViewDto.fromModel( transaction) ).toList();
         return ResponseEntity.ok().body(transactions);
     }
+
+
+    public ResponseEntity<TradedCryptoAmountDTO> totalAmountTraded(int userID, LocalDate startRange, LocalDate endOfRange)
+    {
+        TradedCryptoAmountDTO amountDTO = transactionService.totalAmountTraded(userID, startRange, endOfRange);
+        return ResponseEntity.ok().body(amountDTO);
+    }
+
  }

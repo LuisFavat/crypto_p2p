@@ -16,10 +16,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -64,9 +66,13 @@ public class Transaction implements Serializable {
     @Transient
     private Action action;
 
+    @DateTimeFormat
+    private LocalDate executionDay;
+
 
     public Transaction(Option aOption) {
         this.option = aOption;
+        this.executionDay = null;
     }
 
 
@@ -220,9 +226,14 @@ public class Transaction implements Serializable {
             //setState(new CryptoCurrencySent());
             setStateType(StateType.CRYPTOCURRENTSENT);
             addOperation();
-
+            setExecutionDay();
         }
         return this;
+    }
+
+    private void setExecutionDay()
+    {
+        executionDay = LocalDate.now();
     }
 
     public void  checkValidAction() throws  BadRequestException {

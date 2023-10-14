@@ -4,6 +4,7 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.TradedCryptoAmountDTO;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.persistence.TransactionRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
@@ -80,5 +82,10 @@ public class TransactionService {
         }
         return transaction.get();
 
+    }
+
+    public TradedCryptoAmountDTO totalAmountTraded(Integer userID, LocalDate startRange, LocalDate endRange) {
+        var transactions = transactionRepository.findAllBetween(userID, startRange, endRange);
+        return transactions;
     }
 }
