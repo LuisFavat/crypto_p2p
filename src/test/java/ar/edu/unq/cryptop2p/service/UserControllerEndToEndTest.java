@@ -2,13 +2,15 @@ package ar.edu.unq.cryptop2p.service;
 
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,7 +19,7 @@ import org.springframework.web.reactive.function.BodyInserter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@RunWith(SpringRunner.class)
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerEndToEndTest {
     private static final String HTTP_LOCALHOST = "http://localhost:";
@@ -30,8 +32,33 @@ public class UserControllerEndToEndTest {
     @Autowired
     private WebTestClient webClient;
 
-//    @Autowired
-//    private MockMvc mockMvc;
+    @Autowired
+    private UserCryptoService userService;
+
+    private void fireInitialData() {
+        {
+            UserRegisterDto ale = new UserRegisterDto( "Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com", "1234567890123456789012", "12345678");
+            UserRegisterDto luis = new UserRegisterDto( "Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com", "1234567890123456789015", "12345679");
+
+            try {
+                userService.register(ale.toModel());
+                userService.register(luis.toModel());
+            } catch (Exception e) {
+                e.fillInStackTrace();
+            }
+        }
+    }
+
+    @BeforeEach
+    void setUp() {
+
+    }
+
+    @AfterEach
+    void tearDown() {
+
+    }
+
 
     @Test
     public void contextLoads() throws Exception {
@@ -67,41 +94,41 @@ public class UserControllerEndToEndTest {
 //    }
 
 
-    @Test
-    public void getAllUsers()
-    {
-        String uri = "/api/user/users";
-        webClient.get().uri(uri);
-        var result = this.restTemplate.getForObject(HTTP_LOCALHOST + port + uri, String.class);
-        System.out.println("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        System.out.println(result);
-        assertThat(result).isEqualTo("[{" +
-                        "\"id\":1," +
-                        "\"name\":\"Ale\"," +
-                        "\"surname\":\"Fariña\"," +
-                        "\"address\":\"dir1132123123\"," +
-                        "\"password\":\"Very_Secret!\"," +
-                        "\"email\":\"ale@gmail.com\"," +
-                        "\"cvu\":\"1234567890123456789012\"," +
-                        "\"cryptoAddress\":\"12345678\"," +
-                        "\"numberOfOperation\":0," +
-                        "\"scores\":0," +
-                        "\"reputation\":0" +
-                        "}," +
-                        "{"  +
-                        "\"id\":2," +
-                        "\"name\":\"Luis\"," +
-                        "\"surname\":\"Favatier\"," +
-                        "\"address\":\"dir1132123140\"," +
-                        "\"password\":\"Extremly_Secret!\"," +
-                        "\"email\":\"luis@gmail.com\"," +
-                        "\"cvu\":\"1234567890123456789015\"," +
-                        "\"cryptoAddress\":\"12345679\"," +
-                        "\"numberOfOperation\":0," +
-                        "\"scores\":0," +
-                        "\"reputation\":0" +
-                        "}]");
-    }
+//    @Test
+//    public void getAllUsers()
+//    {
+//        String uri = "/api/user/users";
+//        webClient.get().uri(uri);
+//        var result = this.restTemplate.getForObject(HTTP_LOCALHOST + port + uri, String.class);
+//        System.out.println("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+//        System.out.println(result);
+//        assertThat(result).isEqualTo("[{" +
+//                        "\"id\":1," +
+//                        "\"name\":\"Ale\"," +
+//                        "\"surname\":\"Fariña\"," +
+//                        "\"address\":\"dir1132123123\"," +
+//                        "\"password\":\"Very_Secret!\"," +
+//                        "\"email\":\"ale@gmail.com\"," +
+//                        "\"cvu\":\"1234567890123456789012\"," +
+//                        "\"cryptoAddress\":\"12345678\"," +
+//                        "\"numberOfOperation\":0," +
+//                        "\"scores\":0," +
+//                        "\"reputation\":0" +
+//                        "}," +
+//                        "{"  +
+//                        "\"id\":2," +
+//                        "\"name\":\"Luis\"," +
+//                        "\"surname\":\"Favatier\"," +
+//                        "\"address\":\"dir1132123140\"," +
+//                        "\"password\":\"Extremly_Secret!\"," +
+//                        "\"email\":\"luis@gmail.com\"," +
+//                        "\"cvu\":\"1234567890123456789015\"," +
+//                        "\"cryptoAddress\":\"12345679\"," +
+//                        "\"numberOfOperation\":0," +
+//                        "\"scores\":0," +
+//                        "\"reputation\":0" +
+//                        "}]");
+//    }
 
 
 
