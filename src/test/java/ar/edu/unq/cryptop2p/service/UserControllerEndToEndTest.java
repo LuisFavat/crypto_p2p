@@ -18,7 +18,7 @@ import org.springframework.web.reactive.function.BodyInserter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerEndToEndTest {
     private static final String HTTP_LOCALHOST = "http://localhost:";
