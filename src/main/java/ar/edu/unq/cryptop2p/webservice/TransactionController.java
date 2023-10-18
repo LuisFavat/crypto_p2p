@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
+import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionViewDto;
@@ -83,5 +84,21 @@ public class TransactionController {
     public ResponseEntity <List<TransactionViewDto>>getAll(){
         List<TransactionViewDto> transactions = transactionService.findAll().stream().map( transaction -> TransactionViewDto.fromModel( transaction) ).toList();
         return ResponseEntity.ok().body(transactions);
+    }
+
+    /**Acept a user**/
+    @Operation(summary = "Select a Option For a user")
+    @GetMapping("acept")
+    ResponseEntity<Transaction> acept(@RequestBody OptionSelectDto optiondata) {
+        ResponseEntity response;
+        try {
+            Transaction entity = transactionService.acept(optiondata);
+            ResponseEntity.status(200);
+            response = ResponseEntity.ok().body(entity);
+        } catch (Exception e) {
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+        }
+        return response;
     }
  }

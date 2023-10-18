@@ -2,6 +2,7 @@ package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
+import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
 import ar.edu.unq.cryptop2p.model.dto.OptionViewDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.OptionService;
@@ -48,7 +49,7 @@ public class OptionController {
     /**get option by id**/
     @Operation(summary = "Get an option by Id")
     @GetMapping("/{id}")
-    ResponseEntity<Option> findById(@PathVariable("id") int id) throws NotFoundException {
+    ResponseEntity<Option> findById(@PathVariable("id") int id) {
         ResponseEntity response;
         try {
             Option entity = optionService.findByID(id);

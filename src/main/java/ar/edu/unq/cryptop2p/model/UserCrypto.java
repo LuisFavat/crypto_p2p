@@ -28,8 +28,8 @@ public class UserCrypto implements Serializable {
         @Column(name = "id_userCrypto")
         private Long id;
 
-       @JsonIgnore
-       @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+      // @JsonIgnore
+       @OneToMany(/*mappedBy = "user",*/cascade = CascadeType.ALL, fetch = FetchType.EAGER)
        private Set<Option> optioms = new HashSet<>();
 
        @Column(nullable = false)

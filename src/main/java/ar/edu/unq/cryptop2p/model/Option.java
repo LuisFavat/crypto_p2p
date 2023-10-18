@@ -146,6 +146,23 @@ public abstract class Option implements  Serializable {
         }
     }
 
+    public void checkNotSameUser(UserCrypto userCounterParty) throws BadRequestException {
+        if (getUser().getId().equals(userCounterParty.getId())) {
+            var message = "The counterparty cannot be the owner of the option";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
+
+
+    public void checkSelectedByCounterParty(UserCrypto userCounterParty) throws BadRequestException {
+        if (! userCounterParty.getOptioms().contains(this)) {
+            var message = "You can not acept, The counterparty has not selected this option";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
+
     public abstract boolean  IsValidPriceToPost();
 
 

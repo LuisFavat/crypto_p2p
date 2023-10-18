@@ -2,7 +2,9 @@ package ar.edu.unq.cryptop2p.webservice;
 
 
 import ar.edu.unq.cryptop2p.model.Option;
+import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
@@ -88,6 +90,24 @@ public class UserCryptoController {
         }
         return response;
     }
+
+    /**Select a Option For a user**/
+    @Operation(summary = "Select a Option For a user")
+    @GetMapping("select")
+    ResponseEntity<UserCrypto> selectOption(@RequestBody OptionSelectDto optiondata) {
+        ResponseEntity response;
+        try {
+            UserCrypto entity = userService.select(optiondata);
+            ResponseEntity.status(200);
+            response = ResponseEntity.ok().body(entity);
+        } catch (Exception e) {
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+        }
+        return response;
+    }
+
+
 }
 
 

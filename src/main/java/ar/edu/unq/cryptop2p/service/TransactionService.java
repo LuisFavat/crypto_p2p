@@ -4,6 +4,7 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.persistence.TransactionRepository;
@@ -30,6 +31,22 @@ public class TransactionService {
 
     @Autowired
     private OptionService optionService;
+
+
+
+    @Transactional
+    public Transaction acept(OptionSelectDto optiondata) throws NotFoundException, BadRequestException {
+        var counterPartyUser = userService.findByID(optiondata.getIdCounterParty());
+        var option =    optionService.findByID(optiondata.getIdOption());
+        checkings(option,counterPartyUser);
+        return  create(optiondata.getIdOption(),optiondata.getIdCounterParty());
+    }
+
+
+    public void checkings (Option option, UserCrypto counterPartyUser ) throws  BadRequestException {
+        option.checkNotSameUser(counterPartyUser);
+        option.checkSelectedByCounterParty(counterPartyUser);
+    }
 
 
 

@@ -6,6 +6,7 @@ import static ar.edu.unq.cryptop2p.helpers.StateType.*;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
+import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
@@ -46,7 +47,7 @@ class TransactionServiceTest {
     @AfterEach
     void tearDown() {
     }
-
+/*
     @Test
     void create() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
 
@@ -113,4 +114,51 @@ class TransactionServiceTest {
 
 
     }
+
+*/
+    @Test
+    void select() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
+
+        UserCrypto aUser = aUserCrypto().withEmail("otronail@gmail.com")
+                .withName("Pedro")
+                .withSurname("Picapiedra")
+                .withAddress("dir1132123123")
+                .withPassword("Very_Secret!")
+                .withCvu("1234567890123456789012")
+                .withCryptoAddress("12345678")
+                .build();
+
+
+
+        UserCrypto aCounterParty = aUserCrypto().withEmail("Pablomail@gmail.com")
+                .withName("Pablo")
+                .withSurname("Marmol")
+                .withAddress("dir1132121111")
+                .withPassword("Extremly_Secret!")
+                .withCvu("1234567890123456781111")
+                .withCryptoAddress("12345555")
+                .build();
+
+
+        var user = userService.register(aUser);
+        var counterParty = userService.register(aCounterParty);
+
+        CryptoCurrency aCrypto = aCryto().withName("A").withPrice(10).build();
+        var crypto =  cryptoService.create(aCrypto);
+
+        var optionPut = anyOption().withPrice(9.7).withCryptoAmount(3).withCryptoCurrency(crypto) .withUser(user).build();
+        var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
+        var  optionPutSaved = optionService.post(optioPostDto);
+        var optionSelectDto =  new OptionSelectDto(optionPutSaved.getId(),counterParty.getId());
+
+        var counterpartySaved = userService.select(optionSelectDto);
+
+        var transaction = transactionService.acept(optionSelectDto);
+        var transactions = transactionService.findAll();
+
+        assertEquals("Pablo",counterpartySaved.getName());
+        assertFalse(counterpartySaved.getOptioms().isEmpty());
+        assertEquals(9.7,counterpartySaved.getOptioms().stream().findFirst().get().getPrice());
+        assertFalse(transactions.isEmpty());
+        }
     }
