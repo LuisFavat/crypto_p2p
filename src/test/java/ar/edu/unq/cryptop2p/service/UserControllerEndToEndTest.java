@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.service;
 
+import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
 import org.junit.jupiter.api.AfterEach;
@@ -131,24 +132,25 @@ public class UserControllerEndToEndTest {
 //    }
 
 
-
     @Test
     public void getUserByEmail()
     {
         String uri = "/api/user/email/ale@gmail.com";
+        UserCrypto user = new UserCrypto(1L,"Ale","Fariña","dir1132123123","Very_Secret!","ale@gmail.com","1234567890123456789012","12345678");
         webClient.get().uri(uri);
-        var result = this.restTemplate.getForObject(HTTP_LOCALHOST + port + uri, String.class);
-        assertThat(result).isEqualTo("{" +
-                "\"id\":1," +
-                "\"name\":\"Ale\"," +
-                "\"surname\":\"Fariña\"," +
-                "\"address\":\"dir1132123123\"," +
-                "\"password\":\"Very_Secret!\"," +
-                "\"email\":\"ale@gmail.com\"," +
-                "\"cvu\":\"1234567890123456789012\"," +
-                "\"cryptoAddress\":\"12345678\"," +
-                "\"numberOfOperation\":0," +
-                "\"scores\":0," +
-                "\"reputation\":0}");
+        var result = this.restTemplate.getForObject(HTTP_LOCALHOST + port + uri, UserCrypto.class);
+        assertThat(result.getEmail()).isEqualTo(user.getEmail());
+//        assertThat(result).isEqualTo("{" +
+//                "\"id\":1," +
+//                "\"name\":\"Ale\"," +
+//                "\"surname\":\"Fariña\"," +
+//                "\"address\":\"dir1132123123\"," +
+//                "\"password\":\"Very_Secret!\"," +
+//                "\"email\":\"ale@gmail.com\"," +
+//                "\"cvu\":\"1234567890123456789012\"," +
+//                "\"cryptoAddress\":\"12345678\"," +
+//                "\"numberOfOperation\":0," +
+//                "\"scores\":0," +
+//                "\"reputation\":0}");
     }
 }

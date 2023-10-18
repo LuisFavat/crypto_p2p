@@ -31,7 +31,7 @@ public abstract class Option implements  Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Basic(optional = false)
     @Column(name = "id_options")
    protected int id;

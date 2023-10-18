@@ -2,6 +2,7 @@ package ar.edu.unq.cryptop2p.model;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.Objects;
 
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
@@ -177,6 +178,8 @@ public class UserCrypto implements Serializable {
                scores = 0;
            }
        }
+
+
 
 
 }
