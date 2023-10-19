@@ -5,10 +5,7 @@ import static ar.edu.unq.cryptop2p.helpers.OptionType.*;
 import static ar.edu.unq.cryptop2p.helpers.StateType.*;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
-import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
-import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
+import ar.edu.unq.cryptop2p.model.dto.*;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -149,11 +146,11 @@ class TransactionServiceTest {
         var optionPut = anyOption().withPrice(9.7).withCryptoAmount(3).withCryptoCurrency(crypto) .withUser(user).build();
         var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
         var  optionPutSaved = optionService.post(optioPostDto);
-        var optionSelectDto =  new OptionSelectDto(optionPutSaved.getId(),counterParty.getId());
+        var transactionData =  new TransactionCreateDto(optionPutSaved.getId(),counterParty.getId());
 
-        var counterpartySaved = userService.select(optionSelectDto);
+        var counterpartySaved = userService.select(transactionData);
 
-        var transaction = transactionService.acept(optionSelectDto);
+        var transaction = transactionService.acept(transactionData);
         var transactions = transactionService.findAll();
 
         assertEquals("Pablo",counterpartySaved.getName());

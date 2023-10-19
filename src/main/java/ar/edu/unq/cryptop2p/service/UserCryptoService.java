@@ -1,28 +1,20 @@
 package ar.edu.unq.cryptop2p.service;
 
-import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
+import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
-import ar.edu.unq.cryptop2p.persistence.OptionRepository;
 import ar.edu.unq.cryptop2p.persistence.UserCryptoRepository;
 
-import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -81,9 +73,10 @@ public class UserCryptoService {
     }
 
     @Transactional
-    public UserCrypto select(OptionSelectDto optiondata) throws NotFoundException {
-        var counterPartyUser = findByID(optiondata.getIdCounterParty());
-        var option =    optionService.findByID(optiondata.getIdOption());
+    public UserCrypto select(TransactionCreateDto transactiondata) throws NotFoundException, BadRequestException {
+        var counterPartyUser = findByID(transactiondata.getIdCounterParty());
+        var option =    optionService.findByID(transactiondata.getIdOption());
+        option.checkNotSameUser(counterPartyUser);
          counterPartyUser.getOptioms().add(option);
         return userRepository.save(counterPartyUser);
     }

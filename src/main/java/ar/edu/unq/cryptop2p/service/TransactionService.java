@@ -4,7 +4,7 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
+import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.persistence.TransactionRepository;
@@ -35,11 +35,11 @@ public class TransactionService {
 
 
     @Transactional
-    public Transaction acept(OptionSelectDto optiondata) throws NotFoundException, BadRequestException {
-        var counterPartyUser = userService.findByID(optiondata.getIdCounterParty());
-        var option =    optionService.findByID(optiondata.getIdOption());
+    public Transaction acept(TransactionCreateDto transactiondata) throws NotFoundException, BadRequestException {
+        var counterPartyUser = userService.findByID(transactiondata.getIdCounterParty());
+        var option =    optionService.findByID(transactiondata.getIdOption());
         checkings(option,counterPartyUser);
-        return  create(optiondata.getIdOption(),optiondata.getIdCounterParty());
+        return  create(transactiondata.getIdOption(),transactiondata.getIdCounterParty());
     }
 
 
