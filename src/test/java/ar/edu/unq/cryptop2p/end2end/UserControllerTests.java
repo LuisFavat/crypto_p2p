@@ -1,9 +1,8 @@
-package ar.edu.unq.cryptop2p.service;
+package ar.edu.unq.cryptop2p.end2end;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
-import org.json.JSONException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerEndToEndTest {
+public class UserControllerTests {
     private static final String HTTP_LOCALHOST = "http://localhost:";
     @LocalServerPort
     private int port;

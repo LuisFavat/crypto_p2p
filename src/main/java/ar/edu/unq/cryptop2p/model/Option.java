@@ -34,7 +34,7 @@ public abstract class Option implements  Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Basic(optional = false)
     @Column(name = "id_options")
-   protected int id;
+    protected int id;
 
 
     @Column(nullable = false)
@@ -65,8 +65,8 @@ public abstract class Option implements  Serializable {
     @DateTimeFormat
     protected Date dateTime;
 
-   @Column
-   protected int numberOfOperation ;
+    @Column
+    protected int numberOfOperation ;
 
     @Column
     protected float reputation;
