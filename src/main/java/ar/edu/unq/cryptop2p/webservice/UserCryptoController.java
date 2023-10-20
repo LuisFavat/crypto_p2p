@@ -27,7 +27,7 @@ public class UserCryptoController {
 
     /**register a user*/
     @Operation(summary = "Register a user")
-    @PostMapping("/register")
+    @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
     public  ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata ) {
          ResponseEntity response;
           try {
