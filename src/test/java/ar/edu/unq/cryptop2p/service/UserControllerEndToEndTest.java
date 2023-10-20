@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
 public class UserControllerEndToEndTest {
     private static final String HTTP_LOCALHOST = "http://localhost:";
     @LocalServerPort
@@ -28,8 +27,14 @@ public class UserControllerEndToEndTest {
     private UserCryptoController controller;
     RestTemplate restTemplate;
 
+    //Estos dos usuarios (UserCrypto) se cargan al inicializar el programa de forma automatica
+    UserCrypto user1 = new UserCrypto(1L,"Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com","1234567890123456789012","12345678");
+    UserCrypto user2 = new UserCrypto(2L,"Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com","1234567890123456789015","12345679");
+
+    UserRegisterDto aUserRegisterDTO = new UserRegisterDto("Felipe", "Apellido", "direccion 123", "UnaPass!", "felipe@gmail.com", "1234567890123456789012", "12345678");
+
     @BeforeEach
-    void setUp() throws JSONException {
+    void setUp()  {
         restTemplate = new RestTemplate();
     }
 
@@ -45,20 +50,18 @@ public class UserControllerEndToEndTest {
     }
 
     @Test
-    @DirtiesContext //borra la base de datos
+    @DirtiesContext
     public void register() throws Exception {
         String uri = "/api/user/register";
-        UserRegisterDto uDTO = new UserRegisterDto("Felipe", "Apellido", "direccion 123", "UnaPass!", "felipe@gmail.com", "1234567890123456789012", "12345678");
-        UserCrypto user = uDTO.toModel();
+        UserCrypto user = aUserRegisterDTO.toModel();
 
-        var userResponse = restTemplate.postForObject(HTTP_LOCALHOST + port + uri, uDTO, UserCrypto.class);
+        var userResponse = restTemplate.postForObject(HTTP_LOCALHOST + port + uri, aUserRegisterDTO, UserCrypto.class);
 
         assertThat(userResponse).isEqualTo(user);
     }
 
 
     @Test
-    @DirtiesContext
     public void getAllUsers()
     {
         String uri = "/api/user/users";
@@ -73,8 +76,6 @@ public class UserControllerEndToEndTest {
 
     public UserCrypto[] expectedUsers()
     {
-        UserCrypto user1 = new UserCrypto(1L,"Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com","1234567890123456789012","12345678");
-        UserCrypto user2 = new UserCrypto(2L,"Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com","1234567890123456789015","12345679");
         UserCrypto[] usersExpected = new UserCrypto[2];
         usersExpected[0] = user1;
         usersExpected[1] = user2;
@@ -86,9 +87,21 @@ public class UserControllerEndToEndTest {
     public void getUserByEmail()
     {
         String uri = "/api/user/email/ale@gmail.com";
-        UserCrypto user = new UserCrypto(1L,"Ale","Fariña","dir1132123123","Very_Secret!","ale@gmail.com","1234567890123456789012","12345678");
+
         var result = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, UserCrypto.class);
-        assertThat(result).isEqualTo(user);
+
+        assertThat(result).isEqualTo(user1);
+
+    }
+
+    @Test
+    public void getUserByID()
+    {
+        String uri = "/api/user/1";
+
+        var result = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, UserCrypto.class);
+
+        assertThat(result).isEqualTo(user1);
 
     }
 }
