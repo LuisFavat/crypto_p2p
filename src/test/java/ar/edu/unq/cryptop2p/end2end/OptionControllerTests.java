@@ -81,17 +81,17 @@ public class OptionControllerTests
         optionService.post(optionPostDTO1);
     }
 
-//    @Test
-//    @DirtiesContext
-//    public void getOptionByIDCaseTheIDDoesNotExists() throws NotFoundException, BadRequestException, PreconditionFailedException {
-//        String  uri = "/api/option/111";
-//        createOptionOnDB();
-//
-//        var response = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, OptionCall.class);
-//
-//        assertThat(response).isInstanceOf(OptionCall.class);
-//        assertThat(response.getId()).isEqualTo(1);
-//    }
+    @Test
+    @DirtiesContext
+    public void getOptionByIDCaseTheIDDoesNotExists() throws NotFoundException, BadRequestException, PreconditionFailedException {
+        String  uri = "/api/option/111";
+        createOptionOnDB();
+
+        var response = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, OptionCall.class);
+
+        assertThat(response).isInstanceOf(OptionCall.class);
+        assertThat(response.getId()).isEqualTo(1);
+    }
 
 
 

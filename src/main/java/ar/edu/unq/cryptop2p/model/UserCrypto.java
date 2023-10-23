@@ -185,6 +185,7 @@ public class UserCrypto implements Serializable {
            }
        }
 
+       @Override
        public boolean equals(Object other)
        {
            if(!(other instanceof UserCrypto))
@@ -199,6 +200,12 @@ public class UserCrypto implements Serializable {
            }
            return true;
        }
+
+        @Override
+        public int hashCode()
+        {
+            return 9181 * email.hashCode();
+        }
 
 
 }
