@@ -5,6 +5,8 @@ package ar.edu.unq.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.annotation.DirtiesContext;
+
 import static ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder.anyOption;
 import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +18,7 @@ class OptionTest {
     }
 
     @Test
+    @DirtiesContext
     void ItShouldBeSameOptionPriceWhenSettingPrice() {
 
         var option = anyOption().withPrice(5.00).build();

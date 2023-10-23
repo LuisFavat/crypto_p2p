@@ -2,16 +2,18 @@ package ar.edu.unq.cryptop2p.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 
-@Table(name = "options_put")
+//@Table(name = "options_put")
 @PrimaryKeyJoinColumn(name = "id_options")
 public class OptionPut  extends Option {
 

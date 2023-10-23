@@ -19,19 +19,25 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 
 @Entity
+//@MappedSuperclass
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @Table(name = "options")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+
+
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public abstract class Option implements  Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Basic(optional = false)
     @Column(name = "id_options")
     protected int id;
+
 
     @Column(nullable = false)
     protected OptionType operation;

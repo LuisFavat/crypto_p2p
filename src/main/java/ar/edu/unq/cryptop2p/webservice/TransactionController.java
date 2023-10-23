@@ -1,11 +1,9 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
-import ar.edu.unq.cryptop2p.model.dto.OptionSelectDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionViewDto;
-import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +63,7 @@ public class TransactionController {
     /**get transaction by id**/
     @Operation(summary = "Get a  transaction by Id")
     @GetMapping("/{id}")
-    ResponseEntity<TransactionViewDto> findById(@PathVariable("id") int id) throws NotFoundException {
+    public ResponseEntity<TransactionViewDto> findById(@PathVariable("id") int id)  {
         ResponseEntity response;
         try {
             TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.findByID(id));
@@ -87,12 +85,12 @@ public class TransactionController {
     }
 
     /**Acept a user**/
-    @Operation(summary = "Select a Option For a user")
-    @GetMapping("acept")
-    ResponseEntity<Transaction> acept(@RequestBody OptionSelectDto optiondata) {
+    @Operation(summary = "Acept option for a user")
+    @PostMapping("/acept")
+    public ResponseEntity<Transaction> acept(@RequestBody TransactionCreateDto transactiondata) {
         ResponseEntity response;
         try {
-            Transaction entity = transactionService.acept(optiondata);
+            Transaction entity = transactionService.acept(transactiondata);
             ResponseEntity.status(200);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception e) {
