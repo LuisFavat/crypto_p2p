@@ -1,7 +1,12 @@
 package ar.edu.unq.cryptop2p.service.initializer;
 
+import ar.edu.unq.cryptop2p.helpers.OptionType;
+import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
+import ar.edu.unq.cryptop2p.service.CryptoCurrencyService;
+import ar.edu.unq.cryptop2p.service.OptionService;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
@@ -20,6 +25,12 @@ public class InitServiceInMemory {
 
     @Autowired
     private UserCryptoService userService;
+
+    @Autowired
+    private CryptoCurrencyService cryptoCurrencyService;
+
+    @Autowired
+    private OptionService optionService;
 
     protected final Log logger = LogFactory.getLog(getClass());
 
@@ -43,9 +54,17 @@ public class InitServiceInMemory {
             UserRegisterDto ale = new UserRegisterDto( "Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com", "1234567890123456789012", "12345678");
             UserRegisterDto luis = new UserRegisterDto( "Luis", "Favatier", "dir1132123140", "Extremly_Secret!", "luis@gmail.com", "1234567890123456789015", "12345679");
 
+            CryptoCurrency cryptoBTC = new CryptoCurrency("BTC", 30000);
+
+            OptionPostDto optionPostDTO1 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 0.01f, 1L);
+            OptionPostDto optionPostDTO2 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 0.01f, 2L);
+
             try {
                 userService.register(ale.toModel());
                 userService.register(luis.toModel());
+                cryptoCurrencyService.create(cryptoBTC);
+                optionService.post(optionPostDTO1);
+                optionService.post(optionPostDTO2);
             } catch (Exception e) {
                 e.fillInStackTrace();
             }

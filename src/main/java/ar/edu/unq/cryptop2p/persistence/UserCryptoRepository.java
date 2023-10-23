@@ -14,5 +14,7 @@ public interface UserCryptoRepository extends JpaRepository<UserCrypto, Long> {
 
     Optional<UserCrypto> findByEmail(String email);
     Optional<UserCrypto> findById(long id);
+
+
 }
 

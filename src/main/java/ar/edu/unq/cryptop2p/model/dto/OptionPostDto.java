@@ -20,9 +20,9 @@ import java.io.Serializable;
 
 public class OptionPostDto implements Serializable {
 
-   @NotNull
-   @Enumerated(EnumType.STRING)
-   private final OptionType operation;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private final OptionType operation;
 
     @NotNull
     private final String cryptoCurrencyName;
