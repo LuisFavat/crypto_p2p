@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserControllerTests {
     private int port;
     @Autowired
     private UserCryptoController controller;
-    RestTemplate restTemplate;
+    TestRestTemplate restTemplate;
 
     //Estos dos usuarios (UserCrypto) se cargan al inicializar el programa de forma automatica
     UserCrypto user1 = new UserCrypto(1L,"Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com","1234567890123456789012","12345678");
@@ -34,7 +35,7 @@ public class UserControllerTests {
 
     @BeforeEach
     void setUp()  {
-        restTemplate = new RestTemplate();
+        restTemplate = new TestRestTemplate();
     }
 
     @AfterEach

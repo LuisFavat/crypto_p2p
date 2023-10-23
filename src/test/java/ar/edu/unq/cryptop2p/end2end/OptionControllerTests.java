@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
@@ -38,11 +39,11 @@ public class OptionControllerTests
     private int port;
     @Autowired
     private OptionController controller;
-    RestTemplate restTemplate;
+    TestRestTemplate restTemplate;
 
     @BeforeEach
     void setUp()  {
-        restTemplate = new RestTemplate();
+        restTemplate = new TestRestTemplate();
     }
 
     @Test
@@ -80,6 +81,20 @@ public class OptionControllerTests
         optionService.post(optionPostDTO1);
     }
 
+//    @Test
+//    @DirtiesContext
+//    public void getOptionByIDCaseTheIDDoesNotExists() throws NotFoundException, BadRequestException, PreconditionFailedException {
+//        String  uri = "/api/option/111";
+//        createOptionOnDB();
+//
+//        var response = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, OptionCall.class);
+//
+//        assertThat(response).isInstanceOf(OptionCall.class);
+//        assertThat(response.getId()).isEqualTo(1);
+//    }
+
+
+
 
 @Test
 @DirtiesContext
@@ -101,5 +116,17 @@ public void getAllOptions() throws NotFoundException, BadRequestException {
         OptionPostDto optionPostDTO2 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30001D, 0.5f, 2L);
         optionService.post(optionPostDTO1);
         optionService.post(optionPostDTO2);
+    }
+
+    @Test
+    @DirtiesContext
+    public void getAllOptionsCaseOfZeroOptionOnDB() throws NotFoundException, BadRequestException {
+        String  uri = "/api/option/options";
+        OptionCall[] optionsResponse;
+
+        ResponseEntity<OptionCall[]> result = this.restTemplate.getForEntity(HTTP_LOCALHOST + port + uri, OptionCall[].class);
+        optionsResponse = result.getBody();
+
+        assertThat(optionsResponse.length).isEqualTo(0);
     }
 }
