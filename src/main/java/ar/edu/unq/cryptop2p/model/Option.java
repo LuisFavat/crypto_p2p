@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
@@ -164,6 +165,8 @@ public abstract class Option implements  Serializable {
     }
 
     public abstract boolean  IsValidPriceToPost();
+
+
 
 
 }

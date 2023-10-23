@@ -63,8 +63,8 @@ public class InitServiceInMemory {
                 userService.register(ale.toModel());
                 userService.register(luis.toModel());
                 cryptoCurrencyService.create(cryptoBTC);
-                optionService.post(optionPostDTO1);
-                optionService.post(optionPostDTO2);
+                //optionService.post(optionPostDTO1);
+                //optionService.post(optionPostDTO2);
             } catch (Exception e) {
                 e.fillInStackTrace();
             }
