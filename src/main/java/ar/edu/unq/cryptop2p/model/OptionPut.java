@@ -33,6 +33,6 @@ public class OptionPut  extends Option {
 
     public boolean OptionPriceLowerThanQuotePrice() {
 
-        return this.getPrice() < this.quote();
+        return this.getPrice() <= this.quote();
     }
 }

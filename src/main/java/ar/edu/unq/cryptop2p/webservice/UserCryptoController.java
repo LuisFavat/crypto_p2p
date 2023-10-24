@@ -4,7 +4,9 @@ package ar.edu.unq.cryptop2p.webservice;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
+import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,11 @@ public class UserCryptoController {
                 UserCrypto entity =  userService.register(userdata.toModel());
                 ResponseEntity.status(201);
                 response = ResponseEntity.ok().body(entity);
-            } catch (Exception e) {
+            } catch (PreconditionFailedException e) {
+
                 HashMap result = getResponse();
-                response = ResponseEntity.ok().body(result);
+                response = ResponseEntity.status(400).body(e.getMessage());
+                var a = 2;
                 }
             return response ;
 

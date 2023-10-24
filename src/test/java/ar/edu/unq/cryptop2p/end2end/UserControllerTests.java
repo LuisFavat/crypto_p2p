@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.end2end;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
 import org.junit.jupiter.api.AfterEach;
@@ -10,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.web.client.RestTemplate;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -58,6 +57,18 @@ public class UserControllerTests {
         var userResponse = restTemplate.postForObject(HTTP_LOCALHOST + port + uri, aUserRegisterDTO, UserCrypto.class);
 
         assertThat(userResponse).isEqualTo(user);
+    }
+
+    @Test
+    @DirtiesContext
+    public void registerCaseBadRequest() throws Exception {
+        String uri = "/api/user/register";
+        UserRegisterDto registerDto = new UserRegisterDto("", "", "", "", "", "", "");
+        UserCrypto user = aUserRegisterDTO.toModel();
+
+        var response = restTemplate.postForEntity(HTTP_LOCALHOST + port + uri, registerDto, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(400);
     }
 
 
@@ -104,4 +115,7 @@ public class UserControllerTests {
         assertThat(result).isEqualTo(user1);
 
     }
+
+
+
 }

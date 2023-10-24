@@ -1,10 +1,7 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
-import ar.edu.unq.cryptop2p.model.dto.TradedVoluolumeDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionViewDto;
+import ar.edu.unq.cryptop2p.model.dto.*;
 import ar.edu.unq.cryptop2p.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,14 +99,18 @@ public class TransactionController {
         return response;
     }
 
+
+
+
+
     @Operation(summary = "traded volume of cryptocurrencies between two dates")
-    @GetMapping("/tradedvolume")
-    public ResponseEntity<List<Transaction>> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
+    @PostMapping("/tradedvolume")
+    public ResponseEntity<CryptoAmountDTO> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
         ResponseEntity response;
         try {
-            List <Transaction> transactions = transactionService.tradeVolume(volumeData.convertStringToDate());
+            var responseDTO = transactionService.tradeVolume(volumeData.convertStringToDate());
             ResponseEntity.status(201);
-            response = ResponseEntity.ok().body(transactions);
+            response = ResponseEntity.ok().body(responseDTO);
         } catch (Exception  e) {
 
             HashMap result = getResponse();

@@ -7,6 +7,7 @@ import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.service.CryptoCurrencyService;
 import ar.edu.unq.cryptop2p.service.OptionService;
+import ar.edu.unq.cryptop2p.service.TransactionService;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
@@ -32,6 +33,9 @@ public class InitServiceInMemory {
     @Autowired
     private OptionService optionService;
 
+    @Autowired
+    private TransactionService transactionService;
+
     protected final Log logger = LogFactory.getLog(getClass());
 
 
@@ -56,15 +60,28 @@ public class InitServiceInMemory {
 
             CryptoCurrency cryptoBTC = new CryptoCurrency("BTC", 30000);
 
-            OptionPostDto optionPostDTO1 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 0.01f, 1L);
-            OptionPostDto optionPostDTO2 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 0.01f, 2L);
+            OptionPostDto optionPostDTO1 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 1f, 1L);
+            OptionPostDto optionPostDTO2 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 1f, 1L);
+            OptionPostDto optionPostDTO3 = new OptionPostDto(OptionType.OPTIONPUT, "BTC",30005D, 1f, 1L);
+            OptionPostDto optionPostDTO4 = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 1f, 2L);
+
 
             try {
                 userService.register(ale.toModel());
                 userService.register(luis.toModel());
                 cryptoCurrencyService.create(cryptoBTC);
-                //optionService.post(optionPostDTO1);
-                //optionService.post(optionPostDTO2);
+
+//                optionService.post(optionPostDTO1);
+//                optionService.post(optionPostDTO2);
+//                optionService.post(optionPostDTO3);
+//                optionService.post(optionPostDTO4);
+//
+//                transactionService.create(1, 2L);
+//                transactionService.create(2, 2L);
+//                transactionService.create(3, 2L);
+
+
+
             } catch (Exception e) {
                 e.fillInStackTrace();
             }

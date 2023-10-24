@@ -16,10 +16,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -44,11 +46,11 @@ public class Transaction implements Serializable {
     private Option option;
 
 
-    @NotNull
+    //@NotNull
     @Enumerated(EnumType.STRING)
     private StateType stateType = StateType.UDLE;
 
-    @NotNull
+    //@NotNull
     @Enumerated(EnumType.STRING)
     private ActionType actionType = ActionType.NONE;
 
@@ -58,6 +60,10 @@ public class Transaction implements Serializable {
    @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     private UserCrypto counterPartyUser;
 
+    @Column
+    @DateTimeFormat
+    protected Date finishTime;
+
     @Transient
     private State state;
 
@@ -65,9 +71,18 @@ public class Transaction implements Serializable {
     private Action action;
 
 
-    public Transaction(Option aOption) {
+    public Transaction(Option aOption)  {
         this.option = aOption;
+        //TODO poner en un lugar mejor (REFACTOR)
+        try {
+            finishTime = CurrentDateTime.stringToDate("01/01/2000");//CurrentDateTime.getNewDate();
+        }catch (Exception e)
+        {}
+
+
     }
+
+
 
 
     public Action getAction() {

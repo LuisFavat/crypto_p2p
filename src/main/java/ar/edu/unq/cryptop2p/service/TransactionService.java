@@ -4,6 +4,7 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.CryptoAmountDTO;
 import ar.edu.unq.cryptop2p.model.dto.TradeVolumeLocalDateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
@@ -17,6 +18,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +41,7 @@ public class TransactionService {
 
 
     @Transactional
-    public Transaction acept(TransactionCreateDto transactiondata) throws NotFoundException, BadRequestException {
+    public Transaction acept(TransactionCreateDto transactiondata) throws NotFoundException, BadRequestException, ParseException {
         var counterPartyUser = userService.findByID(transactiondata.getIdCounterParty());
         var option =    optionService.findByID(transactiondata.getIdOption());
         checkings(option,counterPartyUser);
@@ -52,7 +56,7 @@ public class TransactionService {
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Transaction create(int id_Option,Long id_counterPartyUser) throws NotFoundException {
+    public Transaction create(int id_Option,Long id_counterPartyUser) throws NotFoundException, ParseException {
         Option option = optionService.findByID(id_Option);
          UserCrypto counterPartyUser = userService.findByID(id_counterPartyUser);
         Transaction transaction = new Transaction(option);
@@ -102,17 +106,43 @@ public class TransactionService {
 
     @Transactional
     @NotNull
-    public List <Transaction> tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
-     var user =   userService.findByID(volumeData.getUserId());
-    //var transactions =   transactionRepository.findTransactionByUserAndDateTimeBetweenOrderByAmountOfCryptoCurrencyAsc (user,volumeData.getStartDate(),volumeData.getEndDate());
+    public CryptoAmountDTO tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
+     //var user =   userService.findByID(volumeData.getUserId());
+     //var transactions =   transactionRepository.findTransactionByUserAndDateTimeBetweenOrderByAmountOfCryptoCurrencyAsc (user,volumeData.getStartDate(),volumeData.getEndDate());
      var transactions = transactionRepository.findAll();
-       if (transactions.isEmpty()) {
-            String message = "There is not transactions for that search";
-            response(message, HttpStatus.NOT_FOUND);
-            throw new NotFoundException(message);
-        }
-        return transactions;
+
+     var tsSameUser = transactionsWithSameUser(volumeData.getUserId(), transactions);
+     var tsBetweenRange = transactionsBetweenRange(volumeData.getStartDate(), volumeData.getEndDate(), tsSameUser);
+     var cryptoName = tsBetweenRange.get(0).getCryptoCurrency().getName();
+     var tsSameCrypto = transactionsWithSameCrypto(cryptoName, tsBetweenRange);
+     var sum = sumAllAmounts(tsSameCrypto);
+
+     return new CryptoAmountDTO(sum, cryptoName);
+
     }
 
+    public List<Transaction> transactionsWithSameUser(Long userID, List<Transaction> ts)
+    {
+        return  ts.stream().filter(transaction -> transaction.getOption().getUser().getId() == userID).toList();
+    }
 
+    public List<Transaction>  transactionsBetweenRange(Date startRange, Date finishRange, List<Transaction> ts)
+    {
+        return  ts.stream().filter(transaction -> transaction.getFinishTime().after(startRange) && transaction.getFinishTime().before(finishRange)).toList();
+    }
+
+    public List<Transaction>  transactionsWithSameCrypto(String cryptoName, List<Transaction> ts)
+    {
+        return  ts.stream().filter(transaction -> transaction.getOption().getCryptocurrency().getName() == cryptoName).toList();
+    }
+
+    public int sumAllAmounts(List<Transaction> tsInRange)
+    {
+        var sum = 0;
+        for(int i = 0; i <= tsInRange.size() -1; i++)
+        {
+            sum += tsInRange.get(i).getAmountOfCryptoCurrency();
+        }
+        return  sum;
+    }
 }

@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.ParseException;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -108,8 +110,7 @@ public class TransactionBuilder {
         return this;
     }
 
-    public Transaction build()
-    {
+    public Transaction build() {
         Transaction transaction = new Transaction(option);
         transaction.setCounterPartyUser(counterParty);
         transaction.setStateType(stateType);

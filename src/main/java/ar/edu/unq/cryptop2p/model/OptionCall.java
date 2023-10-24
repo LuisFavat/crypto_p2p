@@ -18,22 +18,22 @@ public class OptionCall extends Option {
 
 
 
-    public OptionCall(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user){
+   public OptionCall(CryptoCurrency cryptocurrency, Double price, float cryptoAmount, UserCrypto user){
             super(cryptocurrency, price, cryptoAmount, user);
         }
 
-        public String virtualAddress ()
+   public String virtualAddress ()
         {
             return user.getCryptoAddress();
          }
 
-    public  boolean  IsValidPriceToPost(){
+   public  boolean  IsValidPriceToPost(){
         return OptionPriceHigherThanQuotePrice();
     }
 
-    private boolean OptionPriceHigherThanQuotePrice() {
+   private boolean OptionPriceHigherThanQuotePrice() {
 
-        return this.getPrice() > this.quote();
+        return this.getPrice() >= this.quote();
     }
 
-    }
+}
