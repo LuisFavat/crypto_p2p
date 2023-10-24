@@ -37,10 +37,10 @@ public class OptionController {
             OptionViewDto entity = OptionViewDto.fromModel( optionService.post(optionPostDto) );
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
-        } catch (Exception e) {
+        } catch (BadRequestException | NotFoundException e) {
 
             HashMap result = getResponse();
-            response = ResponseEntity.ok().body(result);
+            response = ResponseEntity.status(400).body(e.getMessage());
         }
         return response ;
     }

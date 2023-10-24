@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,12 +51,23 @@ public class OptionControllerTests
     @DirtiesContext
     public void registerAOption() throws Exception {
         String uri = "/api/option/post";
-        OptionPostDto optionPostDTO = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 0.01f, 1L);
+        OptionPostDto optionPostDTO = new OptionPostDto(OptionType.OPTIONCALL, null,30005D, 0.01f, 1L);
 
         var response = restTemplate.postForObject(HTTP_LOCALHOST + port + uri, optionPostDTO, OptionCall.class);
 
         assertThat(response).isInstanceOf(OptionCall.class);
         assertThat(response.getOperation()).isEqualTo(optionPostDTO.getOperation());
+    }
+
+    @Test
+    public void registerAOptionCaseBadRequest() throws NotFoundException, BadRequestException, PreconditionFailedException {
+        String  uri = "/api/option/post";
+        OptionPostDto optionDTO = new OptionPostDto(OptionType.OPTIONCALL,"BTC",-100D,0.5f, 1L);
+        HttpEntity<OptionPostDto> request = new HttpEntity<>(optionDTO);
+
+        var response = restTemplate.postForEntity(HTTP_LOCALHOST + port + uri, request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(400);
     }
 
 
