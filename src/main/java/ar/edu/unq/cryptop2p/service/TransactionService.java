@@ -4,6 +4,7 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.TradeVolumeLocalDateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
@@ -98,4 +100,19 @@ public class TransactionService {
         return transaction.get();
 
     }
+
+    @Transactional
+    @NotNull
+    public List <Transaction> tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
+     var user =   userService.findByID(volumeData.getUserId());
+    var transactions =   transactionRepository.findTransactionByUserAndDateTimeBetweenOrderByAmountOfCryptoCurrencyAsc (user,volumeData.getStartDate(),volumeData.getEndDate());
+        if (transactions.isEmpty()) {
+            String message = "There is not transactions for that search";
+            response(message, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(message);
+        }
+        return transactions.get();
+    }
+
+
 }

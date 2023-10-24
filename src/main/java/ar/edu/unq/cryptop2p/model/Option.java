@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
