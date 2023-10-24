@@ -1,10 +1,7 @@
 package ar.edu.unq.cryptop2p.end2end;
 
 import ar.edu.unq.cryptop2p.helpers.OptionType;
-import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.OptionCall;
-import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
@@ -12,7 +9,6 @@ import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.CryptoCurrencyService;
 import ar.edu.unq.cryptop2p.service.OptionService;
 import ar.edu.unq.cryptop2p.webservice.OptionController;
-import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +17,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.web.client.RestTemplate;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
 
 
 //Se utilizan los datos precargados en la base de datos.
@@ -39,11 +34,11 @@ public class OptionControllerTests
     private int port;
     @Autowired
     private OptionController controller;
-    TestRestTemplate restTemplate;
+    TestRestTemplate restTemplate = new TestRestTemplate();
 
     @BeforeEach
     void setUp()  {
-        restTemplate = new TestRestTemplate();
+       //restTemplate = new TestRestTemplate();
     }
 
     @Test
@@ -81,24 +76,30 @@ public class OptionControllerTests
         optionService.post(optionPostDTO1);
     }
 
-//    @Test
-//    @DirtiesContext
-//    public void getOptionByIDCaseTheIDDoesNotExists() throws NotFoundException, BadRequestException, PreconditionFailedException {
-//        String  uri = "/api/option/111";
-//        createOptionOnDB();
-//
-//        var response = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, OptionCall.class);
-//
-//        assertThat(response).isInstanceOf(OptionCall.class);
-//        assertThat(response.getId()).isEqualTo(1);
-//    }
+    @Test
+    public void getOptionByIDCaseNotFound() throws NotFoundException, BadRequestException, PreconditionFailedException {
+        String  uri = "/api/option/11231";
+
+        var response = restTemplate.getForEntity(HTTP_LOCALHOST + port + uri, null, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(404);
+
+    }
+
+    @Test
+    public void getOptionByIDCaseBadRequest() throws NotFoundException, BadRequestException, PreconditionFailedException {
+        String  uri = "/api/option/foo";
+
+        var response = restTemplate.getForEntity(HTTP_LOCALHOST + port + uri, null, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(400);
+
+    }
 
 
-
-
-@Test
-@DirtiesContext
-public void getAllOptions() throws NotFoundException, BadRequestException {
+    @Test
+    @DirtiesContext
+    public void getAllOptions() throws NotFoundException, BadRequestException {
     String  uri = "/api/option/options";
     createTwoOptions();
     OptionCall[] optionsResponse;
