@@ -1,5 +1,5 @@
-//package ar.edu.unq.cryptop2p.end2end;
-/*/
+package ar.edu.unq.cryptop2p.end2end;
+
 import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.model.OptionCall;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
@@ -51,7 +51,7 @@ public class OptionControllerTests
     @DirtiesContext
     public void registerAOption() throws Exception {
         String uri = "/api/option/post";
-        OptionPostDto optionPostDTO = new OptionPostDto(OptionType.OPTIONCALL, null,30005D, 0.01f, 1L);
+        OptionPostDto optionPostDTO = new OptionPostDto(OptionType.OPTIONCALL, "BTC",30005D, 0.01f, 1L);
 
         var response = restTemplate.postForObject(HTTP_LOCALHOST + port + uri, optionPostDTO, OptionCall.class);
 
@@ -144,4 +144,4 @@ public class OptionControllerTests
     }
 }
 
- */
+
