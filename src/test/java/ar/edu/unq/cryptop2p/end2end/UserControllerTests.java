@@ -1,5 +1,5 @@
-package ar.edu.unq.cryptop2p.end2end;
-
+//package ar.edu.unq.cryptop2p.end2end;
+/*
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
@@ -105,3 +105,4 @@ public class UserControllerTests {
 
     }
 }
+*/

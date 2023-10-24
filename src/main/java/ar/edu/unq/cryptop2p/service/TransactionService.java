@@ -51,7 +51,6 @@ public class TransactionService {
     }
 
 
-
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Transaction create(int id_Option,Long id_counterPartyUser) throws NotFoundException {
         Option option = optionService.findByID(id_Option);
@@ -105,13 +104,14 @@ public class TransactionService {
     @NotNull
     public List <Transaction> tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
      var user =   userService.findByID(volumeData.getUserId());
-    var transactions =   transactionRepository.findTransactionByUserAndDateTimeBetweenOrderByAmountOfCryptoCurrencyAsc (user,volumeData.getStartDate(),volumeData.getEndDate());
-        if (transactions.isEmpty()) {
+    //var transactions =   transactionRepository.findTransactionByUserAndDateTimeBetweenOrderByAmountOfCryptoCurrencyAsc (user,volumeData.getStartDate(),volumeData.getEndDate());
+     var transactions = transactionRepository.findAll();
+       if (transactions.isEmpty()) {
             String message = "There is not transactions for that search";
             response(message, HttpStatus.NOT_FOUND);
             throw new NotFoundException(message);
         }
-        return transactions.get();
+        return transactions;
     }
 
 
