@@ -3,6 +3,8 @@ package ar.edu.unq.cryptop2p.webservice;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.OptionPostDto;
 import ar.edu.unq.cryptop2p.model.dto.OptionViewDto;
+import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
+import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.OptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +55,12 @@ public class OptionController {
             Option entity = optionService.findByID(id);
             ResponseEntity.status(200);
             response = ResponseEntity.ok().body(entity);
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
+
             HashMap result = getResponse();
-            response = ResponseEntity.ok().body(result);
+            response = ResponseEntity.status(404).body(e.getMessage());
         }
+
         return response;
     }
 

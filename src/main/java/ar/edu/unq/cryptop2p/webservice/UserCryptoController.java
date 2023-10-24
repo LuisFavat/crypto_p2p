@@ -26,22 +26,20 @@ public class UserCryptoController {
     @Autowired
     private UserCryptoService userService;
 
-    /**
-     * register a user
-     */
+    /**register a user*/
     @Operation(summary = "Register a user")
     @PostMapping("/register")
-    public ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata) {
-        ResponseEntity response;
-        try {
-            UserCrypto entity = userService.register(userdata.toModel());
-            ResponseEntity.status(201);
-            response = ResponseEntity.ok().body(entity);
-        } catch (Exception e) {
-            HashMap result = getResponse();
-            response = ResponseEntity.ok().body(result);
-        }
-        return response;
+    public  ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata ) {
+         ResponseEntity response;
+          try {
+                UserCrypto entity =  userService.register(userdata.toModel());
+                ResponseEntity.status(201);
+                response = ResponseEntity.ok().body(entity);
+            } catch (Exception e) {
+                HashMap result = getResponse();
+                response = ResponseEntity.ok().body(result);
+                }
+            return response ;
 
     }
 
@@ -54,9 +52,7 @@ public class UserCryptoController {
     }
 
 
-    /**
-     * get user by id
-     **/
+    /**get user by id**/
     @Operation(summary = "Get a user by Id")
     @GetMapping("/{id}")
     ResponseEntity<UserCrypto> userById(@PathVariable("id") int id) throws NotFoundException {
@@ -105,9 +101,14 @@ public class UserCryptoController {
         return response;
     }
 
+//    @GetMapping("volumen/between/{1}/{2}")
+//    ResponseEntity<List<UserCrypto>> getVolumenBetween(@PathVariable  tipoDeDato nombre, @PathVariable tipoDeDato nombre1)
+//    {
+//        //cuerpo metodo
+//    }
+
 
 }
-
 
 
 

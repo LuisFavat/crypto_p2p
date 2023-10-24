@@ -48,7 +48,7 @@
                 env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                run:  ./gradlew test jacocoTestReport sonarqube # ./gradlew build sonar --info
+                run:  ./gradlew test jacocoTestReport sonar #sonarqube # ./gradlew build sonar --info
 
               #- name: Build with Gradle
                 #uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1

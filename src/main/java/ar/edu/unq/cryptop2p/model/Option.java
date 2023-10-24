@@ -15,6 +15,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
@@ -25,7 +26,6 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 @Getter
 @Setter
 @NoArgsConstructor
-
 @Table(name = "options")
 
 
@@ -69,8 +69,8 @@ public abstract class Option implements  Serializable {
     @DateTimeFormat
     protected Date dateTime;
 
-   @Column
-   protected int numberOfOperation ;
+    @Column
+    protected int numberOfOperation ;
 
     @Column
     protected float reputation;
@@ -166,6 +166,8 @@ public abstract class Option implements  Serializable {
     }
 
     public abstract boolean  IsValidPriceToPost();
+
+
 
 
 }

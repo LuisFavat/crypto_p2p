@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.Objects;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
@@ -162,9 +162,6 @@ public class UserCrypto implements Serializable {
     }
 
 
-
-
-
         public void addOperation()
         {
                 numberOfOperation += 1;
@@ -187,6 +184,28 @@ public class UserCrypto implements Serializable {
                scores = 0;
            }
        }
+
+       @Override
+       public boolean equals(Object other)
+       {
+           if(!(other instanceof UserCrypto))
+           {
+               return false;
+           }
+           final UserCrypto user = (UserCrypto) other;
+
+           if (!Objects.equals(this.email, user.getEmail()))
+           {
+               return false;
+           }
+           return true;
+       }
+
+        @Override
+        public int hashCode()
+        {
+            return 9181 * email.hashCode();
+        }
 
 
 }
