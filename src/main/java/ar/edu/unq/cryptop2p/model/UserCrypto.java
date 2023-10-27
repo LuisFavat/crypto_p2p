@@ -29,7 +29,7 @@ public class UserCrypto implements Serializable {
         private Long id;
 
       // @JsonIgnore
-       @OneToMany(/*mappedBy = "user",*/cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+       @OneToMany(/*mappedBy = "user",*/cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
        private Set<Option> optioms = new HashSet<>();
 
        @Column(nullable = false)

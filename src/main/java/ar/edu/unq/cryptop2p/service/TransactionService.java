@@ -15,10 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.*;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
@@ -56,7 +56,11 @@ public class TransactionService {
         Option option = optionService.findByID(id_Option);
          UserCrypto counterPartyUser = userService.findByID(id_counterPartyUser);
         Transaction transaction = new Transaction(option);
+        transaction.setDateTime(getNewDate());
+        transaction.setUser(option.getUser());
         transaction.setCounterPartyUser(counterPartyUser);
+        transaction.setCryptoCurrency(option.getCryptocurrency());
+        transaction.setOperation(option.getOperation());
         Transaction transactionSaved = transactionRepository.save(transaction);
         return transactionSaved;
     }
@@ -104,14 +108,15 @@ public class TransactionService {
     @NotNull
     public List <Transaction> tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
      var user =   userService.findByID(volumeData.getUserId());
-    //var transactions =   transactionRepository.findTransactionByUserAndDateTimeBetweenOrderByAmountOfCryptoCurrencyAsc (user,volumeData.getStartDate(),volumeData.getEndDate());
-     var transactions = transactionRepository.findAll();
+    var transactions =  transactionRepository.findTransactionByDateTimeBetweenAndUser (volumeData.getStartDate(),volumeData.getEndDate(),user);
+    // var transactions = transactionRepository.findAll();
        if (transactions.isEmpty()) {
             String message = "There is not transactions for that search";
             response(message, HttpStatus.NOT_FOUND);
             throw new NotFoundException(message);
         }
-        return transactions;
+      return   transactions.get();
+
     }
 
 

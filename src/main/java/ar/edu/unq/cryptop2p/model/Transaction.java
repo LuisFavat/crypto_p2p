@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -38,6 +39,19 @@ public class Transaction implements Serializable {
     @Column(name = "id_transaction")
     private int id;
 
+
+    @Column
+    @DateTimeFormat
+    protected Date dateTime;
+
+    @Column(nullable = false)
+    protected OptionType operation;
+
+    @NotNull
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_cryptocurrency", referencedColumnName = "id_cryptocurrency")
+    protected CryptoCurrency cryptoCurrency;
+
     @NotNull
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_options", referencedColumnName = "id_options")
@@ -52,10 +66,15 @@ public class Transaction implements Serializable {
     @Enumerated(EnumType.STRING)
     private ActionType actionType = ActionType.NONE;
 
-   // @Transient
    @NotNull
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_userCrypto"/*, referencedColumnName = "id_userCrypto",insertable = false,updatable = false*/)
+    private UserCrypto user;
+
+
+  @NotNull
    @ManyToOne(cascade = CascadeType.MERGE)
-   @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
+   @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto",insertable = false,updatable = false)
     private UserCrypto counterPartyUser;
 
     @Transient

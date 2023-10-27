@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.builders;
 
 import ar.edu.unq.cryptop2p.helpers.ActionType;
+import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.helpers.StateType;
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.Transaction;
@@ -27,10 +28,12 @@ public class TransactionBuilder {
     private float units;
     private Double price;
     private Option option;
+    private UserCrypto user;
     private UserCrypto counterParty;
     private StateType stateType = StateType.UDLE;
     private Action action;
-    private ActionType actionType;
+    private ActionType actionType = ActionType.NONE;
+    private OptionType optionType;
 
     public static TransactionBuilder aTransaction()
     {
@@ -73,6 +76,12 @@ public class TransactionBuilder {
         return this;
     }
 
+    public TransactionBuilder withUser (UserCrypto aUser)
+    {
+        user = aUser;
+        return this;
+    }
+
     public TransactionBuilder withState (StateType aStateType)
     {
         stateType = aStateType;
@@ -108,6 +117,12 @@ public class TransactionBuilder {
         return this;
     }
 
+    public TransactionBuilder withOperation(OptionType anOptionType)
+    {
+        optionType = anOptionType;
+        return this;
+    }
+
     public Transaction build()
     {
         Transaction transaction = new Transaction(option);
@@ -115,6 +130,9 @@ public class TransactionBuilder {
         transaction.setStateType(stateType);
         transaction.setActionType(actionType);
         transaction.setAction(action);
+        transaction.setUser(user);
+        transaction.setCryptoCurrency(crypto);
+        transaction.setOperation(optionType);
         return transaction;
     }
 

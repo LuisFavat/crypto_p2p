@@ -60,7 +60,7 @@ public abstract class Option implements  Serializable {
     protected Double price;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     protected UserCrypto user;
 
