@@ -66,15 +66,16 @@ public class Transaction implements Serializable {
     @Enumerated(EnumType.STRING)
     private ActionType actionType = ActionType.NONE;
 
+/*
    @NotNull
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_userCrypto"/*, referencedColumnName = "id_userCrypto",insertable = false,updatable = false*/)
+    @JoinColumn(name = "id_userCrypto"/ referencedColumnName = "id_userCrypto",insertable = false,updatable = false)
     private UserCrypto user;
-
+*/
 
   @NotNull
    @ManyToOne(cascade = CascadeType.MERGE)
-   @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto",insertable = false,updatable = false)
+   @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto"/*,insertable = false,updatable = false*/)
     private UserCrypto counterPartyUser;
 
     @Transient
@@ -122,6 +123,10 @@ public class Transaction implements Serializable {
 
     public CryptoCurrency getCryptoCurrency() {
         return getOption().getCryptocurrency();
+    }
+
+    public String getCryptoCurrencyName() {
+        return getOption().getCryptocurrency().getName();
     }
 
     public float getAmountOfCryptoCurrency() {

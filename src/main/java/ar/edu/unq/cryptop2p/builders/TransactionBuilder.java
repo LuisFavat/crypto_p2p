@@ -130,7 +130,7 @@ public class TransactionBuilder {
         transaction.setStateType(stateType);
         transaction.setActionType(actionType);
         transaction.setAction(action);
-        transaction.setUser(user);
+       // transaction.setUser(user);
         transaction.setCryptoCurrency(crypto);
         transaction.setOperation(optionType);
         return transaction;

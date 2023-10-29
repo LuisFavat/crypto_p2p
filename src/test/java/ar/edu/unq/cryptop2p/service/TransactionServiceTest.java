@@ -224,7 +224,7 @@ class TransactionServiceTest {
         var optionPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), 9.7, 3,user.getId());
          option1 = optionService.post(optionPostDto);
          t1 = aTransaction().wwithOption(option1).withOperation(option1.getOperation())
-                 .withCryptoCurrency(option1.getCryptocurrency()).withUser(option1.getUser())
+                 .withCryptoCurrency(option1.getCryptocurrency())//.withUser(option1.getUser())
                  .withCounterPartyUser(counterParty).build();
          t1.setDateTime(stringToDate("10/10/2023"));
         var transaction1 = transactionRepository.save(t1);
@@ -232,7 +232,7 @@ class TransactionServiceTest {
         var optionPostDto2 = new OptionPostDto( OPTIONPUT, crypto2.getName(), 9.5, 7,user.getId());
        option2 = optionService.post(optionPostDto2);
         t2 =   aTransaction().wwithOption(option2).withOperation(option2.getOperation())
-                .withCryptoCurrency(option2.getCryptocurrency()).withUser(option2.getUser())
+                .withCryptoCurrency(option2.getCryptocurrency())//.withUser(option2.getUser())
                 .withCounterPartyUser(counterParty).build();
         t2.setDateTime(stringToDate("9/11/2023"));
         var transaction2 = transactionRepository.save(t2);
@@ -241,7 +241,7 @@ class TransactionServiceTest {
         var optionPostDto3= new OptionPostDto( OPTIONCALL, crypto.getName(), 9.8, 4,user.getId());
         option3 = optionService.post(optionPostDto3);
         t3 = aTransaction().wwithOption(option3).withOperation(option3.getOperation())
-                .withCryptoCurrency(option3.getCryptocurrency()).withUser(option3.getUser())
+                .withCryptoCurrency(option3.getCryptocurrency())//.withUser(option3.getUser())
                 .withCounterPartyUser(counterParty).build();
         t3.setDateTime(stringToDate("15/11/2023"));
         var transaction3 = transactionRepository.save(t3);
@@ -250,7 +250,7 @@ class TransactionServiceTest {
         var optionPostDto4= new OptionPostDto( OPTIONCALL, crypto.getName(), 9.9, 4,counterParty.getId());
        option4 = optionService.post(optionPostDto4);
         t4 =aTransaction().wwithOption(option4).withOperation(option4.getOperation())
-                .withCryptoCurrency(option4.getCryptocurrency()).withUser(option4.getUser())
+                .withCryptoCurrency(option4.getCryptocurrency())//.withUser(option4.getUser())
                 .withCounterPartyUser(user).build();
         t4.setDateTime(stringToDate("30/10/2023"));
         var transaction4 = transactionRepository.save(t4);
@@ -259,7 +259,7 @@ class TransactionServiceTest {
         var optionPostDto5= new OptionPostDto( OPTIONCALL, crypto.getName(), 9.9, 5,user.getId());
         option5 = optionService.post(optionPostDto5);
         t5 = aTransaction().wwithOption(option5).withOperation(option5.getOperation())
-                .withCryptoCurrency(option5.getCryptocurrency()).withUser(option5.getUser())
+                .withCryptoCurrency(option5.getCryptocurrency())//.withUser(option5.getUser())
                 .withCounterPartyUser(counterParty).build();
         t5.setDateTime(stringToDate("19/10/2023"));
         var transaction5 = transactionRepository.save(t5);
@@ -270,14 +270,14 @@ class TransactionServiceTest {
 
         var volumeData = new TradedVoluolumeDto(startDate,endDate, user.getId()).convertStringToDate();
 
-        var  transactionsVolume = transactionService.tradeVolume(volumeData);
+        var  tradedVolume = transactionService.tradeVolume(volumeData);
 
         assertEquals(5, options.size());
         assertEquals(5, transactions.size());
         assertFalse(options.isEmpty());
         assertFalse(transactions.isEmpty());
-        assertFalse(transactionsVolume.isEmpty());
-        assertEquals(3, transactionsVolume.size());
+        assertFalse(tradedVolume.getCryptoCurrencyList().isEmpty());
+        assertEquals(2, tradedVolume.getCryptoCurrencyList().size());
 
     }
 

@@ -1,12 +1,9 @@
 package ar.edu.unq.cryptop2p.service;
 
-
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.TradeVolumeLocalDateDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
+import ar.edu.unq.cryptop2p.model.dto.*;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import ar.edu.unq.cryptop2p.persistence.TransactionRepository;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +14,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.*;
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
@@ -57,7 +55,7 @@ public class TransactionService {
          UserCrypto counterPartyUser = userService.findByID(id_counterPartyUser);
         Transaction transaction = new Transaction(option);
         transaction.setDateTime(getNewDate());
-        transaction.setUser(option.getUser());
+       // transaction.setUser(option.getUser());
         transaction.setCounterPartyUser(counterPartyUser);
         transaction.setCryptoCurrency(option.getCryptocurrency());
         transaction.setOperation(option.getOperation());
@@ -106,18 +104,44 @@ public class TransactionService {
 
     @Transactional
     @NotNull
-    public List <Transaction> tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
-     var user =   userService.findByID(volumeData.getUserId());
-    var transactions =  transactionRepository.findTransactionByDateTimeBetweenAndUser (volumeData.getStartDate(),volumeData.getEndDate(),user);
-    // var transactions = transactionRepository.findAll();
-       if (transactions.isEmpty()) {
+    public  TradeVolumeViewDto tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
+
+      var transactions =   transactionsByUserAndBetweenDates(volumeData);
+        List<CryptoCurrencyVolumeDto> cryptos =  new LinkedList<>();
+        double totalValueTradedInPesos = 0D;
+        Map<String, List<Transaction>> groupByCryptos = transactions.stream().collect(
+                Collectors.groupingBy(Transaction::getCryptoCurrencyName  ) );
+
+
+        for (Map.Entry<String, List<Transaction>> entry: groupByCryptos.entrySet()) {
+          var  transactionsVolume = entry.getValue().stream().toList();
+          var cryptoNominalAmount = transactionsVolume.stream().collect(Collectors.summarizingDouble(Transaction::getAmountOfCryptoCurrency)).getSum();
+          var currentPrice = transactionsVolume.get(0).cryptoPrice();
+          var amountPriceInPesos  =  cryptoNominalAmount * currentPrice;
+          var crypto = new  CryptoCurrencyVolumeDto(entry.getKey(), cryptoNominalAmount, currentPrice,amountPriceInPesos);
+          cryptos.add(crypto);
+          totalValueTradedInPesos  += amountPriceInPesos;
+        }
+        var cryptoVolume = new TradeVolumeViewDto(getNewDate(), totalValueTradedInPesos, cryptos );
+        return cryptoVolume;
+
+
+         }
+
+
+
+
+
+   public  List<Transaction> transactionsByUserAndBetweenDates(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
+        var user =   userService.findByID(volumeData.getUserId());
+        var transactions =  transactionRepository.findTransactionByDateTimeBetweenAndOption_UserOrderByCryptoCurrencyAsc (volumeData.getStartDate(),volumeData.getEndDate(),user);
+        // var transactions = transactionRepository.findAll();
+        if (transactions.isEmpty()) {
             String message = "There is not transactions for that search";
             response(message, HttpStatus.NOT_FOUND);
             throw new NotFoundException(message);
         }
-      return   transactions.get();
+        return   transactions.get();
 
     }
-
-
 }

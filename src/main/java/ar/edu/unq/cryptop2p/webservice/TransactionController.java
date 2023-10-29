@@ -1,10 +1,7 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
-import ar.edu.unq.cryptop2p.model.dto.TradedVoluolumeDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionProcessDto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionViewDto;
+import ar.edu.unq.cryptop2p.model.dto.*;
 import ar.edu.unq.cryptop2p.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +9,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.stringToDate;
-
 import java.util.HashMap;
 import java.util.List;
+
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.getResponse;
 
@@ -104,10 +100,10 @@ public class TransactionController {
 
     @Operation(summary = "traded volume of cryptocurrencies between two dates")
     @GetMapping("/tradedvolume")
-    public ResponseEntity<List<Transaction>> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
+    public ResponseEntity< TradeVolumeViewDto> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
         ResponseEntity response;
         try {
-            List <Transaction> transactions = transactionService.tradeVolume(volumeData.convertStringToDate());
+            TradeVolumeViewDto transactions = transactionService.tradeVolume(volumeData.convertStringToDate());
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(transactions);
         } catch (Exception  e) {
