@@ -43,10 +43,10 @@ public class TransactionController {
 
     @Operation(summary = "Create transaction")
     @PostMapping("/create")
-    public ResponseEntity<TransactionViewDto> create(@RequestBody TransactionCreateDto transactionData){
+    public ResponseEntity<TransactionViewDto> create(@RequestBody TransactionSelectionDto transactionData){
         ResponseEntity response;
         try {
-            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption(), transactionData.getIdCounterParty()));
+            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption(), transactionData.getIdUserSession()));
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception  e) {
@@ -85,7 +85,7 @@ public class TransactionController {
     /**Acept a user**/
     @Operation(summary = "Acept option for a user")
     @PostMapping("/acept")
-    public ResponseEntity<Transaction> acept(@RequestBody TransactionCreateDto transactiondata) {
+    public ResponseEntity<Transaction> acept(@RequestBody TransactionAceptDto transactiondata) {
         ResponseEntity response;
         try {
             Transaction entity = transactionService.acept(transactiondata);

@@ -208,4 +208,27 @@ public class UserCrypto implements Serializable {
         }
 
 
+   public void acept (Option option , UserCrypto userSelector) throws BadRequestException {
+       checkSameUser(option);
+       checkUserSelectorChoosedOptionFromUserSession(option, userSelector);
+       }
+
+
+    private void checkSameUser (Option option) throws BadRequestException {
+        if ( ! option.getUser().getId().equals(this.getId() ) ) {
+            var message =  "userSession must be the owner of the option selected";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
+
+    private void checkUserSelectorChoosedOptionFromUserSession(Option option, UserCrypto userSelector) throws BadRequestException {
+        if (! userSelector.getOptioms().contains(option) ) {
+            var message =  "Sorry" +  userSelector.getName() + "has not select your option";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
+
+
 }

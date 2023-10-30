@@ -35,18 +35,14 @@ public class TransactionService {
 
 
     @Transactional
-    public Transaction acept(TransactionCreateDto transactiondata) throws NotFoundException, BadRequestException {
-        var counterPartyUser = userService.findByID(transactiondata.getIdCounterParty());
+    public Transaction acept(TransactionAceptDto transactiondata) throws NotFoundException, BadRequestException {
+        var userSession = userService.findByID(transactiondata.getIdUserSession());
+        var userSelector = userService.findByID(transactiondata.getIdUserSelector());
         var option =    optionService.findByID(transactiondata.getIdOption());
-        checkings(option,counterPartyUser);
-        return  create(transactiondata.getIdOption(),transactiondata.getIdCounterParty());
+        userSession.acept(option, userSelector);
+       return  create(transactiondata.getIdOption(),transactiondata.getIdUserSelector());
     }
 
-
-    public void checkings (Option option, UserCrypto counterPartyUser ) throws  BadRequestException {
-        option.checkNotSameUser(counterPartyUser);
-        option.checkSelectedByCounterParty(counterPartyUser);
-    }
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -55,7 +51,6 @@ public class TransactionService {
          UserCrypto counterPartyUser = userService.findByID(id_counterPartyUser);
         Transaction transaction = new Transaction(option);
         transaction.setDateTime(getNewDate());
-       // transaction.setUser(option.getUser());
         transaction.setCounterPartyUser(counterPartyUser);
         transaction.setCryptoCurrency(option.getCryptocurrency());
         transaction.setOperation(option.getOperation());
@@ -68,7 +63,6 @@ public class TransactionService {
     public Transaction process (TransactionProcessDto transactionData) throws ConfirmReceptionException, MakeTransferException, CancelException, BadRequestException, NotFoundException {
         Transaction transaction = provideTransaction(transactionData);
         transaction.checkValidAction();
-       // checkNotSameUser(transaction, transactionData);
         transaction.checkValidPriceToPost();
         var transactionProcessed =  transaction.execute();
         return transactionRepository.save(transactionProcessed);
@@ -79,12 +73,7 @@ public class TransactionService {
     transaction.setActionType(transactionData.getActionType());
     return transaction;
     }
-/*
-    public void checkNotSameUser (@NotNull Transaction transaction, @NotNull TransactionProcessDto transactionData) throws NotFoundException, BadRequestException {
-        UserCrypto userCounterParty = userService.findByID(transactionData.getIdCounterParty());
-        transaction.checkNotSameUser(userCounterParty);
-     }
-*/
+
     @Transactional
     public  List<Transaction> findAll() {
         return  transactionRepository.findAll();
@@ -135,8 +124,7 @@ public class TransactionService {
    public  List<Transaction> transactionsByUserAndBetweenDates(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
         var user =   userService.findByID(volumeData.getUserId());
         var transactions =  transactionRepository.findTransactionByDateTimeBetweenAndOption_UserOrderByCryptoCurrencyAsc (volumeData.getStartDate(),volumeData.getEndDate(),user);
-        // var transactions = transactionRepository.findAll();
-        if (transactions.isEmpty()) {
+         if (transactions.isEmpty()) {
             String message = "There is not transactions for that search";
             response(message, HttpStatus.NOT_FOUND);
             throw new NotFoundException(message);
