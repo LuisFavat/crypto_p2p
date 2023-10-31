@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
@@ -30,12 +32,13 @@ public class CryptoCurrencyService {
 	@Autowired
 	BinanceProxyService binanceProxyService;
 
+
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
-
-		 var cryptoNames = CryptoCurrencyEnum.values();
-		 var cryptos = Arrays.stream(cryptoNames).map((crypto -> getCryptoCurrencyValue(crypto.name() ))).toList();
-	     return cryptos;
+        var cryptoNames = CryptoCurrencyEnum.values();
+		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues();
+		var cryptos =   cryptosForBinance.stream().filter( (crypto) ->  Arrays.stream(cryptoNames).toList().contains(crypto.getName() )).toList();
+		return cryptos;
 	}
 
 	@Transactional

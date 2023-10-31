@@ -1,9 +1,15 @@
 package ar.edu.unq.cryptop2p.service.integration;
 
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
+import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteListDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class BinanceProxyService {
@@ -19,5 +25,11 @@ public class BinanceProxyService {
 	return entity;
 	}
 
+
+	public List <CryptoCurrencyLastQuoteDto> getCryptoCurrenciesValues() {
+		CryptoCurrencyLastQuoteListDto entity = restTemplate.getForObject(binanceApiURL + "ticker/price" , CryptoCurrencyLastQuoteListDto.class);
+		assert entity != null;
+		return entity.getCryptoCurrencyLastQuoteList();
+	}
 
 }
