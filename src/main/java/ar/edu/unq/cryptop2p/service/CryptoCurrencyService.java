@@ -32,7 +32,6 @@ public class CryptoCurrencyService {
 	@Autowired
 	BinanceProxyService binanceProxyService;
 
-
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
         var cryptoNames = CryptoCurrencyEnum.values();

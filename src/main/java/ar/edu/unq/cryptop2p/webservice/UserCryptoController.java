@@ -41,7 +41,6 @@ public class UserCryptoController {
 
                 HashMap result = getResponse();
                 response = ResponseEntity.status(400).body(e.getMessage());
-                var a = 2;
                 }
             return response ;
 
