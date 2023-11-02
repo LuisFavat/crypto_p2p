@@ -32,7 +32,7 @@ public class CryptoCurrencyService {
 
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
-
+		 //TODO filtrar desde aca
 		 var cryptoNames = CryptoCurrencyEnum.values();
 		 var cryptos = Arrays.stream(cryptoNames).map((crypto -> getCryptoCurrencyValue(crypto.name() ))).toList();
 	     return cryptos;
