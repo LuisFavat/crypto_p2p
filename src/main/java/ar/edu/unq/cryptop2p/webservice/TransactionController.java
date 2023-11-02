@@ -9,10 +9,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.stringToDate;
-
 import java.util.HashMap;
 import java.util.List;
+
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.getResponse;
 
@@ -44,10 +43,10 @@ public class TransactionController {
 
     @Operation(summary = "Create transaction")
     @PostMapping("/create")
-    public ResponseEntity<TransactionViewDto> create(@RequestBody TransactionCreateDto transactionData){
+    public ResponseEntity<TransactionViewDto> create(@RequestBody TransactionSelectionDto transactionData){
         ResponseEntity response;
         try {
-            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption(), transactionData.getIdCounterParty()));
+            TransactionViewDto entity = TransactionViewDto.fromModel(transactionService.create(transactionData.getIdOption(), transactionData.getIdUserSession()));
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception  e) {
@@ -86,7 +85,7 @@ public class TransactionController {
     /**Acept a user**/
     @Operation(summary = "Acept option for a user")
     @PostMapping("/acept")
-    public ResponseEntity<Transaction> acept(@RequestBody TransactionCreateDto transactiondata) {
+    public ResponseEntity<Transaction> acept(@RequestBody TransactionAceptDto transactiondata) {
         ResponseEntity response;
         try {
             Transaction entity = transactionService.acept(transactiondata);
@@ -99,18 +98,14 @@ public class TransactionController {
         return response;
     }
 
-
-
-
-
     @Operation(summary = "traded volume of cryptocurrencies between two dates")
-    @PostMapping("/tradedvolume")
-    public ResponseEntity<CryptoAmountDTO> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
+    @GetMapping("/tradedvolume")
+    public ResponseEntity< TradeVolumeViewDto> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
         ResponseEntity response;
         try {
-            var responseDTO = transactionService.tradeVolume(volumeData.convertStringToDate());
+            TradeVolumeViewDto transactions = transactionService.tradeVolume(volumeData.convertStringToDate());
             ResponseEntity.status(201);
-            response = ResponseEntity.ok().body(responseDTO);
+            response = ResponseEntity.ok().body(transactions);
         } catch (Exception  e) {
 
             HashMap result = getResponse();

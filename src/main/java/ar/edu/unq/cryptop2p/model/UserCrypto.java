@@ -29,7 +29,7 @@ public class UserCrypto implements Serializable {
         private Long id;
 
       // @JsonIgnore
-       @OneToMany(/*mappedBy = "user",*/cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+       @OneToMany(/*mappedBy = "user",*/cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
        private Set<Option> optioms = new HashSet<>();
 
        @Column(nullable = false)
@@ -206,6 +206,29 @@ public class UserCrypto implements Serializable {
         {
             return 9181 * email.hashCode();
         }
+
+
+   public void acept (Option option , UserCrypto userSelector) throws BadRequestException {
+       checkSameUser(option);
+       checkUserSelectorChoosedOptionFromUserSession(option, userSelector);
+       }
+
+
+    private void checkSameUser (Option option) throws BadRequestException {
+        if ( ! option.getUser().getId().equals(this.getId() ) ) {
+            var message =  "userSession must be the owner of the option selected";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
+
+    private void checkUserSelectorChoosedOptionFromUserSession(Option option, UserCrypto userSelector) throws BadRequestException {
+        if (! userSelector.getOptioms().contains(option) ) {
+            var message =  "Sorry" +  userSelector.getName() + "has not select your option";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
 
 
 }

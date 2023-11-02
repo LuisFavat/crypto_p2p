@@ -10,13 +10,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TransactionCreateDto implements Serializable {
+public class TransactionAceptDto implements Serializable {
 
     @NotNull
     private int idOption;
 
     @NotNull
-    private Long idCounterParty;
+    private Long idUserSelector;
 
-
+    @NotNull
+    private Long idUserSession;
 }

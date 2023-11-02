@@ -60,7 +60,7 @@ public abstract class Option implements  Serializable {
     protected Double price;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto")
     protected UserCrypto user;
 
@@ -148,9 +148,19 @@ public abstract class Option implements  Serializable {
         }
     }
 
-    public void checkNotSameUser(UserCrypto userCounterParty) throws BadRequestException {
-        if (getUser().getId().equals(userCounterParty.getId())) {
-            var message = "The counterparty cannot be the owner of the option";
+    public void checkNotSameUser(UserCrypto userSession) throws BadRequestException {
+        if (getUser().getId().equals(userSession.getId())) {
+            var message = "The userSession cannot be the owner of the option";
+            response(message, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(message);
+        }
+    }
+
+
+
+    public void checkNotSelectedYetByUserSession (UserCrypto userSession) throws BadRequestException {
+        if (userSession.getOptioms().contains(this)) {
+            var message = "You can not select option" + this.getId() + "again, cause you has just selected it";
             response(message, HttpStatus.BAD_REQUEST);
             throw new BadRequestException(message);
         }

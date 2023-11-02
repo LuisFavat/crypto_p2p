@@ -1,7 +1,7 @@
 package ar.edu.unq.cryptop2p.service;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
+import ar.edu.unq.cryptop2p.model.dto.TransactionSelectionDto;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
@@ -73,12 +73,13 @@ public class UserCryptoService {
     }
 
     @Transactional
-    public UserCrypto select(TransactionCreateDto transactiondata) throws NotFoundException, BadRequestException {
-        var counterPartyUser = findByID(transactiondata.getIdCounterParty());
+    public UserCrypto select(TransactionSelectionDto transactiondata) throws NotFoundException, BadRequestException {
+        var userSession = findByID(transactiondata.getIdUserSession());
         var option =    optionService.findByID(transactiondata.getIdOption());
-        option.checkNotSameUser(counterPartyUser);
-         counterPartyUser.getOptioms().add(option);
-        return userRepository.save(counterPartyUser);
+        option.checkNotSameUser(userSession);
+        option.checkNotSelectedYetByUserSession(userSession);
+        userSession.getOptioms().add(option);
+        return userRepository.save(userSession);
     }
 
 }

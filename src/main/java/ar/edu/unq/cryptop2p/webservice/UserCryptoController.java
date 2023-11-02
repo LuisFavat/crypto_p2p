@@ -2,7 +2,7 @@ package ar.edu.unq.cryptop2p.webservice;
 
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import ar.edu.unq.cryptop2p.model.dto.TransactionCreateDto;
+import ar.edu.unq.cryptop2p.model.dto.TransactionSelectionDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
@@ -92,7 +92,7 @@ public class UserCryptoController {
     /**Select a Option For a user**/
     @Operation(summary = "Select a Option For a user")
     @PostMapping("/select")
-    ResponseEntity<UserCrypto> selectOption(@RequestBody TransactionCreateDto transactiondata) {
+    ResponseEntity<UserCrypto> selectOption(@RequestBody TransactionSelectionDto transactiondata) {
         ResponseEntity response;
         try {
             UserCrypto entity = userService.select(transactiondata);
@@ -104,12 +104,6 @@ public class UserCryptoController {
         }
         return response;
     }
-
-//    @GetMapping("volumen/between/{1}/{2}")
-//    ResponseEntity<List<UserCrypto>> getVolumenBetween(@PathVariable  tipoDeDato nombre, @PathVariable tipoDeDato nombre1)
-//    {
-//        //cuerpo metodo
-//    }
 
 
 }
