@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.service.integration;
 
+import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteListDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.*;
 
 @Service
 public class BinanceProxyService {
@@ -25,11 +28,31 @@ public class BinanceProxyService {
 	return entity;
 	}
 
-
+/*
 	public List <CryptoCurrencyLastQuoteDto> getCryptoCurrenciesValues() {
 		CryptoCurrencyLastQuoteListDto entity = restTemplate.getForObject(binanceApiURL + "ticker/price" , CryptoCurrencyLastQuoteListDto.class);
 		assert entity != null;
 		return entity.getCryptoCurrencyLastQuoteList();
+	}
+*/
+	public List <CryptoCurrencyLastQuoteDto> getCryptoCurrenciesValues(String symbols) {
+		ResponseEntity<CryptoCurrencyLastQuoteDto[]> entity = restTemplate.getForEntity(binanceApiURL + "ticker/price?symbols=" + symbols , CryptoCurrencyLastQuoteDto[].class);
+		return Arrays.asList(Objects.requireNonNull(entity.getBody()));
+	}
+
+	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(CryptoCurrency cryptocurrency) {
+
+		String url = binanceApiURL + "klines?symbol=" + cryptocurrency.getName() +
+				"&interval=1h&startTime=" + getCurrentTimeMinusOneDayInMilliseconds() +
+				"&endTime=" + getCurrentTimeInMilliseconds();
+
+		ResponseEntity<List[]> responseList =
+				restTemplate.getForEntity(url, List[].class);
+
+		return Arrays.stream(Objects.requireNonNull(responseList.getBody())).map(
+				obj -> new CryptoCurrencyLastQuoteDto(cryptocurrency.getName(),
+						obj.get(4) + "",
+						longToDate((long) obj.get(0)))).collect(Collectors.toList());
 	}
 
 }

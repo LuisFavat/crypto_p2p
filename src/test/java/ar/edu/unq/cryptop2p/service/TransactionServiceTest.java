@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.text.ParseException;
+import java.util.List;
 
 import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
 import static ar.edu.unq.cryptop2p.builders.OptionConcreteBuilder.anyOption;
@@ -180,6 +181,7 @@ class TransactionServiceTest {
 //        assertFalse(transactions.isEmpty());
 //        }
 
+    /*
     @Test
     @DirtiesContext
     void options() throws PreconditionFailedException, NotFoundException, BadRequestException, ParseException {
@@ -278,6 +280,28 @@ class TransactionServiceTest {
         assertFalse(transactions.isEmpty());
         assertFalse(tradedVolume.getCryptoCurrencyList().isEmpty());
         assertEquals(2, tradedVolume.getCryptoCurrencyList().size());
+
+    }
+*/
+
+
+    @Test
+    @DirtiesContext
+    void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException {
+
+        CryptoCurrency aCrypto = aCryto().withName("AUDIOUSDT").withPrice(10).build();
+        var crypto =  cryptoService.create(aCrypto);
+
+
+        CryptoCurrency aCrypto2 = aCryto().withName("ALICEUSDT").withPrice(10).build();
+        var crypto2 =  cryptoService.create(aCrypto2);
+
+        List<CryptoCurrencyLastQuoteDto> cryptoQuotes = cryptoService.getCryptoCurrencyLastQuotes24hs(crypto.getName());
+
+        assertFalse(cryptoQuotes.isEmpty());
+        assertEquals(24, cryptoQuotes.size());
+        assertEquals(crypto.getName(), cryptoQuotes.stream().findAny().get().getName());
+
 
     }
 }

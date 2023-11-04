@@ -31,7 +31,7 @@ public class CryptoCurrencyService {
 
 	@Autowired
 	BinanceProxyService binanceProxyService;
-
+/*
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
         var cryptoNames = CryptoCurrencyEnum.values();
@@ -39,13 +39,35 @@ public class CryptoCurrencyService {
 		var cryptos =   cryptosForBinance.stream().filter( (crypto) ->  Arrays.stream(cryptoNames).toList().contains(crypto.getName() )).toList();
 		return cryptos;
 	}
+*/
+	@Transactional
+	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
+		var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).toList().toString();
+		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues(cryptoNames);
+		var cryptos =   cryptosForBinance.stream().toList();
+		return cryptos;
+	}
 
+	/*
 	@Transactional
     public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) {
 		CryptoCurrencyLastQuoteDto entity = binanceProxyService.getCryptoCurrencyValue(symbol);
 		if (entity != null) {
 			entity.setDateTime(CurrentDateTime.getNewDateString());
 		}
+		return entity;
+	}
+*/
+
+	@Transactional
+	public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) throws NotFoundException {
+		CryptoCurrencyLastQuoteDto entity = binanceProxyService.getCryptoCurrencyValue(symbol);
+		if (entity == null ) {
+			String message = " CruyptoCurrency name is does not exist";
+			response(message, HttpStatus.NOT_FOUND);
+			throw new NotFoundException(message);
+		}
+		entity.setDateTime(CurrentDateTime.getNewDateString());
 		return entity;
 	}
 
@@ -78,4 +100,11 @@ public class CryptoCurrencyService {
 		return crypto.get();
 
 	}
+
+	@Transactional
+	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrencyLastQuotes24hs(String name) throws NotFoundException {
+		CryptoCurrency  cryptoCurrency = findByName(name);
+		return binanceProxyService.getCryptoCurrencyLastQuotes24hs(cryptoCurrency);
+	}
+
 }

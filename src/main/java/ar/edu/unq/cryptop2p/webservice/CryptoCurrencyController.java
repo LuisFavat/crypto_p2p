@@ -1,11 +1,13 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
+import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.CryptoCurrencyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +42,36 @@ public class CryptoCurrencyController {
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
     @GetMapping("/quotes/{symbol}")
     public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@PathVariable("symbol" )String symbol){
-       CryptoCurrencyLastQuoteDto cryptoQuotes = cryptoService.getCryptoCurrencyValue(symbol);
-        return ResponseEntity.ok().body(cryptoQuotes);
+      ResponseEntity response;
+        try {
+            CryptoCurrencyLastQuoteDto cryptoQuotes = cryptoService.getCryptoCurrencyValue(symbol);
+            response = ResponseEntity.ok().body(cryptoQuotes);
+        } catch (Exception e) {
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+        }
+        return response;
+    }
+
+
+
+
+    @Operation(summary = "Get cryptocurrency quotes from the last 24 hours")
+    @GetMapping("/lastquotes24hs/{name}")
+    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getCryptoCurrencyLastQuotes24hs(@PathVariable("name")String name) {
+    ResponseEntity response;
+        try {
+        List<CryptoCurrencyLastQuoteDto> cryptoCurrencyLastQuotes24hs = cryptoService.getCryptoCurrencyLastQuotes24hs(name);
+       response = ResponseEntity.ok().body(cryptoCurrencyLastQuotes24hs);
+        } catch (Exception e) {
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+        }
+        return response;
 
     }
+
+
 
 
     @Operation(summary = "Create a CryptoCurrency")

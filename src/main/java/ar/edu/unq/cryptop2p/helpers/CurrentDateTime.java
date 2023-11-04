@@ -18,7 +18,8 @@ public class CurrentDateTime {
     private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
     private static final String DATE_FORMAT2 = "dd/MM/yyyy";
     private  static final  long CURRENT_TIME_MINUS_30_MINUTES_IN_MILLISECONDS = ZonedDateTime.now().minusMinutes(30).toInstant().toEpochMilli();
-
+    private static final long currentTimeInMilliseconds = ZonedDateTime.now().toInstant().toEpochMilli();
+    private static final long currentTimeMinusOneDayInMilliseconds = ZonedDateTime.now().minusDays(1).toInstant().toEpochMilli();
 
     private CurrentDateTime() {}
 
@@ -37,7 +38,21 @@ public class CurrentDateTime {
         return date;
     }
 
+    public static String longToDate (long timeInLong) {
+        var date = getNewDate();
+        date.setTime(timeInLong);
+        return new SimpleDateFormat().format(date);
+    }
 
+
+    public static long getCurrentTimeInMilliseconds() {
+        return currentTimeInMilliseconds;
+    }
+
+
+    public  static long getCurrentTimeMinusOneDayInMilliseconds() {
+        return currentTimeMinusOneDayInMilliseconds;
+    }
 
     /*
     public static  LocalDate  stringToDate(String dateString)  {
