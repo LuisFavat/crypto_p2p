@@ -1,15 +1,14 @@
-package ar.edu.unq.cryptop2p.architectureTests;
+package ar.edu.unq.architecture;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
+
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
-import com.tngtech.archunit.lang.ArchRule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ArchitectureTests {
+public class AccesTests {
 
     private JavaClasses baseClasses;
     @BeforeEach
@@ -28,17 +27,6 @@ public class ArchitectureTests {
     }
 
 
-    @Test
-    public void dtoClassesShouldEndWithDTO(){
-        classes().that().resideInAPackage("..dto..")
-                .should().haveSimpleNameEndingWith("Dto").check(baseClasses);
-    }
-
-    @Test
-    public void exceptionsClassesShouldEndWithException(){
-        classes().that().resideInAPackage("..exceptions..")
-                .should().haveSimpleNameEndingWith("Exception").check(baseClasses);
-    }
 
 
 
