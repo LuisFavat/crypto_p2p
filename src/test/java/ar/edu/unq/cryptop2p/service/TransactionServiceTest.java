@@ -1,3 +1,4 @@
+/*
 package ar.edu.unq.cryptop2p.service;
 
 import static ar.edu.unq.cryptop2p.helpers.ActionType.*;
@@ -29,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static ar.edu.unq.cryptop2p.builders.TransactionBuilder.aTransaction;
 import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.*;
 
-/*
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TransactionServiceTest {
 
@@ -64,8 +65,8 @@ class TransactionServiceTest {
     void tearDown() {
 
     }
+*/
 
- */
 /*
     @Test
     @DirtiesContext
@@ -285,8 +286,7 @@ class TransactionServiceTest {
 
     }
 */
-
-/*
+    /*
     @Test
     @DirtiesContext
     void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException {

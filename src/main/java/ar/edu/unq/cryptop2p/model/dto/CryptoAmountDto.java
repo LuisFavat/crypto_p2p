@@ -7,7 +7,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CryptoAmountDTO
+public class CryptoAmountDto
 {
     int amount;
     String cryptoName;
