@@ -6,9 +6,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
-@Order(3)
+//@Aspect
+//@Component
+//@Order(3)
 public class Duration {
 
     @Around("ar.edu.unq.cryptop2p.audition.PointCuts.entryPoint()")

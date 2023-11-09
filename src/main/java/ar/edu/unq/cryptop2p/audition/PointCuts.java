@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
-@Order(0)
+//@Aspect
+//@Component
+//@Order(0)
 public class PointCuts
 {
     static Logger logger = LoggerFactory.getLogger(PointCuts.class);
