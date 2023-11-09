@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 public class AccesTests {
 
     private JavaClasses baseClasses;
+
     @BeforeEach
     public void setup() {
         baseClasses = new ClassFileImporter()
