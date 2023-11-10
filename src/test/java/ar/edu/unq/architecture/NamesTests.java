@@ -21,7 +21,7 @@ public class NamesTests {
     }
 
     @Test
-    public void dtoClassesShouldEndWithDTO(){
+    public void dtoClassesShouldEndWithDto(){
         classes().that().resideInAPackage("..dto..")
                 .should().haveSimpleNameEndingWith("Dto").check(baseClasses);
     }

@@ -20,7 +20,7 @@ public class AccesTests {
     }
 
     @Test
-    public void Services_should_only_be_accessed_by_WebServices() {
+    public void ServicesShouldOnlyBeAccessedByWebServices() {
          classes()
              .that().resideInAPackage("..service..")
              .should().onlyBeAccessed().byAnyPackage("..webservice..", "..service..")
