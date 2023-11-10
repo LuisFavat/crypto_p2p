@@ -3,11 +3,12 @@ package ar.edu.unq.cryptop2p.service.integration;
 import ar.edu.unq.cryptop2p.model.dolar.Dollar;
 import ar.edu.unq.cryptop2p.helpers.api.URLs;
 import ar.edu.unq.cryptop2p.model.exceptions.DollarProxyServerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class DollarProxyServer {
     private RestTemplate restTemplate = new RestTemplate();
 

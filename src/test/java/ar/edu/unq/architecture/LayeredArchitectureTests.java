@@ -21,7 +21,7 @@ public class LayeredArchitectureTests
     }
 
     @Test
-    public void Layers_should_mantain_An_Access_Jerarquy() {
+    public void LayersShouldMantainAnAccessJerarquy() {
         classes().that().haveSimpleNameEndingWith("Dto")
                 .should().resideInAPackage("ar.edu.unq.cryptop2p.model.dto")
                 .check(baseClasses);

@@ -4,7 +4,6 @@ package ar.edu.unq.cryptop2p.webservice;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionSelectionDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
-import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
