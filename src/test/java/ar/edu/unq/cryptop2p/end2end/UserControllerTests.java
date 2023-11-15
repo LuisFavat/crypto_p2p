@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -20,11 +21,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTests {
     private static final String HTTP_LOCALHOST = "http://localhost:";
+
     @LocalServerPort
     private int port;
+
     @Autowired
     private UserCryptoController controller;
-    TestRestTemplate restTemplate;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     //Estos dos usuarios (UserCrypto) se cargan al inicializar el programa de forma automatica
     UserCrypto user1 = new UserCrypto(1L,"Ale", "Fariña", "dir1132123123", "Very_Secret!", "ale@gmail.com","1234567890123456789012","12345678");
@@ -32,15 +37,6 @@ public class UserControllerTests {
 
     UserRegisterDto aUserRegisterDTO = new UserRegisterDto("Felipe", "Apellido", "direccion 123", "UnaPass!", "felipe@gmail.com", "1234567890123456789012", "12345678");
 
-    @BeforeEach
-    void setUp()  {
-        restTemplate = new TestRestTemplate();
-    }
-
-    @AfterEach
-    void tearDown() {
-
-    }
 
 
     @Test

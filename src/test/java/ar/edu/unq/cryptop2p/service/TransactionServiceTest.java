@@ -66,7 +66,6 @@ class TransactionServiceTest {
 
     }
 */
-
 /*
     @Test
     @DirtiesContext
@@ -286,7 +285,7 @@ class TransactionServiceTest {
 
     }
 */
-    /*
+/*
     @Test
     @DirtiesContext
     void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException {

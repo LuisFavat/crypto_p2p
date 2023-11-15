@@ -20,27 +20,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-
 //Se utilizan los datos precargados en la base de datos.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OptionControllerTests
-{
+public class OptionControllerTests{
+
+    private static final String HTTP_LOCALHOST = "http://localhost:";
+
+    @LocalServerPort
+   private int port;
+
     @Autowired
     private OptionService optionService;
+
     @Autowired
     private CryptoCurrencyService cryptoCurrencyService;
-    private static final String HTTP_LOCALHOST = "http://localhost:";
-    @LocalServerPort
-    private int port;
+
     @Autowired
     private OptionController controller;
-    TestRestTemplate restTemplate = new TestRestTemplate();
 
-    @BeforeEach
-    void setUp()  {
-       //restTemplate = new TestRestTemplate();
-    }
+    @Autowired
+    private TestRestTemplate restTemplate;
+
 
     @Test
     public void contextLoads() throws Exception {
@@ -58,6 +58,8 @@ public class OptionControllerTests
         assertThat(response).isInstanceOf(OptionCall.class);
         assertThat(response.getOperation()).isEqualTo(optionPostDTO.getOperation());
     }
+
+
 
     @Test
     public void registerAOptionCaseBadRequest() throws NotFoundException, BadRequestException, PreconditionFailedException {
