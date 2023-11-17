@@ -2,9 +2,8 @@ package ar.edu.unq.cryptop2p.model;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import java.util.*;
+
 import ar.edu.unq.cryptop2p.model.exceptions.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
@@ -61,6 +60,10 @@ public class UserCrypto implements Serializable {
 
         @Column
         private int reputation;
+
+        @ManyToMany
+        @JoinColumn(name = "id_role")
+        private List<Role> roles = new ArrayList<>();
 
 
         public UserCrypto(
