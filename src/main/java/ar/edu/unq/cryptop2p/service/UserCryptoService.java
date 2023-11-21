@@ -1,7 +1,9 @@
 package ar.edu.unq.cryptop2p.service;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
+import ar.edu.unq.cryptop2p.model.dto.TokenDto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionSelectionDto;
+import ar.edu.unq.cryptop2p.model.dto.UserLoginDto;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
@@ -41,6 +43,7 @@ public class UserCryptoService {
     private  Boolean existByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
+
 
 
 

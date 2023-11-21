@@ -6,6 +6,7 @@ import ar.edu.unq.cryptop2p.model.dto.TransactionSelectionDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
+import ar.edu.unq.cryptop2p.service.CustomUserDetailsService;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UserCryptoController {
     @Autowired
     private UserCryptoService userService;
 
+
+
+
     /**register a user*/
     @Operation(summary = "Register a user")
     @PostMapping("/register")
@@ -44,6 +48,7 @@ public class UserCryptoController {
             return response ;
 
     }
+
 
     @Operation(summary = "Get all users")
     @GetMapping("/users")

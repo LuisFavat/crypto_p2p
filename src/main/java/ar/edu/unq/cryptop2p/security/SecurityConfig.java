@@ -1,3 +1,4 @@
+
 package ar.edu.unq.cryptop2p.security;
 
 
@@ -15,50 +16,54 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Arrays;
+
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
+   @Autowired
+   private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
+   /*
     public SecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
-
-    @Bean
-    JwtAuthenticationEntryPoint  jwtAuthenticationEntryPoint () {
-       return  new  JwtAuthenticationEntryPoint();
-    }
+*/
+    // @Autowired
+    // private  JwtAuthenticationFilter   jwtAuthenticationFilter;
 
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter();
-    }
+  //  @Bean
+   // JwtAuthenticationFilter jwtAuthenticationFilter() {
+     //  return new JwtAuthenticationFilter();
+  // }
 
     private static final String[] AUTH_WHITELIST = {
-            "/auth/**",
             "/doc/swagger-ui/**",
             "/v3/api-docs/**",
             "/h2-console/**",
-            "/cryptocoins/**",
-            "/intention/getActivesIntentions/**"
+            "/auth/**",
+            "/api/crypto/**",
+            "/api/option/**",
+            "/api/transaction/**",
+            "/api/user/**",
     };
 
-/*
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable();
@@ -80,9 +85,10 @@ public class SecurityConfig {
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+       // http.addFilteBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+      //   http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
-*/
+
 }

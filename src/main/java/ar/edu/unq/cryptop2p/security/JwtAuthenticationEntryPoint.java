@@ -1,3 +1,4 @@
+
 package ar.edu.unq.cryptop2p.security;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,10 +11,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 
+
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
     @SneakyThrows
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
