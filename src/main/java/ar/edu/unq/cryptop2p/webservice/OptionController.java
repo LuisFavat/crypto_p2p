@@ -7,6 +7,7 @@ import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.OptionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,9 @@ public class OptionController {
     private OptionService optionService;
 
     @Operation(summary = "Post an Option")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/post")
-    public ResponseEntity<Option> post(@RequestBody OptionPostDto optionPostDto ){
+    public ResponseEntity<Option> post(@RequestHeader(value = "Authorization") String token,@RequestBody OptionPostDto optionPostDto ){
         ResponseEntity response;
         try {
             OptionViewDto entity = OptionViewDto.fromModel( optionService.post(optionPostDto) );
@@ -48,8 +50,9 @@ public class OptionController {
 
     /**get option by id**/
     @Operation(summary = "Get an option by Id")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
-    ResponseEntity<Option> findById(@PathVariable("id") int id) {
+    ResponseEntity<Option> findById(@RequestHeader(value = "Authorization") String token,@PathVariable("id") int id) {
         ResponseEntity response;
         try {
             Option entity = optionService.findByID(id);
@@ -65,8 +68,9 @@ public class OptionController {
     }
 
     @Operation(summary = "Get all options")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/options")
-    public ResponseEntity <List<Option>>getAll(){
+    public ResponseEntity <List<Option>>getAll(@RequestHeader(value = "Authorization") String token){
         List<Option> options = optionService.findAll();
        return ResponseEntity.ok().body(options);
     }

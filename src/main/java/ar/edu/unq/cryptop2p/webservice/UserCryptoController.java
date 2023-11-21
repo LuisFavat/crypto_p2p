@@ -9,6 +9,7 @@ import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.CustomUserDetailsService;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,9 @@ public class UserCryptoController {
 
     /**register a user*/
     @Operation(summary = "Register a user")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/register")
-    public  ResponseEntity<UserCrypto> register(@RequestBody UserRegisterDto userdata ) {
+    public  ResponseEntity<UserCrypto> register(@RequestHeader(value = "Authorization") String token,@RequestBody UserRegisterDto userdata ) {
          ResponseEntity response;
           try {
                 UserCrypto entity =  userService.register(userdata.toModel());
@@ -51,8 +53,9 @@ public class UserCryptoController {
 
 
     @Operation(summary = "Get all users")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/users")
-    public ResponseEntity<List<UserCrypto>> getAllUsers() {
+    public ResponseEntity<List<UserCrypto>> getAllUsers(@RequestHeader(value = "Authorization") String token) {
         List<UserCrypto> users = userService.findAll();
         return ResponseEntity.ok().body(users);
 
@@ -61,8 +64,9 @@ public class UserCryptoController {
 
     /**get user by id**/
     @Operation(summary = "Get a user by Id")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
-    ResponseEntity<UserCrypto> userById(@PathVariable("id") int id) throws NotFoundException {
+    ResponseEntity<UserCrypto> userById(@RequestHeader(value = "Authorization") String token,@PathVariable("id") int id) throws NotFoundException {
         ResponseEntity response;
         try {
             UserCrypto entity = userService.findByID(id);
@@ -78,8 +82,9 @@ public class UserCryptoController {
 
     /*** get user by email **/
     @Operation(summary = "Get a user by email")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/email/{email}")
-    ResponseEntity<UserCrypto> userByEmail(@PathVariable("email") String email) throws NotFoundException {
+    ResponseEntity<UserCrypto> userByEmail(@RequestHeader(value = "Authorization") String token,@PathVariable("email") String email) throws NotFoundException {
         ResponseEntity response;
         try {
             UserCrypto entity = userService.findByEmail(email);
@@ -94,8 +99,9 @@ public class UserCryptoController {
 
     /**Select a Option For a user**/
     @Operation(summary = "Select a Option For a user")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/select")
-    ResponseEntity<UserCrypto> selectOption(@RequestBody TransactionSelectionDto transactiondata) {
+    ResponseEntity<UserCrypto> selectOption(@RequestHeader(value = "Authorization") String token,@RequestBody TransactionSelectionDto transactiondata) {
         ResponseEntity response;
         try {
             UserCrypto entity = userService.select(transactiondata);
