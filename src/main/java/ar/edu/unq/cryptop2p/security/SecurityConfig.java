@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.util.Arrays;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 
 @Configuration
@@ -26,8 +27,8 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @EnableMethodSecurity
 public class SecurityConfig {
 
-   @Autowired
-   private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
    /*
     public SecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
@@ -47,10 +48,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-  //  @Bean
-   // JwtAuthenticationFilter jwtAuthenticationFilter() {
-     //  return new JwtAuthenticationFilter();
-  // }
+    @Bean
+    JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
 
     private static final String[] AUTH_WHITELIST = {
             "/doc/swagger-ui/**",
@@ -67,10 +68,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable();
-
         http
                 .csrf()
-                .ignoringRequestMatchers("/**")
+                .ignoringRequestMatchers(antMatcher("/**"))
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -79,16 +79,32 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(AUTH_WHITELIST)
+                //.requestMatchers(AUTH_WHITELIST)
+                .requestMatchers(antMatcher("/v3/api-docs/"))
                 .permitAll()
+
+                .requestMatchers(antMatcher("/v3/api-docs/**"))
+                .permitAll()
+
+                .requestMatchers(antMatcher("/swagger-ui/**"))
+                .permitAll()
+
+                .requestMatchers(antMatcher("/auth/**"))
+                .permitAll()
+
+                .requestMatchers(antMatcher("/api/crypto/**"))
+                .permitAll()
+
+                .requestMatchers(antMatcher("/api/option/options"))
+                .permitAll()
+
                 .requestMatchers(toH2Console())
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-       // http.addFilteBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-      //   http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
-    }
 
+    }
 }

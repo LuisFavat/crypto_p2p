@@ -1,4 +1,4 @@
-/*
+
 package ar.edu.unq.cryptop2p.service;
 
 import static ar.edu.unq.cryptop2p.helpers.ActionType.*;
@@ -65,7 +65,7 @@ class TransactionServiceTest {
     void tearDown() {
 
     }
-*/
+
 /*
     @Test
     @DirtiesContext
@@ -285,7 +285,7 @@ class TransactionServiceTest {
 
     }
 */
-/*
+
     @Test
     @DirtiesContext
     void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException {
@@ -306,4 +306,3 @@ class TransactionServiceTest {
 
     }
 }
-*/
