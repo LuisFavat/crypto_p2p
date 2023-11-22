@@ -17,6 +17,9 @@ public class CryptoCurrencyLastQuoteDto implements Serializable {
     private String lastQuote;
 
     private String dateTime;
+
+    //Este campo al ser static se comporto similar a si fuera transcient
+    //private static final long serialVersion = 1L;
     public CryptoCurrencyLastQuoteDto(String name, String lastQuote){
         this.name = name;
         this.lastQuote = lastQuote;

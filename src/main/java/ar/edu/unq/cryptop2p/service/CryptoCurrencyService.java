@@ -46,6 +46,7 @@ public class CryptoCurrencyService {
 		var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).toList().toString();
 		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues(cryptoNames);
 		var cryptos =   cryptosForBinance.stream().toList();
+		System.out.println("Persistencia");
 		return cryptos;
 	}
 
