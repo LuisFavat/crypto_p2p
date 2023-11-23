@@ -26,6 +26,8 @@ public class Auditioner {
 
     @Around("entryPoint()")
     public Object durationTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        logger.info("Timestamp: " + LocalDateTime.now());
+
         long start = System.currentTimeMillis();
 
         methodSignature(joinPoint);
@@ -47,11 +49,5 @@ public class Auditioner {
 
     void arguments(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info("arguments: " + Arrays.toString(joinPoint.getArgs()));
-    }
-
-    @Before("entryPoint()")
-    public void timeStamp() throws Throwable
-    {
-        logger.info("Timestamp: " + LocalDateTime.now());
     }
 }
