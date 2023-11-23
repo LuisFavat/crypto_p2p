@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.model.validators;
 
+import ar.edu.unq.cryptop2p.model.dto.UserLoginDto;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import org.springframework.http.HttpStatus;
 
@@ -204,4 +205,6 @@ public class Validator {
     public static HashMap getResponse(){
         return response;
     }
+
+
 }

@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     public CustomUserDetailsService(UserCryptoService userCryptoService) {
-     this.userCryptoService = userCryptoService;
+        this.userCryptoService = userCryptoService;
     }
 
     @Autowired
@@ -44,7 +45,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    public Collection<GrantedAuthority> mapToAuthorities(List<Role> roleList){
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Collection<GrantedAuthority> mapToAuthorities(List<Role> roleList) {
         return roleList.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
@@ -52,18 +56,28 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         UserCrypto user = userCryptoService.findByEmail(email);
-        return new User(user.getEmail(), user.getPassword(), mapToAuthorities(user.getRoles())) ;
+        return new User(user.getEmail(), user.getPassword(), mapToAuthorities(user.getRoles()));
 
     }
 
     @Transactional
-    public TokenDto login(UserLoginDto userData){
-        authenticationManager.authenticate(
-         new UsernamePasswordAuthenticationToken(userData.getEmail(),userData.getPassword()));
+    public TokenDto login(UserLoginDto userData) throws PreconditionFailedException {
+
+        // var auth =  SecurityContextHolder.getContext().getAuthentication();
+        // String jwt = jwtTokenProvider.generateToken(auth);
         UserDetails userDetails = loadUserByUsername(userData.getEmail());
-      // var auth =  SecurityContextHolder.getContext().getAuthentication();
-       // String jwt = jwtTokenProvider.generateToken(auth);
-        String jwt = jwtTokenProvider.generateToken(userDetails);
-        return new TokenDto(jwt);
-    }
+
+        if (passwordEncoder.matches(userData.getPassword(), userDetails.getPassword())) {
+
+            var authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userData.getEmail(), userData.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = jwtTokenProvider.generateToken(authentication);
+            return new TokenDto(token);
+        } else {
+            throw new PreconditionFailedException ("ERROR: The data entered is incorrect");
         }
+
+    }
+
+}

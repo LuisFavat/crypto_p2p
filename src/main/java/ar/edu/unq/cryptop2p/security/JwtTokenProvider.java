@@ -42,7 +42,7 @@ public class JwtTokenProvider {
     }
 
 
-
+/*
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         var rol = userDetails.getAuthorities().stream().collect(Collectors.toList()).get(0);
@@ -60,23 +60,21 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
+*/
 
-/*
     public String generateToken(Authentication authentication){
         String email = authentication.getName();
         Date now = new Date();
 
-        Date expirationToken = new Date(now.getTime() + exp_date);
-
         String token = Jwts.builder()
                 .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(expirationToken)
+                .setIssuedAt(getTimeStamp())
+                .setExpiration(getExpirationTime())
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
         return token;
     }
-*/
+
     public String getEmailFromJwt (String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(secretKey)

@@ -1,6 +1,7 @@
 
 package ar.edu.unq.cryptop2p.security;
 
+import ar.edu.unq.cryptop2p.model.dto.UserLoginDto;
 import ar.edu.unq.cryptop2p.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,6 +37,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
+
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
