@@ -4,6 +4,7 @@ package ar.edu.unq.cryptop2p.service;
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
+import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,9 +46,21 @@ public class CryptoCurrencyService {
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
 		var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).toList().toString();
-		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues(cryptoNames);
+		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues();
 		var cryptos =   cryptosForBinance.stream().toList();
-		return cryptos;
+
+		var interestCrypto = new ArrayList<CryptoCurrencyLastQuoteDto>();
+
+		 for (CryptoCurrencyLastQuoteDto crypto : cryptos)
+		 {
+			 if(cryptoNames.contains(crypto.getName()))
+			 {
+				 crypto.setDateTime(CurrentDateTime.getNewDateString());
+				 interestCrypto.add(crypto);
+			 }
+		 }
+
+		return interestCrypto;
 	}
 
 	/*
