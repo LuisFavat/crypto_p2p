@@ -2,12 +2,19 @@ package ar.edu.unq.cryptop2p.model.dto;
 
 import ar.edu.unq.cryptop2p.model.UserCrypto;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.io.Serializable;
 
 @Data
 public class UserRegisterDto implements Serializable {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     private final String name;
     private final String surname;
     private final String address;
@@ -23,7 +30,8 @@ public class UserRegisterDto implements Serializable {
     }
 
    public  UserCrypto toModel() {
-         var user = new UserCrypto(0L, name,  surname,address, password,email, cvu, cryptoAddress);
+         var encryptedPassword =  passwordEncoder.encode(password);
+         var user = new UserCrypto(0L, name,  surname,address, encryptedPassword,email, cvu, cryptoAddress);
             user.setNumberOfOperation(0);
             user.setScores(0);
             user.setReputation(0);
