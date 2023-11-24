@@ -8,6 +8,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
+
 @Service
 public class DollarProxyServer {
     private RestTemplate restTemplate = new RestTemplate();
@@ -27,7 +29,9 @@ public class DollarProxyServer {
 
         if (dollars == null)
         {
-            throw new DollarProxyServerException("Null from dollar api");
+            String message = "Null from dollar api";
+            response(message, HttpStatus.NOT_FOUND);
+            throw new DollarProxyServerException(message);
         }
 
         return dollars[dollars.length - 1];

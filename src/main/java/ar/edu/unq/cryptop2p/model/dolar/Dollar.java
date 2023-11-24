@@ -1,11 +1,14 @@
 package ar.edu.unq.cryptop2p.model.dolar;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 
+//@Getter
+//@Setter
+@Data
 public class Dollar
 {
     @JsonProperty("d")
