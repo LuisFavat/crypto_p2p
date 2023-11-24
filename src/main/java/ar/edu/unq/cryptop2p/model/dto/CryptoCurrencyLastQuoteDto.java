@@ -1,5 +1,7 @@
 package ar.edu.unq.cryptop2p.model.dto;
 
+import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -21,4 +23,7 @@ public class CryptoCurrencyLastQuoteDto implements Serializable {
         this.name = name;
         this.lastQuote = lastQuote;
     }
+
+
+
 }

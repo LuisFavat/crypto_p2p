@@ -1,10 +1,8 @@
 package ar.edu.unq.cryptop2p.service;
 
-
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
@@ -16,14 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import static  ar.edu.unq.cryptop2p.helpers.CurrentDateTime.*;
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 @Service
@@ -34,45 +28,22 @@ public class CryptoCurrencyService {
 
 	@Autowired
 	BinanceProxyService binanceProxyService;
-/*
+
+
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
-        var cryptoNames = CryptoCurrencyEnum.values();
+       var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).map(Enum::toString).toList();
 		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues();
-		var cryptos =   cryptosForBinance.stream().filter( (crypto) ->  Arrays.stream(cryptoNames).toList().contains(crypto.getName() )).toList();
-		return cryptos;
-	}
-*/
-	@Transactional
-	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
-		var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).toList().toString();
-		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues();
-		var cryptos =   cryptosForBinance.stream().toList();
-
-		var interestCrypto = new ArrayList<CryptoCurrencyLastQuoteDto>();
-
-		 for (CryptoCurrencyLastQuoteDto crypto : cryptos)
-		 {
-			 if(cryptoNames.contains(crypto.getName()))
-			 {
-				 crypto.setDateTime(CurrentDateTime.getNewDateString());
-				 interestCrypto.add(crypto);
-			 }
-		 }
-
-		return interestCrypto;
+		var cryptos =   cryptosForBinance.stream().filter( (crypto) ->  cryptoNames.contains(crypto.getName() ));
+		return cryptos.toList().stream().map(this::agregateDateTime).toList();
 	}
 
-	/*
-	@Transactional
-    public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) {
-		CryptoCurrencyLastQuoteDto entity = binanceProxyService.getCryptoCurrencyValue(symbol);
-		if (entity != null) {
-			entity.setDateTime(CurrentDateTime.getNewDateString());
-		}
-		return entity;
-	}
-*/
+
+      public CryptoCurrencyLastQuoteDto agregateDateTime(CryptoCurrencyLastQuoteDto crypto){
+		  crypto.setDateTime(getNewDateString());
+		  return crypto ;
+	  }
+
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) throws NotFoundException {
@@ -85,6 +56,7 @@ public class CryptoCurrencyService {
 		entity.setDateTime(CurrentDateTime.getNewDateString());
 		return entity;
 	}
+
 
 	@Transactional
 	public CryptoCurrency create(@NotNull CryptoCurrency crypto) throws PreconditionFailedException {
@@ -112,8 +84,7 @@ public class CryptoCurrencyService {
 			response(message, HttpStatus.NOT_FOUND);
 			throw new NotFoundException(message);
 		}
-		return crypto.get();
-
+    	return crypto.get();
 	}
 
 	@Transactional

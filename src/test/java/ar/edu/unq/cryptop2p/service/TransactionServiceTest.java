@@ -2,9 +2,11 @@
 package ar.edu.unq.cryptop2p.service;
 
 import static ar.edu.unq.cryptop2p.helpers.ActionType.*;
+import static ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum.ALICEUSDT;
 import static ar.edu.unq.cryptop2p.helpers.OptionType.*;
 import static ar.edu.unq.cryptop2p.helpers.StateType.*;
 
+import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.dto.*;
@@ -21,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 
 import static ar.edu.unq.cryptop2p.builders.CryptoCurrencyBuilder.aCryto;
@@ -286,6 +289,8 @@ class TransactionServiceTest {
     }
 */
 
+
+
     @Test
     @DirtiesContext
     void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException {
@@ -303,6 +308,73 @@ class TransactionServiceTest {
         assertEquals(24, cryptoQuotes.size());
         assertEquals(crypto.getName(), cryptoQuotes.stream().findAny().get().getName());
 
+   }
+
+
+    @Test
+    @DirtiesContext
+    void getCryptoCurrencyValue() throws PreconditionFailedException, NotFoundException {
+        CryptoCurrency aCrypto = aCryto().withName("AUDIOUSDT").withPrice(10).build();
+        var crypto =  cryptoService.create(aCrypto);
+
+        CryptoCurrency aCrypto2 = aCryto().withName("ALICEUSDT").withPrice(10).build();
+        var crypto2 =  cryptoService.create(aCrypto2);
+
+       CryptoCurrencyLastQuoteDto cryptoCurrency = cryptoService.getCryptoCurrencyValue(crypto.getName());
+
+       assertNotNull(cryptoCurrency);
+       assertEquals(crypto.getName(), cryptoCurrency.getName());
 
     }
+
+
+    @Test
+    @DirtiesContext
+    void getCryptoCurrenciesLatestQuotes() throws PreconditionFailedException, NotFoundException {
+        var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).map(Enum::toString).toList();
+        List<CryptoCurrencyLastQuoteDto> cryptos = cryptoService.getCryptoCurrenciesLatestQuotes();
+        var cryptoSymbols = cryptos.stream().map(CryptoCurrencyLastQuoteDto::getName).toList();
+        assertFalse(cryptos.isEmpty());
+       assertEquals(cryptoNames.size(), cryptoSymbols.size());
+       assertTrue(cryptoSymbols.containsAll(cryptoNames));
+
+        assertTrue(cryptoNames.contains("ALICEUSDT"));
+        assertTrue(cryptoNames.contains("MATICUSDT"));
+        assertTrue(cryptoNames.contains("AXSUSDT"));
+        assertTrue(cryptoNames.contains("AAVEUSDT"));
+        assertTrue(cryptoNames.contains("ATOMUSDT"));
+
+        assertTrue(cryptoNames.contains("NEOUSDT"));
+        assertTrue(cryptoNames.contains("DOTUSDT"));
+        assertTrue(cryptoNames.contains("ETHUSDT"));
+        assertTrue(cryptoNames.contains("CAKEUSDT"));
+        assertTrue(cryptoNames.contains("BTCUSDT"));
+
+        assertTrue(cryptoNames.contains("BNBUSDT"));
+        assertTrue(cryptoNames.contains("ADAUSDT"));
+        assertTrue(cryptoNames.contains("TRXUSDT"));
+        assertTrue(cryptoNames.contains("AUDIOUSDT"));
+
+
+
+
+
+
+        assertTrue(cryptoSymbols.contains("ALICEUSDT"));
+        assertTrue(cryptoSymbols.contains("MATICUSDT"));
+        assertTrue(cryptoSymbols.contains("AXSUSDT"));
+        assertTrue(cryptoSymbols.contains("AAVEUSDT"));
+        assertTrue(cryptoSymbols.contains("ATOMUSDT"));
+
+        assertTrue(cryptoSymbols.contains("NEOUSDT"));
+        assertTrue(cryptoSymbols.contains("DOTUSDT"));
+        assertTrue(cryptoSymbols.contains("ETHUSDT"));
+        assertTrue(cryptoSymbols.contains("CAKEUSDT"));
+        assertTrue(cryptoSymbols.contains("BTCUSDT"));
+
+        assertTrue(cryptoSymbols.contains("BNBUSDT"));
+        assertTrue(cryptoSymbols.contains("ADAUSDT"));
+        assertTrue(cryptoSymbols.contains("TRXUSDT"));
+        assertTrue(cryptoSymbols.contains("AUDIOUSDT"));
+  }
 }
