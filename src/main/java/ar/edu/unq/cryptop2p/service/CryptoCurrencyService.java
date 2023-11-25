@@ -9,14 +9,18 @@ import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.persistence.CryptoCurrencyRepository;
 import ar.edu.unq.cryptop2p.service.integration.BinanceProxyService;
+import jakarta.annotation.PostConstruct;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
+@EnableScheduling
 @Service
 public class CryptoCurrencyService {
 
@@ -43,11 +48,55 @@ public class CryptoCurrencyService {
 */
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
+		var cryptos = cryptoRepository.findAll();
+		return toCryptoCurrencyLastQuoteDto(cryptos);
+	}
+
+
+	private List<CryptoCurrencyLastQuoteDto> toCryptoCurrencyLastQuoteDto(List<CryptoCurrency> list)
+	{
+		var result = new ArrayList<CryptoCurrencyLastQuoteDto> ();
+		for (CryptoCurrency crypto : list)
+		{
+			result.add(new CryptoCurrencyLastQuoteDto(crypto.getName(), crypto.getPrice().toString() ,crypto.getDateTime()));
+		}
+		return result;
+	}
+
+
+	@PostConstruct
+	@Scheduled(fixedDelay = 600000)//600.000 milisec = 10 min
+	public void getLastQuoteFromBinance()
+	{
 		var cryptoNames = Arrays.stream(CryptoCurrencyEnum.values()).toList().toString();
-		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues(cryptoNames);
+		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues();
 		var cryptos =   cryptosForBinance.stream().toList();
-		System.out.println("Persistencia");
-		return cryptos;
+		var result = new ArrayList<CryptoCurrencyLastQuoteDto>();
+		for (CryptoCurrencyLastQuoteDto crypto : cryptos)
+		{
+			if(cryptoNames.contains(crypto.getName()))
+			{
+				crypto.setDateTime(CurrentDateTime.getNewDateString());
+				result.add(crypto);
+			}
+		}
+
+		cryptoRepository.saveAll(toListModel(result));
+
+
+		System.out.println("Persistencia fix time");
+	}
+
+	private List<CryptoCurrency> toListModel(List<CryptoCurrencyLastQuoteDto> list)
+	{
+			var cryptosModel = new ArrayList<CryptoCurrency>();
+
+			for(CryptoCurrencyLastQuoteDto dto : list)
+			{
+				cryptosModel.add(dto.ToModelObject());
+			}
+
+			return cryptosModel;
 	}
 
 	/*
@@ -60,6 +109,7 @@ public class CryptoCurrencyService {
 		return entity;
 	}
 */
+
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) throws NotFoundException {

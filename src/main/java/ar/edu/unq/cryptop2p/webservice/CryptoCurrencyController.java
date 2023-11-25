@@ -1,5 +1,6 @@
 package ar.edu.unq.cryptop2p.webservice;
 
+import ar.edu.unq.cryptop2p.cache.CacheConfig;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +32,17 @@ public class CryptoCurrencyController {
     private CryptoCurrencyService cryptoService;
 
 
+    @Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")//no cachea si es null
     @Operation(summary = "Get All CryptoCurrencies latest quotes")
     @GetMapping("/quotes")
     public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getAllCryptoCurrenciesLatestQuotes(){
         List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
+        System.out.println("pepito01");
         return ResponseEntity.ok().body(cryptosQuotes);
-
     }
 
 
+    @Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
     @GetMapping("/quotes/{symbol}")
     public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@PathVariable("symbol" )String symbol){
@@ -50,10 +54,9 @@ public class CryptoCurrencyController {
             HashMap result = getResponse();
             response = ResponseEntity.ok().body(result);
         }
+        System.out.println("pepito02");
         return response;
     }
-
-
 
 
     @Operation(summary = "Get cryptocurrency quotes from the last 24 hours")
