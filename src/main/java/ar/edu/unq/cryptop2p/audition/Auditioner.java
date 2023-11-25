@@ -3,7 +3,6 @@ package ar.edu.unq.cryptop2p.audition;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +25,8 @@ public class Auditioner {
 
     @Around("entryPoint()")
     public Object durationTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        logger.info("Timestamp: " + LocalDateTime.now());
+
         long start = System.currentTimeMillis();
 
         methodSignature(joinPoint);
@@ -47,11 +48,5 @@ public class Auditioner {
 
     void arguments(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info("arguments: " + Arrays.toString(joinPoint.getArgs()));
-    }
-
-    @Before("entryPoint()")
-    public void timeStamp() throws Throwable
-    {
-        logger.info("Timestamp: " + LocalDateTime.now());
     }
 }

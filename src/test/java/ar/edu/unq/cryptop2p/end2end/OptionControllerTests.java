@@ -53,8 +53,8 @@ public class OptionControllerTests{
     @Autowired
     private TestRestTemplate restTemplate;
 
-  //  private HttpEntity<String> headersWithToken;
-    private HttpHeaders headersWithToken;
+    private HttpEntity<String> headersWithToken;
+   // private HttpHeaders headersWithToken;
 
     @BeforeAll
     public void init() {
@@ -78,14 +78,18 @@ public class OptionControllerTests{
             }
         }
 
-        ResponseEntity<TokenDto> authenticationResponse = restTemplate.exchange(HTTP_LOCALHOST + port + "/auth/login",
-                HttpMethod.POST, authenticationEntity, TokenDto.class);
+      //  ResponseEntity<TokenDto> authenticationResponse = restTemplate.postForObject(HTTP_LOCALHOST + port + "/auth/login",
+        //        authenticationEntity, TokenDto.class);
+
+        ResponseEntity<TokenDto> authenticationResponse = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/auth/login",
+               authenticationEntity, TokenDto.class);
+
         if (authenticationResponse.getStatusCode().equals(HttpStatus.OK)) {
             String token = "Bearer " + Objects.requireNonNull(authenticationResponse.getBody()).getToken();
             HttpHeaders headers = getHeaders();
             headers.set("Authorization", token);
             //headersWithToken = new HttpEntity<>(headers);
-            headersWithToken = headers;
+            headersWithToken = new HttpEntity<>(headers);;
         }
     }
 

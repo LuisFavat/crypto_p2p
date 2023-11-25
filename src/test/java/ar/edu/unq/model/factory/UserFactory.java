@@ -78,8 +78,8 @@ public class UserFactory {
 
     public static  HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+         headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         return headers;
     }
 
