@@ -1,7 +1,6 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
@@ -31,8 +30,9 @@ public class CryptoCurrencyController {
 
 
     @Operation(summary = "Get All CryptoCurrencies latest quotes")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/quotes")
-    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getAllCryptoCurrenciesLatestQuotes(){
+    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getAllCryptoCurrenciesLatestQuotes(@RequestHeader(value = "Authorization") String token){
         List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
         return ResponseEntity.ok().body(cryptosQuotes);
 
@@ -40,9 +40,10 @@ public class CryptoCurrencyController {
 
 
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/quotes/{symbol}")
-    public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@PathVariable("symbol" )String symbol){
-      ResponseEntity response;
+    public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@RequestHeader(value = "Authorization") String token,@PathVariable("symbol" )String symbol){
+        ResponseEntity response;
         try {
             CryptoCurrencyLastQuoteDto cryptoQuotes = cryptoService.getCryptoCurrencyValue(symbol);
             response = ResponseEntity.ok().body(cryptoQuotes);
@@ -57,12 +58,13 @@ public class CryptoCurrencyController {
 
 
     @Operation(summary = "Get cryptocurrency quotes from the last 24 hours")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/lastquotes24hs/{name}")
-    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getCryptoCurrencyLastQuotes24hs(@PathVariable("name")String name) {
-    ResponseEntity response;
+    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getCryptoCurrencyLastQuotes24hs(@RequestHeader(value = "Authorization") String token,@PathVariable("name")String name) {
+        ResponseEntity response;
         try {
-        List<CryptoCurrencyLastQuoteDto> cryptoCurrencyLastQuotes24hs = cryptoService.getCryptoCurrencyLastQuotes24hs(name);
-       response = ResponseEntity.ok().body(cryptoCurrencyLastQuotes24hs);
+            List<CryptoCurrencyLastQuoteDto> cryptoCurrencyLastQuotes24hs = cryptoService.getCryptoCurrencyLastQuotes24hs(name);
+            response = ResponseEntity.ok().body(cryptoCurrencyLastQuotes24hs);
         } catch (Exception e) {
             HashMap result = getResponse();
             response = ResponseEntity.ok().body(result);
@@ -75,11 +77,12 @@ public class CryptoCurrencyController {
 
 
     @Operation(summary = "Create a CryptoCurrency")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
-    public ResponseEntity<CryptoCurrency>create(@RequestBody CryptoCurrencyDto cryptoDto ){
+    public ResponseEntity<CryptoCurrency>create(@RequestHeader(value = "Authorization") String token,@RequestBody CryptoCurrencyDto cryptoDto ){
         ResponseEntity response;
         try {
-           CryptoCurrency entity =  cryptoService.create(cryptoDto.toModel());
+            CryptoCurrency entity =  cryptoService.create(cryptoDto.toModel());
             ResponseEntity.status(201);
             response = ResponseEntity.ok().body(entity);
         } catch (Exception e) {
@@ -92,15 +95,17 @@ public class CryptoCurrencyController {
 
 
     @Operation(summary = "Get all CryptoCurrencies")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/cryptos")
-    public ResponseEntity <List<CryptoCurrency>>getAll(){
+    public ResponseEntity <List<CryptoCurrency>>getAll(@RequestHeader(value = "Authorization") String token){
         List<CryptoCurrency> cryptos = cryptoService.getAll();
         return ResponseEntity.ok().body(cryptos);
     }
 
     @Operation(summary = "Find a CryptoCurrency by name")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/cryptos/{name}")
-    public ResponseEntity <CryptoCurrency>findByName(@PathVariable("name") String name) throws NotFoundException {
+    public ResponseEntity <CryptoCurrency>findByName(@RequestHeader(value = "Authorization") String token,@PathVariable("name") String name) throws NotFoundException {
         ResponseEntity response;
         try {
             CryptoCurrency entity = cryptoService.findByName(name);
@@ -112,7 +117,7 @@ public class CryptoCurrencyController {
         }
         return response;
     }
-  }
+}
 
 
 
