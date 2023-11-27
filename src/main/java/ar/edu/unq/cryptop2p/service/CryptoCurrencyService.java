@@ -5,6 +5,7 @@ import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.dolar.Dollar;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
+import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.persistence.CryptoCurrencyRepository;
@@ -95,9 +96,15 @@ public class CryptoCurrencyService {
 	}
 
 	@Transactional
-	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(String name) throws NotFoundException {
+	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(String name) throws NotFoundException, BadRequestException {
 		CryptoCurrency cryptoCurrency = findByName(name);
-		return binanceProxyService.getCryptoCurrencyLastQuotes24hs(cryptoCurrency);
+        var cryptoCurrenciesLast24hs =  binanceProxyService.getCryptoCurrencyLastQuotes24hs(cryptoCurrency);
+		if (cryptoCurrenciesLast24hs.isEmpty()) {
+			String message = "Can not get CryptoCurrencies Last quotes 24 hs";
+			response(message, HttpStatus.BAD_REQUEST);
+			throw new BadRequestException(message);
+		}
+		return cryptoCurrenciesLast24hs;
 	}
 
 	@Transactional

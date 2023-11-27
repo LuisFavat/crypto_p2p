@@ -285,7 +285,7 @@ class TransactionServiceTest {
 
     @Test
     @DirtiesContext
-    void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException {
+    void cryptoQuotesLast24hs() throws PreconditionFailedException, NotFoundException, BadRequestException {
 
         CryptoCurrency aCrypto = aCryto().withName("AUDIOUSDT").withPrice(10).build();
         var crypto =  cryptoService.create(aCrypto);

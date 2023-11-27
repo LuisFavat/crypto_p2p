@@ -7,7 +7,9 @@ import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
+@Api(tags = "User services")
+@Tag(name = "User services", description = "Manage users")
 @RestController
 @Transactional
 @RequestMapping("/api/user")

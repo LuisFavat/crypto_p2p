@@ -22,7 +22,7 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 @Entity
 //@MappedSuperclass
-@Data
+//@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -159,8 +159,8 @@ public abstract class Option implements  Serializable {
 
 
     public void checkNotSelectedYetByUserSession (UserCrypto userSession) throws BadRequestException {
-        if (userSession.getOptioms().contains(this)) {
-            var message = "You can not select option" + this.getId() + "again, cause you has just selected it";
+        if (userSession.getOptioms().contains(this.getId())) {
+            var message = "You can not select option " + this.getId() + " again, cause you has just selected it";
             response(message, HttpStatus.BAD_REQUEST);
             throw new BadRequestException(message);
         }
