@@ -79,7 +79,7 @@ public class TransactionService {
         return  transactionRepository.findAll();
     }
 
-    @Transactional
+
     public Transaction findByID(int id) throws NotFoundException {
         var  transaction = transactionRepository.findById(id);
         if (transaction.isEmpty()) {
