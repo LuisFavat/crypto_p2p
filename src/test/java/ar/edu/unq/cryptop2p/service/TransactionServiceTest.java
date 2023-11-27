@@ -66,10 +66,8 @@ class TransactionServiceTest {
 
     @AfterEach
     void tearDown() {
-
     }
 
-/*
     @Test
     @DirtiesContext
     void create() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
@@ -106,9 +104,9 @@ class TransactionServiceTest {
         var  optionPutSaved = optionService.post(optioPostDto);
         var options = optionService.findAll();
         var transaction =  transactionService.create(optionPutSaved.getId(),counterParty.getId());
-       var transactions = transactionService.findAll();
-       var transactionData = new TransactionProcessDto(transaction.getId(), MAKETRANSFER);
-       var transactionProcessed = transactionService.process(transactionData);
+        var transactions = transactionService.findAll();
+        var transactionData = new TransactionProcessDto(transaction.getId(), MAKETRANSFER);
+        var transactionProcessed = transactionService.process(transactionData);
 
         assertFalse(options.isEmpty());
         assertFalse(transactions.isEmpty());
@@ -120,7 +118,7 @@ class TransactionServiceTest {
 
         var transactionData2 = new TransactionProcessDto(transaction.getId(),MAKETRANSFER);
 
-      assertThrows ( MakeTransferException.class , () -> transactionService.process(transactionData2));
+        assertThrows ( MakeTransferException.class , () -> transactionService.process(transactionData2));
 
 
         var transactionData3 = new TransactionProcessDto(transaction.getId(),CONFIRMRECEPTION);
@@ -138,55 +136,49 @@ class TransactionServiceTest {
 
     }
 
-*/
-//
-//    @Test
-//    void select() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
-//
-//        UserCrypto aUser = aUserCrypto().withEmail("otronail@gmail.com")
-//                .withName("Pedro")
-//                .withSurname("Picapiedra")
-//                .withAddress("dir1132123123")
-//                .withPassword("Very_Secret!")
-//                .withCvu("1234567890123456789012")
-//                .withCryptoAddress("12345678")
-//                .build();
-//
-//
-//
-//        UserCrypto aCounterParty = aUserCrypto().withEmail("Pablomail@gmail.com")
-//                .withName("Pablo")
-//                .withSurname("Marmol")
-//                .withAddress("dir1132121111")
-//                .withPassword("Extremly_Secret!")
-//                .withCvu("1234567890123456781111")
-//                .withCryptoAddress("12345555")
-//                .build();
-//
-//
-//        var user = userService.register(aUser);
-//        var counterParty = userService.register(aCounterParty);
-//
-//        CryptoCurrency aCrypto = aCryto().withName("A").withPrice(10).build();
-//        var crypto =  cryptoService.create(aCrypto);
-//
-//        var optionPut = anyOption().withPrice(9.7).withCryptoAmount(3).withCryptoCurrency(crypto) .withUser(user).build();
-//        var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
-//        var  optionPutSaved = optionService.post(optioPostDto);
-//        var transactionData =  new TransactionCreateDto(optionPutSaved.getId(),counterParty.getId());
-//
-//        var counterpartySaved = userService.select(transactionData);
-//
-//        var transaction = transactionService.acept(transactionData);
-//        var transactions = transactionService.findAll();
-//
-//        assertEquals("Pablo",counterpartySaved.getName());
-//        assertFalse(counterpartySaved.getOptioms().isEmpty());
-//        assertEquals(9.7,counterpartySaved.getOptioms().stream().findFirst().get().getPrice());
-//        assertFalse(transactions.isEmpty());
-//        }
 
-    /*
+
+    @Test
+    void select() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
+
+        UserCrypto aUser = aUserCrypto().withEmail("otronail@gmail.com")
+                .withName("Pedro")
+                .withSurname("Picapiedra")
+                .withAddress("dir1132123123")
+                .withPassword("Very_Secret!")
+                .withCvu("1234567890123456789012")
+                .withCryptoAddress("12345678")
+                .build();
+
+
+        UserCrypto aCounterParty = aUserCrypto().withEmail("Pablomail@gmail.com")
+                .withName("Pablo")
+                .withSurname("Marmol")
+                .withAddress("dir1132121111")
+                .withPassword("Extremly_Secret!")
+                .withCvu("1234567890123456781111")
+                .withCryptoAddress("12345555")
+                .build();
+
+        var user = userService.register(aUser);
+        var counterParty = userService.register(aCounterParty);
+        CryptoCurrency aCrypto = aCryto().withName("A").withPrice(10).build();
+        var crypto =  cryptoService.create(aCrypto);
+        var optionPut = anyOption().withPrice(9.7).withCryptoAmount(3).withCryptoCurrency(crypto) .withUser(user).build();
+        var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
+        var  optionPutSaved = optionService.post(optioPostDto);
+        var transactionData =  new TransactionSelectionDto(optionPutSaved.getId(),counterParty.getId());
+        var transactionDataAcept = new TransactionAceptDto(optionPutSaved.getId(),counterParty.getId(),user.getId());
+        var counterpartySaved = userService.select(transactionData);
+        var transaction = transactionService.acept(transactionDataAcept);
+        var transactions = transactionService.findAll();
+
+        assertEquals("Pablo",counterpartySaved.getName());
+        assertFalse(counterpartySaved.getOptioms().isEmpty());
+        assertEquals(9.7,counterpartySaved.getOptioms().stream().findFirst().get().getPrice());
+        assertFalse(transactions.isEmpty());
+    }
+
     @Test
     @DirtiesContext
     void options() throws PreconditionFailedException, NotFoundException, BadRequestException, ParseException {
@@ -229,15 +221,15 @@ class TransactionServiceTest {
 
 
         var optionPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), 9.7, 3,user.getId());
-         option1 = optionService.post(optionPostDto);
-         t1 = aTransaction().wwithOption(option1).withOperation(option1.getOperation())
-                 .withCryptoCurrency(option1.getCryptocurrency())//.withUser(option1.getUser())
-                 .withCounterPartyUser(counterParty).build();
-         t1.setDateTime(stringToDate("10/10/2023"));
+        option1 = optionService.post(optionPostDto);
+        t1 = aTransaction().wwithOption(option1).withOperation(option1.getOperation())
+                .withCryptoCurrency(option1.getCryptocurrency())//.withUser(option1.getUser())
+                .withCounterPartyUser(counterParty).build();
+        t1.setDateTime(stringToDate("10/10/2023"));
         var transaction1 = transactionRepository.save(t1);
 
         var optionPostDto2 = new OptionPostDto( OPTIONPUT, crypto2.getName(), 9.5, 7,user.getId());
-       option2 = optionService.post(optionPostDto2);
+        option2 = optionService.post(optionPostDto2);
         t2 =   aTransaction().wwithOption(option2).withOperation(option2.getOperation())
                 .withCryptoCurrency(option2.getCryptocurrency())//.withUser(option2.getUser())
                 .withCounterPartyUser(counterParty).build();
@@ -255,7 +247,7 @@ class TransactionServiceTest {
 
 
         var optionPostDto4= new OptionPostDto( OPTIONCALL, crypto.getName(), 9.9, 4,counterParty.getId());
-       option4 = optionService.post(optionPostDto4);
+        option4 = optionService.post(optionPostDto4);
         t4 =aTransaction().wwithOption(option4).withOperation(option4.getOperation())
                 .withCryptoCurrency(option4.getCryptocurrency())//.withUser(option4.getUser())
                 .withCounterPartyUser(user).build();
@@ -287,7 +279,7 @@ class TransactionServiceTest {
         assertEquals(2, tradedVolume.getCryptoCurrencyList().size());
 
     }
-*/
+
 
 
 
@@ -308,7 +300,7 @@ class TransactionServiceTest {
         assertEquals(24, cryptoQuotes.size());
         assertEquals(crypto.getName(), cryptoQuotes.stream().findAny().get().getName());
 
-   }
+    }
 
 
     @Test
@@ -320,10 +312,10 @@ class TransactionServiceTest {
         CryptoCurrency aCrypto2 = aCryto().withName("ALICEUSDT").withPrice(10).build();
         var crypto2 =  cryptoService.create(aCrypto2);
 
-       CryptoCurrencyLastQuoteDto cryptoCurrency = cryptoService.getCryptoCurrencyValue(crypto.getName());
+        CryptoCurrencyLastQuoteDto cryptoCurrency = cryptoService.getCryptoCurrencyValue(crypto.getName());
 
-       assertNotNull(cryptoCurrency);
-       assertEquals(crypto.getName(), cryptoCurrency.getName());
+        assertNotNull(cryptoCurrency);
+        assertEquals(crypto.getName(), cryptoCurrency.getName());
 
     }
 
@@ -335,8 +327,8 @@ class TransactionServiceTest {
         List<CryptoCurrencyLastQuoteDto> cryptos = cryptoService.getCryptoCurrenciesLatestQuotes();
         var cryptoSymbols = cryptos.stream().map(CryptoCurrencyLastQuoteDto::getName).toList();
         assertFalse(cryptos.isEmpty());
-       assertEquals(cryptoNames.size(), cryptoSymbols.size());
-       assertTrue(cryptoSymbols.containsAll(cryptoNames));
+        assertEquals(cryptoNames.size(), cryptoSymbols.size());
+        assertTrue(cryptoSymbols.containsAll(cryptoNames));
 
         assertTrue(cryptoNames.contains("ALICEUSDT"));
         assertTrue(cryptoNames.contains("MATICUSDT"));
@@ -376,5 +368,5 @@ class TransactionServiceTest {
         assertTrue(cryptoSymbols.contains("ADAUSDT"));
         assertTrue(cryptoSymbols.contains("TRXUSDT"));
         assertTrue(cryptoSymbols.contains("AUDIOUSDT"));
-  }
+    }
 }
