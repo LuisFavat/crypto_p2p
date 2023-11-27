@@ -33,6 +33,9 @@ public class TransactionService {
     private OptionService optionService;
 
 
+    @Autowired
+    private CryptoCurrencyService cryptoCurrencyService;
+
 
     @Transactional
     public Transaction acept(TransactionAceptDto transactiondata) throws NotFoundException, BadRequestException {
@@ -111,10 +114,10 @@ public class TransactionService {
           cryptos.add(crypto);
           totalValueTradedInPesos  += amountPriceInPesos;
         }
-        var cryptoVolume = new TradeVolumeViewDto(getNewDate(), totalValueTradedInPesos, cryptos );
+        var dollarPrice =  cryptoCurrencyService.updatePrice().getPrice();
+        var totalValueTradedInDollars = totalValueTradedInPesos * dollarPrice;
+        var cryptoVolume = new TradeVolumeViewDto(getNewDate(), totalValueTradedInPesos, totalValueTradedInDollars, cryptos );
         return cryptoVolume;
-
-
          }
 
 

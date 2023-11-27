@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class TradeVolumeViewDto implements Serializable {
      Date requestDate ;
-     //Double totalValueTradedInDolars;
+     Double totalValueTradedInDolars;
      Double totalValueTradedInPesos;
      List<CryptoCurrencyVolumeDto> cryptoCurrencyList ;
 }
