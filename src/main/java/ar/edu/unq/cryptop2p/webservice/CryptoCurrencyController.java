@@ -32,18 +32,26 @@ public class CryptoCurrencyController {
     private CryptoCurrencyService cryptoService;
 
 
-    @Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")//no cachea si es null
+
     @Operation(summary = "Get All CryptoCurrencies latest quotes")
     @GetMapping("/quotes")
+    //@Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")//no cachea si es null
+    @Cacheable("getAllCryptoCurrenciesLatestQuotes")
     public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getAllCryptoCurrenciesLatestQuotes(){
         List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
         System.out.println("pepito01");
         return ResponseEntity.ok().body(cryptosQuotes);
+//        return ResponseEntity.ok().body(sarasa());
     }
 
+    @Cacheable("sarasa")//no cachea si es null
+    public List<CryptoCurrencyLastQuoteDto> sarasa()
+    {
+        return cryptoService.getCryptoCurrenciesLatestQuotes();
+    }
 
-    @Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
+    @Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")
     @GetMapping("/quotes/{symbol}")
     public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@PathVariable("symbol" )String symbol){
       ResponseEntity response;
@@ -54,7 +62,7 @@ public class CryptoCurrencyController {
             HashMap result = getResponse();
             response = ResponseEntity.ok().body(result);
         }
-        System.out.println("pepito02");
+
         return response;
     }
 

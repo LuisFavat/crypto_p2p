@@ -1,6 +1,7 @@
 package ar.edu.unq.cryptop2p.service;
 
 
+import ar.edu.unq.cryptop2p.cache.CacheConfig;
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
@@ -12,6 +13,7 @@ import ar.edu.unq.cryptop2p.service.integration.BinanceProxyService;
 import jakarta.annotation.PostConstruct;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -48,6 +50,7 @@ public class CryptoCurrencyService {
 */
 	@Transactional
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
+		System.out.println("kawapanga");
 		var cryptos = cryptoRepository.findAll();
 		return toCryptoCurrencyLastQuoteDto(cryptos);
 	}
