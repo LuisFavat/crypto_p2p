@@ -66,10 +66,8 @@ class TransactionServiceTest {
 
     @AfterEach
     void tearDown() {
-
     }
 
-/*
     @Test
     @DirtiesContext
     void create() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
@@ -138,56 +136,50 @@ class TransactionServiceTest {
 
     }
 
-*/
-//
-//    @Test
-//    void select() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
-//
-//        UserCrypto aUser = aUserCrypto().withEmail("otronail@gmail.com")
-//                .withName("Pedro")
-//                .withSurname("Picapiedra")
-//                .withAddress("dir1132123123")
-//                .withPassword("Very_Secret!")
-//                .withCvu("1234567890123456789012")
-//                .withCryptoAddress("12345678")
-//                .build();
-//
-//
-//
-//        UserCrypto aCounterParty = aUserCrypto().withEmail("Pablomail@gmail.com")
-//                .withName("Pablo")
-//                .withSurname("Marmol")
-//                .withAddress("dir1132121111")
-//                .withPassword("Extremly_Secret!")
-//                .withCvu("1234567890123456781111")
-//                .withCryptoAddress("12345555")
-//                .build();
-//
-//
-//        var user = userService.register(aUser);
-//        var counterParty = userService.register(aCounterParty);
-//
-//        CryptoCurrency aCrypto = aCryto().withName("A").withPrice(10).build();
-//        var crypto =  cryptoService.create(aCrypto);
-//
-//        var optionPut = anyOption().withPrice(9.7).withCryptoAmount(3).withCryptoCurrency(crypto) .withUser(user).build();
-//        var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
-//        var  optionPutSaved = optionService.post(optioPostDto);
-//        var transactionData =  new TransactionCreateDto(optionPutSaved.getId(),counterParty.getId());
-//
-//        var counterpartySaved = userService.select(transactionData);
-//
-//        var transaction = transactionService.acept(transactionData);
-//        var transactions = transactionService.findAll();
-//
-//        assertEquals("Pablo",counterpartySaved.getName());
-//        assertFalse(counterpartySaved.getOptioms().isEmpty());
-//        assertEquals(9.7,counterpartySaved.getOptioms().stream().findFirst().get().getPrice());
-//        assertFalse(transactions.isEmpty());
-//        }
 
-    /*
+
     @Test
+    void select() throws PreconditionFailedException, NotFoundException, BadRequestException, ConfirmReceptionException, MakeTransferException, CancelException {
+
+       UserCrypto aUser = aUserCrypto().withEmail("otronail@gmail.com")
+                .withName("Pedro")
+                .withSurname("Picapiedra")
+                .withAddress("dir1132123123")
+                .withPassword("Very_Secret!")
+                .withCvu("1234567890123456789012")
+                .withCryptoAddress("12345678")
+               .build();
+
+
+        UserCrypto aCounterParty = aUserCrypto().withEmail("Pablomail@gmail.com")
+                .withName("Pablo")
+                .withSurname("Marmol")
+                .withAddress("dir1132121111")
+                .withPassword("Extremly_Secret!")
+               .withCvu("1234567890123456781111")
+                .withCryptoAddress("12345555")
+                .build();
+
+        var user = userService.register(aUser);
+       var counterParty = userService.register(aCounterParty);
+       CryptoCurrency aCrypto = aCryto().withName("A").withPrice(10).build();
+        var crypto =  cryptoService.create(aCrypto);
+       var optionPut = anyOption().withPrice(9.7).withCryptoAmount(3).withCryptoCurrency(crypto) .withUser(user).build();
+       var optioPostDto = new OptionPostDto( OPTIONPUT, crypto.getName(), optionPut.getPrice(), optionPut.getCryptoAmount(),user.getId());
+       var  optionPutSaved = optionService.post(optioPostDto);
+        var transactionData =  new TransactionSelectionDto(optionPutSaved.getId(),counterParty.getId());
+       var transactionDataAcept = new TransactionAceptDto(optionPutSaved.getId(),counterParty.getId(),user.getId());
+        var counterpartySaved = userService.select(transactionData);
+       var transaction = transactionService.acept(transactionDataAcept);
+      var transactions = transactionService.findAll();
+
+        assertEquals("Pablo",counterpartySaved.getName());
+        assertFalse(counterpartySaved.getOptioms().isEmpty());
+       assertEquals(9.7,counterpartySaved.getOptioms().stream().findFirst().get().getPrice());
+       assertFalse(transactions.isEmpty());
+        }
+
+     @Test
     @DirtiesContext
     void options() throws PreconditionFailedException, NotFoundException, BadRequestException, ParseException {
         Option option1,option2,option3,option4,option5 ;
@@ -287,7 +279,7 @@ class TransactionServiceTest {
         assertEquals(2, tradedVolume.getCryptoCurrencyList().size());
 
     }
-*/
+
 
 
 
