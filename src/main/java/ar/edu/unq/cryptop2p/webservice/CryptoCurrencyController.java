@@ -1,6 +1,5 @@
 package ar.edu.unq.cryptop2p.webservice;
 
-import ar.edu.unq.cryptop2p.cache.CacheConfig;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
@@ -36,22 +35,18 @@ public class CryptoCurrencyController {
     @Operation(summary = "Get All CryptoCurrencies latest quotes")
     @GetMapping("/quotes")
     //@Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")//no cachea si es null
-    @Cacheable("getAllCryptoCurrenciesLatestQuotes")
     public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getAllCryptoCurrenciesLatestQuotes(){
-        List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
-        System.out.println("pepito01");
-        return ResponseEntity.ok().body(cryptosQuotes);
-//        return ResponseEntity.ok().body(sarasa());
+//        List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
+//        System.out.println("pepito01");
+//        return ResponseEntity.ok().body(cryptosQuotes);
+        return ResponseEntity.ok().body(cryptoService.getCryptoCurrenciesLatestQuotes());
     }
 
-    @Cacheable("sarasa")//no cachea si es null
-    public List<CryptoCurrencyLastQuoteDto> sarasa()
-    {
-        return cryptoService.getCryptoCurrenciesLatestQuotes();
-    }
+
+
 
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
-    @Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")
+    //@Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")
     @GetMapping("/quotes/{symbol}")
     public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@PathVariable("symbol" )String symbol){
       ResponseEntity response;

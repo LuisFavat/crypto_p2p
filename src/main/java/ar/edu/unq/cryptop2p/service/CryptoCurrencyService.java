@@ -1,7 +1,7 @@
 package ar.edu.unq.cryptop2p.service;
 
 
-import ar.edu.unq.cryptop2p.cache.CacheConfig;
+
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
@@ -13,6 +13,7 @@ import ar.edu.unq.cryptop2p.service.integration.BinanceProxyService;
 import jakarta.annotation.PostConstruct;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -48,10 +49,11 @@ public class CryptoCurrencyService {
 		return cryptos;
 	}
 */
-	@Transactional
+
+	@Cacheable(cacheNames = "cryptoQuotes")
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
-		System.out.println("kawapanga");
 		var cryptos = cryptoRepository.findAll();
+		System.out.println("On data base");
 		return toCryptoCurrencyLastQuoteDto(cryptos);
 	}
 
@@ -65,6 +67,7 @@ public class CryptoCurrencyService {
 		}
 		return result;
 	}
+
 
 
 	@PostConstruct
@@ -84,10 +87,17 @@ public class CryptoCurrencyService {
 			}
 		}
 
-		cryptoRepository.saveAll(toListModel(result));
-
+		//cryptoRepository.saveAll(toListModel(result));
+		saveAll(toListModel(result));
 
 		System.out.println("Persistencia fix time");
+	}
+
+	@CachePut(cacheNames = "cryptoQuote")
+	private void saveAll(List<CryptoCurrency> cryptoQuotes)
+	{
+		System.out.println("on database");
+		cryptoRepository.saveAll(cryptoQuotes);
 	}
 
 	private List<CryptoCurrency> toListModel(List<CryptoCurrencyLastQuoteDto> list)
@@ -115,6 +125,7 @@ public class CryptoCurrencyService {
 
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Cacheable(cacheNames = "quotes", key="#symbol")
 	public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) throws NotFoundException {
 		CryptoCurrencyLastQuoteDto entity = binanceProxyService.getCryptoCurrencyValue(symbol);
 		if (entity == null ) {
@@ -123,6 +134,7 @@ public class CryptoCurrencyService {
 			throw new NotFoundException(message);
 		}
 		entity.setDateTime(CurrentDateTime.getNewDateString());
+		System.out.println("on database");
 		return entity;
 	}
 
