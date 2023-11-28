@@ -115,7 +115,7 @@ public class TransactionService {
           totalValueTradedInPesos  += amountPriceInPesos;
         }
         var dollarPrice =  cryptoCurrencyService.updatePrice().getPrice();
-        var totalValueTradedInDollars = totalValueTradedInPesos * dollarPrice;
+        var totalValueTradedInDollars = totalValueTradedInPesos /  dollarPrice;
         var cryptoVolume = new TradeVolumeViewDto(getNewDate(), totalValueTradedInPesos, totalValueTradedInDollars, cryptos );
         return cryptoVolume;
          }
