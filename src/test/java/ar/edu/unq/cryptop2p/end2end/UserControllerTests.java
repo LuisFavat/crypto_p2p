@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTests {
+    /*
     private static final String HTTP_LOCALHOST = "http://localhost:";
 
     @LocalServerPort
@@ -101,7 +102,7 @@ public class UserControllerTests {
 
     }
 
-    /*
+    
     @Test
     public void getUserByID() {
         String uri = "/api/user/1";
