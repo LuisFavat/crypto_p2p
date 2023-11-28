@@ -102,8 +102,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void getUserByID()
-    {
+    public void getUserByID() {
         String uri = "/api/user/1";
 
         var result = restTemplate.getForObject(HTTP_LOCALHOST + port + uri, UserCrypto.class);
