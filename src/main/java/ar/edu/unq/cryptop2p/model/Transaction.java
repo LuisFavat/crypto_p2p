@@ -59,20 +59,15 @@ public class Transaction implements Serializable {
     private Option option;
 
 
-    //@NotNull
+
     @Enumerated(EnumType.STRING)
     private StateType stateType = StateType.UDLE;
 
-    //@NotNull
+
     @Enumerated(EnumType.STRING)
     private ActionType actionType = ActionType.NONE;
 
-/*
-   @NotNull
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_userCrypto"/ referencedColumnName = "id_userCrypto",insertable = false,updatable = false)
-    private UserCrypto user;
-*/
+
 
   @NotNull
    @ManyToOne(cascade = CascadeType.MERGE)

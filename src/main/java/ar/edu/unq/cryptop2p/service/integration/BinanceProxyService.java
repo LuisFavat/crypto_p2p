@@ -32,9 +32,9 @@ public class BinanceProxyService {
 	}
 
 
-	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(CryptoCurrency cryptocurrency) {
+	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(String name) {
 
-		String url = binanceApiURL + "klines?symbol=" + cryptocurrency.getName() +
+		String url = binanceApiURL + "klines?symbol=" + name +
 				"&interval=1h&startTime=" + getCurrentTimeMinusOneDayInMilliseconds() +
 				"&endTime=" + getCurrentTimeInMilliseconds();
 
@@ -42,7 +42,7 @@ public class BinanceProxyService {
 				restTemplate.getForEntity(url, List[].class);
 
 		return Arrays.stream(Objects.requireNonNull(responseList.getBody())).map(
-				obj -> new CryptoCurrencyLastQuoteDto(cryptocurrency.getName(),
+				obj -> new CryptoCurrencyLastQuoteDto(name,
 						obj.get(4) + "",
 						longToDate((long) obj.get(0)))).collect(Collectors.toList());
 	}

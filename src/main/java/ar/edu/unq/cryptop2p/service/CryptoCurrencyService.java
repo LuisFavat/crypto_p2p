@@ -96,9 +96,8 @@ public class CryptoCurrencyService {
 	}
 
 	@Transactional
-	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(String name) throws NotFoundException, BadRequestException {
-		CryptoCurrency cryptoCurrency = findByName(name);
-        var cryptoCurrenciesLast24hs =  binanceProxyService.getCryptoCurrencyLastQuotes24hs(cryptoCurrency);
+	public List<CryptoCurrencyLastQuoteDto> getCryptoCurrencyLastQuotes24hs(String name)  throws BadRequestException {
+	    var cryptoCurrenciesLast24hs =  binanceProxyService.getCryptoCurrencyLastQuotes24hs(name);
 		if (cryptoCurrenciesLast24hs.isEmpty()) {
 			String message = "Can not get CryptoCurrencies Last quotes 24 hs";
 			response(message, HttpStatus.BAD_REQUEST);
