@@ -4,6 +4,7 @@ import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
+import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.CryptoCurrencyService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,21 @@ public class CryptoCurrencyController {
 
     @Operation(summary = "Create a CryptoCurrency")
     @PostMapping("/create")
+    public ResponseEntity<CryptoCurrency>create(@RequestBody CryptoCurrencyDto cryptoDto ) throws PreconditionFailedException {
+        ResponseEntity response;
+
+            CryptoCurrency entity =  cryptoService.create(cryptoDto.toModel());
+            ResponseEntity.status(201);
+            response = ResponseEntity.ok().body(entity);
+            HashMap result = getResponse();
+            response = ResponseEntity.ok().body(result);
+           return response ;
+
+    }
+
+/*
+    @Operation(summary = "Create a CryptoCurrency")
+    @PostMapping("/create")
     public ResponseEntity<CryptoCurrency>create(@RequestBody CryptoCurrencyDto cryptoDto ){
         ResponseEntity response;
         try {
@@ -87,7 +103,7 @@ public class CryptoCurrencyController {
         return response ;
 
     }
-
+*/
 
     @Operation(summary = "Get all CryptoCurrencies")
     @GetMapping("/cryptos")
