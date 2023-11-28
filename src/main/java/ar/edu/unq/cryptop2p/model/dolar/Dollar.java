@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.sql.Date;
-import java.time.LocalDate;
+
 
 @Data
 public class Dollar

@@ -5,7 +5,6 @@ import ar.edu.unq.cryptop2p.model.UserCrypto;
 import ar.edu.unq.cryptop2p.model.dto.TransactionSelectionDto;
 import ar.edu.unq.cryptop2p.model.dto.UserRegisterDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
-import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
 import ar.edu.unq.cryptop2p.service.UserCryptoService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,10 +39,10 @@ public class UserCryptoController {
                 UserCrypto entity =  userService.register(userdata.toModel());
                 ResponseEntity.status(201);
                 response = ResponseEntity.ok().body(entity);
-            } catch (PreconditionFailedException e) {
+            } catch ( Exception ee) {
 
                 HashMap result = getResponse();
-                response = ResponseEntity.status(400).body(e.getMessage());
+                response = ResponseEntity.status(400).body(result);
                 }
             return response ;
 

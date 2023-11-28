@@ -1,6 +1,6 @@
 package ar.edu.unq.cryptop2p.utils;
 
-import ar.edu.unq.cryptop2p.webservice.UserCryptoController;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.Collections;
 
 @Configuration
-//@EnableSwagger2
 public class SwaggerConfig {
 
     @Bean
@@ -23,7 +22,6 @@ public class SwaggerConfig {
         return new Docket( DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("ar.edu.unq.cryptop2p"))
-                //.apis(RequestHandlerSelectors.any())
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
                 .build()

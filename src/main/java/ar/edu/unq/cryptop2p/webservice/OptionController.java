@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
-//import org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl;
-//import  org.springframework.aop.framework.CglibAopProy;
+
 
 @RestController
 @Transactional
@@ -40,7 +39,7 @@ public class OptionController {
         } catch (BadRequestException | NotFoundException e) {
 
             HashMap result = getResponse();
-            response = ResponseEntity.status(400).body(e.getMessage());
+            response = ResponseEntity.status(400).body(result);
         }
         return response ;
     }
@@ -58,7 +57,7 @@ public class OptionController {
         } catch (NotFoundException e) {
 
             HashMap result = getResponse();
-            response = ResponseEntity.status(404).body(e.getMessage());
+            response = ResponseEntity.status(404).body(result);
         }
 
         return response;

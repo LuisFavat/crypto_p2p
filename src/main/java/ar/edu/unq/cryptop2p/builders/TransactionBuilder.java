@@ -6,9 +6,6 @@ import ar.edu.unq.cryptop2p.helpers.StateType;
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.actions.Action;
-import ar.edu.unq.cryptop2p.model.states.Idle;
-import ar.edu.unq.cryptop2p.model.states.State;
-import jakarta.persistence.EnumType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -130,7 +127,6 @@ public class TransactionBuilder {
         transaction.setStateType(stateType);
         transaction.setActionType(actionType);
         transaction.setAction(action);
-       // transaction.setUser(user);
         transaction.setCryptoCurrency(crypto);
         transaction.setOperation(optionType);
         return transaction;

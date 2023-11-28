@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
-
-
 import static ar.edu.unq.cryptop2p.model.validators.Validator.getResponse;
 
 @RestController

@@ -1,11 +1,8 @@
 package ar.edu.unq.cryptop2p.model.dto;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Getter

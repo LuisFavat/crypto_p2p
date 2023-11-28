@@ -1,14 +1,12 @@
 package ar.edu.unq.cryptop2p.model.dto;
 
-
-import ar.edu.unq.cryptop2p.model.UserCrypto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import static ar.edu.unq.cryptop2p.helpers.CurrentDateTime.stringToDate;
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.time.LocalDate;
+
 
 @Getter
 @Setter

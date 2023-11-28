@@ -3,26 +3,18 @@ package ar.edu.unq.cryptop2p.model;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.helpers.OptionType;
 import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-
-import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
-
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 
 @Entity
-//@MappedSuperclass
-//@Data
 @Getter
 @Setter
 @NoArgsConstructor

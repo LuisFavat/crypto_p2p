@@ -56,7 +56,7 @@ public class TransactionService {
         transaction.setDateTime(getNewDate());
         transaction.setCounterPartyUser(counterPartyUser);
         transaction.setCryptoCurrency(option.getCryptocurrency());
-        transaction.setOperation(option.getOperation());
+       transaction.setOperation(option.getOperation());
         Transaction transactionSaved = transactionRepository.save(transaction);
         return transactionSaved;
     }

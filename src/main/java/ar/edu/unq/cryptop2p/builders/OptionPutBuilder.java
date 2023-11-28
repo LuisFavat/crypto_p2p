@@ -1,6 +1,6 @@
 package ar.edu.unq.cryptop2p.builders;
 
-import ar.edu.unq.cryptop2p.helpers.OptionType;
+
 import ar.edu.unq.cryptop2p.model.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

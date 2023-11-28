@@ -18,13 +18,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-
 import java.io.Serializable;
 import java.text.MessageFormat;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
-
 import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 @Entity
@@ -74,9 +71,6 @@ public class Transaction implements Serializable {
    @JoinColumn(name = "id_userCrypto", referencedColumnName = "id_userCrypto"/*,insertable = false,updatable = false*/)
     private UserCrypto counterPartyUser;
 
-    @Column
-    @DateTimeFormat
-    protected Date finishTime;
 
     @Transient
     private State state;
@@ -87,15 +81,8 @@ public class Transaction implements Serializable {
 
     public Transaction(Option aOption)  {
         this.option = aOption;
-        //TODO poner en un lugar mejor (REFACTOR)
-        try {
-            finishTime = CurrentDateTime.stringToDate("01/01/2000");//CurrentDateTime.getNewDate();
-        }catch (Exception e)
-        {}
-
 
     }
-
 
 
 
@@ -107,19 +94,12 @@ public class Transaction implements Serializable {
         return getStateType().getState();
     }
 
-    public UserCrypto getCounterPartyUser() {
-        return counterPartyUser;
-    }
-
-    public Double getPrice() {
+      public Double getPrice() {
         return getOption().getPrice();
     }
 
     public OptionType getOperationType() {
         return getOption().getOperation();
-    }
-
-    public Date getDateTime() { return getOption().getDateTime();
     }
 
     public UserCrypto getUser() {

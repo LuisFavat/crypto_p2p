@@ -1,10 +1,8 @@
 package ar.edu.unq.cryptop2p.model.dto;
 
-import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
+
 import ar.edu.unq.cryptop2p.helpers.OptionType;
-import ar.edu.unq.cryptop2p.model.CryptoCurrency;
 import ar.edu.unq.cryptop2p.model.Option;
-import ar.edu.unq.cryptop2p.model.UserCrypto;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;

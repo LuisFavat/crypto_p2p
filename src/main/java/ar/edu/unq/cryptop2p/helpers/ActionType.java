@@ -4,7 +4,6 @@ import ar.edu.unq.cryptop2p.model.actions.Action;
 import ar.edu.unq.cryptop2p.model.actions.Cancel;
 import ar.edu.unq.cryptop2p.model.actions.ConfirmReception;
 import ar.edu.unq.cryptop2p.model.actions.MakeTransfer;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 
 @Getter

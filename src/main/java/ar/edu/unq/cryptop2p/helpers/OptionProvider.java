@@ -25,16 +25,7 @@ public class OptionProvider {
            option = new OptionCall(crypto, optionPostDto.getPrice(), optionPostDto.getCryptoAmount(), user);}
        option.setOperation(optionPostDto.getOperation());
        return option;
-    /*
-    var  anOption =   optionPostDTO.getOperation().getOption();
-    anOption.setOperation(optionPostDTO.getOperation());
-    anOption.setPrice(optionPostDTO.getPrice());
-    anOption.setUser(user);
-    anOption.setCryptocurrency(crypto);
-    anOption.setCryptoAmount(optionPostDTO.getCryptoAmount());
-    anOption.setDateTime(CurrentDateTime.getNewDate());
-    return anOption;
-*/
+
     }
 
   public static  void  checkValidOperation(OptionType operation) throws  BadRequestException {

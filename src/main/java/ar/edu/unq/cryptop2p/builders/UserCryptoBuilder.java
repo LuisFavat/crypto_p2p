@@ -107,11 +107,7 @@ public class UserCryptoBuilder {
         user.setReputation(reputation);
         user.setNumberOfOperation(numberOfOperations);
         user.setScores(scores);
-      //  try {
-         user.validate();
-       // } catch (Exception e) {
-         //   e.fillInStackTrace();
-       // }
+        user.validate();
         return user;
 
           }

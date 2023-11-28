@@ -2,8 +2,6 @@ package ar.edu.unq.cryptop2p.persistence;
 
 import ar.edu.unq.cryptop2p.model.Transaction;
 import ar.edu.unq.cryptop2p.model.UserCrypto;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.LazyGroup;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
