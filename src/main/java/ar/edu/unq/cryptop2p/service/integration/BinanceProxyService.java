@@ -35,7 +35,7 @@ public class BinanceProxyService {
 		return entity.getCryptoCurrencyLastQuoteList();
 	}
 */
-	public List <CryptoCurrencyLastQuoteDto> getCryptoCurrenciesValues(String symbols) {
+	public List <CryptoCurrencyLastQuoteDto> getCryptoCurrenciesValues() {
 		ResponseEntity<CryptoCurrencyLastQuoteDto[]> entity = restTemplate.getForEntity(binanceApiURL + "ticker/price", CryptoCurrencyLastQuoteDto[].class);
 		return Arrays.asList(Objects.requireNonNull(entity.getBody()));
 	}
