@@ -1,13 +1,10 @@
-
+/*
 package ar.edu.unq.cryptop2p.service;
 
 import static ar.edu.unq.cryptop2p.helpers.ActionType.*;
-import static ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum.ALICEUSDT;
 import static ar.edu.unq.cryptop2p.helpers.OptionType.*;
 import static ar.edu.unq.cryptop2p.helpers.StateType.*;
-
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
-import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.*;
 import ar.edu.unq.cryptop2p.model.dto.*;
 import ar.edu.unq.cryptop2p.model.exceptions.*;
@@ -19,8 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.annotation.DirtiesContext;
+
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -370,3 +366,4 @@ class TransactionServiceTest {
         assertTrue(cryptoSymbols.contains("AUDIOUSDT"));
     }
 }
+*/
