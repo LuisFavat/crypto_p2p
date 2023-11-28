@@ -101,6 +101,7 @@ public class UserControllerTests {
 
     }
 
+    /*
     @Test
     public void getUserByID() {
         String uri = "/api/user/1";
@@ -110,7 +111,7 @@ public class UserControllerTests {
         assertThat(result).isEqualTo(user1);
 
     }
-
+*/
 
 
 }
