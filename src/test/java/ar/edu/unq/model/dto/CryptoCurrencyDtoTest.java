@@ -1,33 +1,37 @@
 package ar.edu.unq.model.dto;
 
 import ar.edu.unq.cryptop2p.model.dto.CryptoAmountDto;
-import org.junit.Assert;
+import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CryptoAmountDtoTests {
+public class CryptoCurrencyDtoTest {
 
     @Test
     public void fullContructorTest()
     {
-        var amount = 1;
+        var amount = 1D;
         var name = "cryptoName";
-        var cryptoAmountDTO = new CryptoAmountDto(amount, name);
+        var cryptoCurrencyDTO = new CryptoCurrencyDto(name, amount);
 
-        assertEquals(amount, cryptoAmountDTO.getAmount());
-        assertEquals(name, cryptoAmountDTO.getCryptoName());
+        assertEquals(amount, cryptoCurrencyDTO.getPrice());
+        assertEquals(name, cryptoCurrencyDTO.getName());
     }
 
     @Test
-    public void emptyContructorTest()
+    public void toModelTest()
     {
-        var amount = 0;
-        String name = null;
-        var cryptoAmountDTO = new CryptoAmountDto();
 
-        assertEquals(amount, cryptoAmountDTO.getAmount());
-        assertEquals(name, cryptoAmountDTO.getCryptoName());
+        var amount = 1D;
+        var name = "cryptoName";
+        var cryptoCurrencyDTO = new CryptoCurrencyDto(name, amount);
+
+        var crypto = cryptoCurrencyDTO.toModel();
+
+        assertEquals(amount, crypto.getPrice());
+        assertEquals(name, crypto.getName());
+
     }
 
     @Test
