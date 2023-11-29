@@ -11,18 +11,18 @@ import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 import java.util.HashMap;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class  GlobalExceptionHandler {
     @ExceptionHandler({BadRequestException.class})
     public ResponseEntity<Object> handleBadRequestException(BadRequestException exception) {
           HashMap result = getResponse();
-        return  ResponseEntity.ok().body(result);
+        return  ResponseEntity.status(400).body(result);
     }
 
 
     @ExceptionHandler({ NotFoundException.class})
     public ResponseEntity<Object> handleSNotFoundException( NotFoundException exception) {
          HashMap result = getResponse();
-         return  ResponseEntity.ok().body(result);
+         return  ResponseEntity.status(404).body(result);
 
     }
 
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({ PreconditionFailedException.class})
     public ResponseEntity<Object> handlePreconditionFailedException( PreconditionFailedException  exception) {
         HashMap result = getResponse();
-        return  ResponseEntity.ok().body(result);
+        return  ResponseEntity.status(400).body(result);
     }
 
 
