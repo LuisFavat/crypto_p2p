@@ -12,6 +12,8 @@ public class CurrentDateTime {
     private  static final  long CURRENT_TIME_MINUS_30_MINUTES_IN_MILLISECONDS = ZonedDateTime.now().minusMinutes(30).toInstant().toEpochMilli();
     private static final long currentTimeInMilliseconds = ZonedDateTime.now().toInstant().toEpochMilli();
     private static final long currentTimeMinusOneDayInMilliseconds = ZonedDateTime.now().minusDays(1).toInstant().toEpochMilli();
+    private static final long currentTimeInMillisecondsFromSystem = System.currentTimeMillis();
+
 
     private CurrentDateTime() {}
 
@@ -23,6 +25,12 @@ public class CurrentDateTime {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         return formatter.format(getNewDate());
     }
+
+    public static Date getTimeStamp(){
+        return new Date(currentTimeInMillisecondsFromSystem);
+    }
+
+    public static Date getExpirationTime() {return new Date(currentTimeInMillisecondsFromSystem + 3600000);}
 
     public static String dateToString(Date date){
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
