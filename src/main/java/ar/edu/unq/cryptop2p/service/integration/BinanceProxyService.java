@@ -19,7 +19,7 @@ public class BinanceProxyService {
 
 	@Value("${integration.binance.api.url:NONE}")
 	private String binanceApiURL;
-
+	
 	public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) {
 		CryptoCurrencyLastQuoteDto entity = restTemplate.getForObject(binanceApiURL + "ticker/price?symbol=" + symbol, CryptoCurrencyLastQuoteDto.class);
 		return entity;

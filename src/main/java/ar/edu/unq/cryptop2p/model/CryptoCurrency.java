@@ -49,6 +49,14 @@ public class CryptoCurrency implements Serializable {
 
     }
 
+    public CryptoCurrency(String name, double price, String timeStamp) {
+
+        this.name = name;
+        this.price = price;
+        dateTime = timeStamp;
+
+    }
+
 
     public double fivePercentDown() {
         return this.price * percentDown;

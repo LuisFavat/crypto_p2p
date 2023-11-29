@@ -13,6 +13,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -22,19 +24,14 @@ import java.util.List;
 @EnableAutoConfiguration
 public class CryptoCurrencyController {
 
-
     @Autowired
     private CryptoCurrencyService cryptoService;
 
-
     @Operation(summary = "Get All CryptoCurrencies latest quotes")
     @GetMapping("/quotes")
-    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>> getAllCryptoCurrenciesLatestQuotes() {
-        List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
-        return ResponseEntity.ok().body(cryptosQuotes);
-
+    public ResponseEntity<List<CryptoCurrencyLastQuoteDto>> getAllCryptoCurrenciesLatestQuotes(){
+        return ResponseEntity.ok().body(cryptoService.getCryptoCurrenciesLatestQuotes());
     }
-
 
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
     @GetMapping("/quotes/{symbol}")
