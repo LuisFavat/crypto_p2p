@@ -97,7 +97,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "traded volume of cryptocurrencies between two dates")
-    @GetMapping("/tradedvolume")
+    @PostMapping("/tradedvolume")
     public ResponseEntity< TradeVolumeViewDto> tradedVolume(@RequestBody TradedVoluolumeDto volumeData){
         ResponseEntity response;
         try {

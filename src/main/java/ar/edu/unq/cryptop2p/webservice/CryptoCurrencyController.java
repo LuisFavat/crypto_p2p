@@ -76,14 +76,14 @@ public class CryptoCurrencyController {
     @Operation(summary = "Create a CryptoCurrency")
     @PostMapping("/create")
     public ResponseEntity<CryptoCurrency>create(@RequestBody CryptoCurrencyDto cryptoDto ) throws PreconditionFailedException {
-        ResponseEntity response;
+       //ResponseEntity response;
 
             CryptoCurrency entity =  cryptoService.create(cryptoDto.toModel());
             ResponseEntity.status(201);
-            response = ResponseEntity.ok().body(entity);
-            HashMap result = getResponse();
-            response = ResponseEntity.ok().body(result);
-           return response ;
+            return  ResponseEntity.ok().body(entity);
+          //  HashMap result = getResponse();
+           // response = ResponseEntity.ok().body(result);
+         //  return response ;
 
     }
 

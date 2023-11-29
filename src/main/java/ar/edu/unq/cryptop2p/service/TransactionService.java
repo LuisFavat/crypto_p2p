@@ -95,7 +95,7 @@ public class TransactionService {
     }
 
     @Transactional
-    @NotNull
+    //@NotNull
     public  TradeVolumeViewDto tradeVolume(TradeVolumeLocalDateDto volumeData) throws NotFoundException {
 
       var transactions =   transactionsByUserAndBetweenDates(volumeData);
