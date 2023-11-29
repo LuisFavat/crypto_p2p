@@ -7,6 +7,7 @@ import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.OptionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,9 @@ public class OptionController {
     private OptionService optionService;
 
     @Operation(summary = "Post an Option")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/post")
-    public ResponseEntity<OptionViewDto> post(@RequestBody OptionPostDto optionPostDto ) throws NotFoundException, BadRequestException {
+    public ResponseEntity<OptionViewDto> post(@RequestHeader(value = "Authorization") String  token,@RequestBody OptionPostDto optionPostDto ) throws NotFoundException, BadRequestException {
             OptionViewDto entity = OptionViewDto.fromModel( optionService.post(optionPostDto) );
             ResponseEntity.status(201);
            return  ResponseEntity.ok().body(entity);
@@ -35,8 +37,9 @@ public class OptionController {
 
     /**get option by id**/
     @Operation(summary = "Get an option by Id")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
-    ResponseEntity<Option> findById(@PathVariable("id") int id) throws NotFoundException {
+    ResponseEntity<Option> findById(@RequestHeader(value = "Authorization") String  token,@PathVariable("id") int id) throws NotFoundException {
             Option entity = optionService.findByID(id);
             ResponseEntity.status(200);
           return  ResponseEntity.ok().body(entity);
@@ -44,8 +47,9 @@ public class OptionController {
     }
 
     @Operation(summary = "Get all options")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/options")
-    public ResponseEntity <List<Option>>getAll(){
+    public ResponseEntity <List<Option>>getAll(@RequestHeader(value = "Authorization") String  token){
         List<Option> options = optionService.findAll();
        return ResponseEntity.ok().body(options);
     }
