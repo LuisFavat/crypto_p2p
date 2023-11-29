@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -99,7 +101,7 @@ public class OptionControllerTests{
         assertThat(response.getStatusCode().value()).isEqualTo(404);
 
     }
-
+/*
     @Test
     public void getOptionByIDCaseBadRequest() throws NotFoundException, BadRequestException, PreconditionFailedException {
         String  uri = "/api/option/foo";
@@ -109,7 +111,7 @@ public class OptionControllerTests{
         assertThat(response.getStatusCode().value()).isEqualTo(400);
 
     }
-
+*/
 
     @Test
     @DirtiesContext

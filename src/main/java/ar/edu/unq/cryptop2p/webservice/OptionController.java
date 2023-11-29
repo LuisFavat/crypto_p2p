@@ -57,7 +57,7 @@ public class OptionController {
         } catch (NotFoundException e) {
 
             HashMap result = getResponse();
-            response = ResponseEntity.status(404).body(result);
+            response = ResponseEntity.status(400).body(result);
         }
 
         return response;
