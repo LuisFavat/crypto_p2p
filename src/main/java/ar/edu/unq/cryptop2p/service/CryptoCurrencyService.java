@@ -1,7 +1,5 @@
 package ar.edu.unq.cryptop2p.service;
 
-
-
 import ar.edu.unq.cryptop2p.helpers.CryptoCurrencyEnum;
 import ar.edu.unq.cryptop2p.helpers.CurrentDateTime;
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
@@ -21,13 +19,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
@@ -40,15 +36,6 @@ public class CryptoCurrencyService {
 
 	@Autowired
 	BinanceProxyService binanceProxyService;
-/*
-	@Transactional
-	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
-        var cryptoNames = CryptoCurrencyEnum.values();
-		var cryptosForBinance  = binanceProxyService.getCryptoCurrenciesValues();
-		var cryptos =   cryptosForBinance.stream().filter( (crypto) ->  Arrays.stream(cryptoNames).toList().contains(crypto.getName() )).toList();
-		return cryptos;
-	}
-*/
 
 	@Cacheable(cacheNames = "cryptoQuotes")
 	public List<CryptoCurrencyLastQuoteDto>  getCryptoCurrenciesLatestQuotes() {
@@ -56,7 +43,6 @@ public class CryptoCurrencyService {
 		System.out.println("On data base");
 		return toCryptoCurrencyLastQuoteDto(cryptos);
 	}
-
 
 	private List<CryptoCurrencyLastQuoteDto> toCryptoCurrencyLastQuoteDto(List<CryptoCurrency> list)
 	{
@@ -67,8 +53,6 @@ public class CryptoCurrencyService {
 		}
 		return result;
 	}
-
-
 
 	@PostConstruct
 	@Scheduled(fixedDelay = 600000)//600.000 milisec = 10 min
@@ -86,10 +70,7 @@ public class CryptoCurrencyService {
 				result.add(crypto);
 			}
 		}
-
-		//cryptoRepository.saveAll(toListModel(result));
 		saveAll(toListModel(result));
-
 		System.out.println("Persistencia fix time");
 	}
 
@@ -111,18 +92,6 @@ public class CryptoCurrencyService {
 
 			return cryptosModel;
 	}
-
-	/*
-	@Transactional
-    public CryptoCurrencyLastQuoteDto getCryptoCurrencyValue(String symbol) {
-		CryptoCurrencyLastQuoteDto entity = binanceProxyService.getCryptoCurrencyValue(symbol);
-		if (entity != null) {
-			entity.setDateTime(CurrentDateTime.getNewDateString());
-		}
-		return entity;
-	}
-*/
-
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Cacheable(cacheNames = "quotes", key="#symbol")
@@ -150,7 +119,6 @@ public class CryptoCurrencyService {
 
 	private @NotNull Boolean existByName(String name) {return cryptoRepository.findByName(name).isPresent(); }
 
-
 	@Transactional
 	public List<CryptoCurrency> getAll(){
 		return cryptoRepository.findAll();
@@ -165,7 +133,6 @@ public class CryptoCurrencyService {
 			throw new NotFoundException(message);
 		}
 		return crypto.get();
-
 	}
 
 	@Transactional
@@ -173,5 +140,4 @@ public class CryptoCurrencyService {
 		CryptoCurrency  cryptoCurrency = findByName(name);
 		return binanceProxyService.getCryptoCurrencyLastQuotes24hs(cryptoCurrency);
 	}
-
 }

@@ -1,21 +1,17 @@
 package ar.edu.unq.cryptop2p.webservice;
 
 import ar.edu.unq.cryptop2p.model.CryptoCurrency;
-import ar.edu.unq.cryptop2p.model.Option;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyDto;
 import ar.edu.unq.cryptop2p.model.dto.CryptoCurrencyLastQuoteDto;
 import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
 import ar.edu.unq.cryptop2p.service.CryptoCurrencyService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import static  ar.edu.unq.cryptop2p.model.validators.Validator.*;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,27 +22,16 @@ import java.util.List;
 @EnableAutoConfiguration
 public class CryptoCurrencyController {
 
-
     @Autowired
     private CryptoCurrencyService cryptoService;
 
-
-
     @Operation(summary = "Get All CryptoCurrencies latest quotes")
     @GetMapping("/quotes")
-    //@Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")//no cachea si es null
     public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getAllCryptoCurrenciesLatestQuotes(){
-//        List<CryptoCurrencyLastQuoteDto> cryptosQuotes = cryptoService.getCryptoCurrenciesLatestQuotes();
-//        System.out.println("pepito01");
-//        return ResponseEntity.ok().body(cryptosQuotes);
         return ResponseEntity.ok().body(cryptoService.getCryptoCurrenciesLatestQuotes());
     }
 
-
-
-
     @Operation(summary = "Get a CryptoCurrenccy latest quotes")
-    //@Cacheable(cacheNames = CacheConfig.LAST_QUOTE_CACHE, unless = "#result == null")
     @GetMapping("/quotes/{symbol}")
     public ResponseEntity<CryptoCurrencyLastQuoteDto>getCryptoCurrencieLatestQuotes(@PathVariable("symbol" )String symbol){
       ResponseEntity response;
@@ -61,7 +46,6 @@ public class CryptoCurrencyController {
         return response;
     }
 
-
     @Operation(summary = "Get cryptocurrency quotes from the last 24 hours")
     @GetMapping("/lastquotes24hs/{name}")
     public ResponseEntity<List<CryptoCurrencyLastQuoteDto>>getCryptoCurrencyLastQuotes24hs(@PathVariable("name")String name) {
@@ -74,11 +58,7 @@ public class CryptoCurrencyController {
             response = ResponseEntity.ok().body(result);
         }
         return response;
-
     }
-
-
-
 
     @Operation(summary = "Create a CryptoCurrency")
     @PostMapping("/create")
