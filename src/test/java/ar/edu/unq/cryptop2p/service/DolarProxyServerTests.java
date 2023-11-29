@@ -51,7 +51,4 @@ public class DolarProxyServerTests
         Assertions.assertEquals(dolar2, dolar);
     }
 
-
-
-
 }

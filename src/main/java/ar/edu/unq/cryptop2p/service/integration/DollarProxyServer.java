@@ -2,11 +2,14 @@ package ar.edu.unq.cryptop2p.service.integration;
 
 import ar.edu.unq.cryptop2p.model.dolar.Dollar;
 import ar.edu.unq.cryptop2p.helpers.api.URLs;
+import ar.edu.unq.cryptop2p.model.exceptions.ConfirmReceptionException;
 import ar.edu.unq.cryptop2p.model.exceptions.DollarProxyServerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import static ar.edu.unq.cryptop2p.model.validators.Validator.response;
 
 @Service
 public class DollarProxyServer {
@@ -26,8 +29,9 @@ public class DollarProxyServer {
         Dollar[] dollars = response.getBody();
 
         if (dollars == null)
-        {
-            throw new DollarProxyServerException("Null from dollar api");
+        {    var message = "Null from dollar api";
+            response(message, HttpStatus.SERVICE_UNAVAILABLE);
+            throw new DollarProxyServerException(message);
         }
 
         return dollars[dollars.length - 1];

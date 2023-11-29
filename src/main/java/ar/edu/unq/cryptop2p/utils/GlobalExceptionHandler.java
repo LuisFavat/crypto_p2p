@@ -1,9 +1,7 @@
 package ar.edu.unq.cryptop2p.utils;
 
 
-import ar.edu.unq.cryptop2p.model.exceptions.BadRequestException;
-import ar.edu.unq.cryptop2p.model.exceptions.NotFoundException;
-import ar.edu.unq.cryptop2p.model.exceptions.PreconditionFailedException;
+import ar.edu.unq.cryptop2p.model.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,23 +14,13 @@ import java.util.HashMap;
 public class GlobalExceptionHandler {
     @ExceptionHandler({BadRequestException.class})
     public ResponseEntity<Object> handleBadRequestException(BadRequestException exception) {
-       /*
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(exception.getMessage());
-    */
-        HashMap result = getResponse();
+          HashMap result = getResponse();
         return  ResponseEntity.ok().body(result);
     }
 
 
     @ExceptionHandler({ NotFoundException.class})
     public ResponseEntity<Object> handleSNotFoundException( NotFoundException exception) {
-       /*
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-               .body(exception.getMessage());
-         */
          HashMap result = getResponse();
          return  ResponseEntity.ok().body(result);
 
@@ -41,24 +29,44 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({ PreconditionFailedException.class})
     public ResponseEntity<Object> handlePreconditionFailedException( PreconditionFailedException  exception) {
-      /*
-        return ResponseEntity
-                .status(HttpStatus.PRECONDITION_FAILED)
-                .body(exception.getMessage());
-    */
+        HashMap result = getResponse();
+        return  ResponseEntity.ok().body(result);
+    }
+
+
+    @ExceptionHandler({ DollarProxyServerException.class})
+    public ResponseEntity<Object> handleDollarProxyServerException ( DollarProxyServerException exception) {
         HashMap result = getResponse();
         return  ResponseEntity.ok().body(result);
     }
 
 
 
-    @ExceptionHandler({RuntimeException.class})
-    public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
-       /*
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(exception.getMessage());
-   */
+    @ExceptionHandler({ CancelException.class})
+    public ResponseEntity<Object> handleCancelException ( CancelException   exception) {
         HashMap result = getResponse();
         return  ResponseEntity.ok().body(result);
+    }
+
+
+    @ExceptionHandler({ ConfirmReceptionException.class})
+    public ResponseEntity<Object> handleConfirmReceptionException ( ConfirmReceptionException   exception) {
+        HashMap result = getResponse();
+        return  ResponseEntity.ok().body(result);
+    }
+
+
+
+    @ExceptionHandler({ MakeTransferException.class})
+    public ResponseEntity<Object> handleMakeTransferException ( MakeTransferException  exception) {
+        HashMap result = getResponse();
+        return  ResponseEntity.ok().body(result);
+    }
+
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
+               return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+
     }}

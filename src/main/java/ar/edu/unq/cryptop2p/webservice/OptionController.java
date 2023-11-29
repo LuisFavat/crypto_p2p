@@ -12,11 +12,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.List;
-
-import static ar.edu.unq.cryptop2p.model.validators.Validator.*;
 
 
 @RestController
@@ -30,37 +26,21 @@ public class OptionController {
 
     @Operation(summary = "Post an Option")
     @PostMapping("/post")
-    public ResponseEntity<Option> post(@RequestBody OptionPostDto optionPostDto ){
-        ResponseEntity response;
-        try {
+    public ResponseEntity<OptionViewDto> post(@RequestBody OptionPostDto optionPostDto ) throws NotFoundException, BadRequestException {
             OptionViewDto entity = OptionViewDto.fromModel( optionService.post(optionPostDto) );
             ResponseEntity.status(201);
-            response = ResponseEntity.ok().body(entity);
-        } catch (BadRequestException | NotFoundException e) {
-
-            HashMap result = getResponse();
-            response = ResponseEntity.status(400).body(result);
+           return  ResponseEntity.ok().body(entity);
         }
-        return response ;
-    }
 
 
     /**get option by id**/
     @Operation(summary = "Get an option by Id")
     @GetMapping("/{id}")
-    ResponseEntity<Option> findById(@PathVariable("id") int id) {
-        ResponseEntity response;
-        try {
+    ResponseEntity<Option> findById(@PathVariable("id") int id) throws NotFoundException {
             Option entity = optionService.findByID(id);
             ResponseEntity.status(200);
-            response = ResponseEntity.ok().body(entity);
-        } catch (NotFoundException e) {
+          return  ResponseEntity.ok().body(entity);
 
-            HashMap result = getResponse();
-            response = ResponseEntity.status(400).body(result);
-        }
-
-        return response;
     }
 
     @Operation(summary = "Get all options")
@@ -69,7 +49,6 @@ public class OptionController {
         List<Option> options = optionService.findAll();
        return ResponseEntity.ok().body(options);
     }
-
 
 
 }
